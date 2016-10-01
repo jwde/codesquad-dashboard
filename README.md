@@ -1,6 +1,10 @@
 # codesquad-dashboard
 ### codesquad-dev.herokuapp.com
 
+## Integration branch tests status:
+
+[![CircleCI](https://circleci.com/gh/jwde/codesquad-dashboard.svg?style=svg&circle-token=ef3c1ffb1aaef7fb29685f4ff1410e52183c7327)](https://circleci.com/gh/jwde/codesquad-dashboard)
+
 ## Environment setup:
 
 1. Install python 2.7 and pip if not already installed.
