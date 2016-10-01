@@ -52,7 +52,7 @@
 
 `    git commit -m "description of work"`
 
-`    git push origin (feature name)`
+`    git push --set-upstream origin (feature name)`
 
 4. Open a pull request to merge it with the integration branch
 5. Once you have two approvals to the pull request, merge to integration and remove the feature branch.
