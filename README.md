@@ -3,7 +3,12 @@
 
 ## Integration branch tests status:
 
+[![CircleCI](https://circleci.com/gh/jwde/codesquad-dashboard/tree/integration.svg?style=svg&circle-token=ef3c1ffb1aaef7fb29685f4ff1410e52183c7327)](https://circleci.com/gh/jwde/codesquad-dashboard/tree/integration)
+
+## Master branch tests status:
+
 [![CircleCI](https://circleci.com/gh/jwde/codesquad-dashboard.svg?style=svg&circle-token=ef3c1ffb1aaef7fb29685f4ff1410e52183c7327)](https://circleci.com/gh/jwde/codesquad-dashboard)
+
 
 ## Environment setup:
 
