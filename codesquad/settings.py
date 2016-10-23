@@ -32,6 +32,9 @@ if IS_PRODUCTION:
     DEBUG = False
 
 ALLOWED_HOSTS = []
+if IS_PRODUCTION:
+    ALLOWED_HOSTS = ['codesquad-dev.herokuapp.com', \
+                     'codesquad-test-j.herokuapp.com']
 
 
 # Application definition
