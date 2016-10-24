@@ -64,5 +64,5 @@
 `    git push --set-upstream origin (feature name)`
 
 4. Open a pull request to merge it with the integration branch
-5. Once you have an approvals to the pull request, merge to integration and remove the feature branch.
+5. Once you have an approval to the pull request, merge to integration and remove the feature branch.
 6. If integration passes all tests (check for results in the integration channel on slack), merge to master, otherwise fix the problems first.
