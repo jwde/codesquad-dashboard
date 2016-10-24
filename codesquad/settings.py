@@ -24,19 +24,17 @@ IS_PRODUCTION = 'IS_PRODUCTION' in os.environ
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '7i(&e_bsji-xyc9_a0+^ajisq1lz7uhyf@@#*$2q-v(l3@3o@a'
-if IS_PRODUCTION:
-    SECRET_KEY = os.environ['CODESQUAD_DJANGO_SECRET']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-if IS_PRODUCTION:
-    DEBUG = False
 
 ALLOWED_HOSTS = []
+
 if IS_PRODUCTION:
+    SECRET_KEY = os.environ['CODESQUAD_DJANGO_SECRET']
     ALLOWED_HOSTS = ['codesquad-dev.herokuapp.com', \
                      'codesquad-test-j.herokuapp.com']
-
+    DEBUG = False
 
 # Application definition
 
