@@ -32,8 +32,7 @@ ALLOWED_HOSTS = []
 
 if IS_PRODUCTION:
     SECRET_KEY = os.environ['CODESQUAD_DJANGO_SECRET']
-    ALLOWED_HOSTS = ['codesquad-dev.herokuapp.com', \
-                     'codesquad-test-j.herokuapp.com']
+    ALLOWED_HOSTS = ['codesquad-dev.herokuapp.com']
     DEBUG = False
 
 # Application definition
