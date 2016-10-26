@@ -7,7 +7,7 @@ class StudentTestCase(TestCase):
         dboyer = Student.objects.create(username="horsecrzy85",password="i<3horses",first_name="Droolia",
                                last_name="Boyer", email="dboyer@gmail.com")
         html = Course.objects.create(name="Intro to CSS/HTML")
-        e1 = Enrollment(student=dboyer,course=html,start_date="2016-10-10")
+        e1 = Enrollment(user=dboyer,course=html,start_date="2016-10-10")
         e1.save()
 
     def test_students(self):
@@ -22,7 +22,7 @@ class StudentTestCase(TestCase):
     def test_enrollment(self):
         html = Course.objects.get(name="Intro to CSS/HTML")
         dboyer = Student.objects.get(first_name="Droolia")
-        self.assertEqual(html.enrolled_students.get(pk=dboyer.pk), dboyer)
+        self.assertEqual(html.enrolled_users.get(pk=dboyer.pk).first_name, "Droolia")
 
 # example mock / test case
 class AlwaysPassThisTest(TestCase):
