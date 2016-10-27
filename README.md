@@ -41,6 +41,46 @@
 
 `    pip install -r requirements.txt`
 
+7. Install postgres -- The remote server will be running version 9.5.4, but you'll be unlikely to have problems as long as you're running a version >= 9.3.14.
+
+8. Start postgres service
+
+This is platform dependent. On Ubuntu, the command is:
+
+`    sudo /etc/init.d/postgresql start`
+
+9. Make codesquad database
+
+Note: when prompted to set a password for the postgres user, give a password you don't mind becoming public, it will be stored in plaintext.
+
+In linux (tested only on Ubuntu so far), the postgres installation should have created a new system user: postgres. In a new shell run:
+
+`    sudo su - postgres`
+`    createuser -P`
+`    createdb codesquad`
+`    psql`
+
+Then, in the postgres console, run:
+
+`    GRANT ALL PRIVILIGES ON DATABASE codesquad TO postgres;`
+
+On osx (tested on Mavericks), there will not be a system user postgres. Instead, run:
+
+`    createuser -P postgres`
+`    createdb codesquad`
+`    psql -d codequad`
+
+Then, in the postgres console, run:
+
+`    GRANT ALL PRIVILIGES ON DATABASE codesquad TO postgres`
+`    ALTER DATABASE codesquad OWNER TO postgres`
+
+10. Set up environment variables
+
+On linux, open ~/.profile, on osx, open ~/.bash\_profile, and add the following line:
+
+`    export DATABASE_URL="postgres://postgres:password@localhost:5432/codesquad"`
+
 
 ## Workflow
 
