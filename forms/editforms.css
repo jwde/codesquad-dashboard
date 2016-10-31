@@ -24,6 +24,7 @@ body, html {
 .menu {
 	/*float: left;*/
 	width: 20%;
+	margin-bottom: 10px;
 }
 
 ul {
@@ -48,13 +49,15 @@ li a:hover {
 
 .buildform {
 	width: 80%;
+	margin-bottom: 10px;
 }
 
 .buildform#templates {
 	display: inline-block;
 	width: 20%;
-	height: 40%;
+	height: 80%;
 	background-color: lightgray;
+	margin-right: 100px;
 
 }
 
@@ -65,13 +68,9 @@ li a:hover {
 	background-color: lightgray;
 }
 
-.buildform#questions {
-	display: inline-block;
-	width: 20%;
-	height: 40%;
-	background-color: lightgray;
 
-}
+
+
 
 
 
