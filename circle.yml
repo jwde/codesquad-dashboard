@@ -3,3 +3,6 @@ general:
     only:
       - integration
       - master
+machine:
+    environment:
+        DATABASE_URL: "postgres://ubuntu:@localhost:5432/circle_test"
