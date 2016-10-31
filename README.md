@@ -62,22 +62,22 @@ In linux (tested only on Ubuntu so far), the postgres installation should have c
 
 Then, in the postgres console, run:
 
-`    GRANT ALL PRIVILIGES ON DATABASE codesquad TO postgres;`
+`    GRANT ALL PRIVILEGES ON DATABASE codesquad TO postgres;`
 
 On osx (tested on Mavericks), there will not be a system user postgres. Instead, run:
 
 `    createuser -P postgres`
 `    createdb codesquad`
-`    psql -d codequad`
+`    psql -d codesquad`
 
 Then, in the postgres console, run:
 
-`    GRANT ALL PRIVILIGES ON DATABASE codesquad TO postgres`
+`    GRANT ALL PRIVILEGES ON DATABASE codesquad TO postgres`
 `    ALTER DATABASE codesquad OWNER TO postgres`
 
 10. Set up environment variables
 
-On linux, open ~/.profile, on osx, open ~/.bash\_profile, and add the following line:
+On linux, open ~/.profile, on osx, open ~/.bash\_profile (this file might not exist yet), and add the following line:
 
 `    export DATABASE_URL="postgres://postgres:password@localhost:5432/codesquad"`
 
