@@ -56,8 +56,11 @@
     In linux (tested only on Ubuntu so far), the postgres installation should have created a new system user: postgres. In a new shell run:
 
     `    sudo su - postgres`
+
     `    createuser -P`
+
     `    createdb codesquad`
+
     `    psql`
 
     Then, in the postgres console, run:
@@ -67,12 +70,15 @@
     On osx (tested on Mavericks), there will not be a system user postgres. Instead, run:
 
     `    createuser -P postgres`
+
     `    createdb codesquad`
+
     `    psql -d codesquad`
 
     Then, in the postgres console, run:
 
     `    GRANT ALL PRIVILEGES ON DATABASE codesquad TO postgres`
+
     `    ALTER DATABASE codesquad OWNER TO postgres`
 
 10. Set up environment variables
