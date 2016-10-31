@@ -1,0 +1,77 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Montserrat, sans-serif;
+    /*box-sizing: border-box;*/
+}
+
+body, html {
+    height: 100%;
+}
+
+.header {
+	position: relative;
+	width: 100%;
+	background-color: #CEB5A7;
+}
+
+.footer {
+	position: relative;
+	width: 100%;
+	background-color: #CEB5A7;
+}
+
+.menu {
+	/*float: left;*/
+	width: 20%;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 200px;
+	background-color: #FFF9FB;
+}
+
+li a {
+	display: block;
+	color: #000;
+	padding: 8px 16px;
+	text-decoration: none;
+}
+
+li a:hover {
+	background-color: #383D66;
+	color: white;
+}
+
+.buildform {
+	width: 80%;
+}
+
+.buildform#templates {
+	display: inline-block;
+	width: 20%;
+	height: 40%;
+	background-color: lightgray;
+
+}
+
+.buildform#building {
+	display: inline-block;
+	width: 50%;
+	height: 80%;
+	background-color: lightgray;
+}
+
+.buildform#questions {
+	display: inline-block;
+	width: 20%;
+	height: 40%;
+	background-color: lightgray;
+
+}
+
+
+
