@@ -3,3 +3,11 @@ general:
     only:
       - integration
       - master
+machine:
+    environment:
+        DATABASE_URL: "postgres://ubuntu:@localhost:5432/circle_test"
+test:
+    override:
+        - python manage.py makemigrations
+        - python manage.py migrate
+        - python manage.py test
