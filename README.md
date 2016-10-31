@@ -45,32 +45,32 @@
 
 8. Start postgres service
 
-This is platform dependent. On Ubuntu, the command is:
+    This is platform dependent. On Ubuntu, the command is:
 
     `    sudo /etc/init.d/postgresql start`
 
 9. Make codesquad database
 
-        Note: when prompted to set a password for the postgres user, give a password you don't mind becoming public, it will be stored in plaintext.
+    Note: when prompted to set a password for the postgres user, give a password you don't mind becoming public, it will be stored in plaintext.
 
-        In linux (tested only on Ubuntu so far), the postgres installation should have created a new system user: postgres. In a new shell run:
+    In linux (tested only on Ubuntu so far), the postgres installation should have created a new system user: postgres. In a new shell run:
 
     `    sudo su - postgres`
     `    createuser -P`
     `    createdb codesquad`
     `    psql`
 
-        Then, in the postgres console, run:
+    Then, in the postgres console, run:
 
     `    GRANT ALL PRIVILEGES ON DATABASE codesquad TO postgres;`
 
-        On osx (tested on Mavericks), there will not be a system user postgres. Instead, run:
+    On osx (tested on Mavericks), there will not be a system user postgres. Instead, run:
 
     `    createuser -P postgres`
     `    createdb codesquad`
     `    psql -d codesquad`
 
-        Then, in the postgres console, run:
+    Then, in the postgres console, run:
 
     `    GRANT ALL PRIVILEGES ON DATABASE codesquad TO postgres`
     `    ALTER DATABASE codesquad OWNER TO postgres`
