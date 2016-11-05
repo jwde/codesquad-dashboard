@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="loginform-open">
+    <img src="http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_1440,w_720,f_auto/v1/50529/code_squad_bnzkih.png" id="CodeSquad-logo" alt="CodeSquad"/>
+    CodeSquad
+</div>
+
+<form class="login-form" method='post' action="{% url 'login' %}">
+    {% csrf_token %}
+    <a href="" class="form-close bounce"><i class="fa fa-times fa-lg"></i></a>
+    {{ form.username.label_tag }}
+    {{ form.username}}
+    {{ form.password.label_tag }}
+    {{ form.password}}
+    <!-- remember me does nothing right now, should be integrated into forms when it does -->
+    <label class="remember-me"> Remember me
+        <input type="checkbox" checked="checked"/>
+    </label>
+    <button type="submit">Login</button>
+    <button id="forgot-password">Forgot Password? </button>
+    <button id="create-account">Create Account</button>
+    <input type='hidden' name='next' value='{{ next }}' />
+</form>
+{% endblock %}
+
+{% block  javascript %}
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}
+
