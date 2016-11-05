@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
 
 # Create your views here.
 def index(request):
     return HttpResponse("hello world")
+
+def julia(request, number):
+    return HttpResponse("it's me, julia! I know %d things!" %int(number))
