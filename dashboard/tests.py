@@ -1,5 +1,6 @@
 from django.test import TestCase
 from models import Student, Course, Enrollment
+from django.test import Client
 
 
 class StudentTestCase(TestCase):
@@ -23,6 +24,17 @@ class StudentTestCase(TestCase):
         html = Course.objects.get(name="Intro to CSS/HTML")
         dboyer = Student.objects.get(first_name="Droolia")
         self.assertEqual(html.enrolled_users.get(pk=dboyer.pk).first_name, "Droolia")
+
+class CreateUserTestCase(TestCase):
+    def setUp(self):
+        client = Client()
+
+    def test_create_user(self):
+
+        response = self.client.get('/create_user/', {'username': 'craycray', 'password': 'ialso<3horses', 'firstname': 'Max',
+                                        'lastname' : 'Boyer', 'email': 'whodat@idk.com','role': 'student'})
+        self.assertEqual(response, '<h1>It\'s a Student!</h1>')
+
 
 # example mock / test case
 class AlwaysPassThisTest(TestCase):
