@@ -5,13 +5,98 @@
     <head>
         <title>Student Dashboard</title>
         <meta charset="utf-8" />
-        <link rel="stylesheet" href="style.css" />
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="stylesheet" href="editforms.css">
+        <style> 
+            * {
+                margin: 0;
+                padding: 0;
+                font-family: Montserrat, sans-serif;
+                /*box-sizing: border-box;*/
+            }
+
+            body, html {
+                height: 100%;
+            }
+
+            .header {
+                position: relative;
+                width: 100%;
+                background-color: #CEB5A7;
+            }
+
+            .footer {
+                position: relative;
+                width: 100%;
+                background-color: #CEB5A7;
+            }
+
+            .menu {
+                /*float: left;*/
+                width: 20%;
+                margin-bottom: 10px;
+            }
+
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                width: 200px;
+                background-color: #FFF9FB;
+            }
+
+            li a {
+                display: block;
+                color: #000;
+                padding: 8px 16px;
+                text-decoration: none;
+            }
+
+            li a:hover {
+                background-color: #383D66;
+                color: white;
+            }
+
+            .buildform {
+                width: 80%;
+                margin-bottom: 10px;
+            }
+
+            .buildform#templates {
+                display: inline-block;
+                width: 20%;
+                height: 80%;
+                background-color: lightgray;
+                margin-right: 100px;
+                margin-left: 100px;
+
+            }
+
+            .buildform#building {
+                display: inline-block;
+                width: 50%;
+                height: 80%;
+                background-color: lightgray;
+            }
+
+        </style>
     </head>
 
     <body>
+        <div class="header">
+            <h1>Header</h1>
+        </div>
+
+        <div class="menu">
+            <ul>
+                <li><a>Home</a></li>
+                <li><a>Dashboard</a></li>
+                <li><a>My Forms</a></li>
+            </ul>
+        </div>
         <div id="AboutMe"> 
             <h1 id="AboutMe-hdr">About Me</h1>
-            <img id="self-portrait" src="example_image.jpg" alt="self-portrait"/>
+            <img id="self-portrait" src="Ugly-Pigeon.jpg" alt="self-portrait"/>
             <h2 id="name">Julia Moyer :D</h2>    
             <p class="bio">I am rly gud @ code!</p>
         </div>
