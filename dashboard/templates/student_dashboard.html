@@ -1,13 +1,14 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load staticfiles %}
 
-<html>
-
-    <head>
-        <title>Student Dashboard</title>
-        <meta charset="utf-8" />
+{% block styles %}
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-        <link rel="stylesheet" href="editforms.css">
-        <style> 
+        <link rel="stylesheet" href="{% static 'css/editforms.css' %}">        
+{% endblock %}
+
+
+{% block content %}
+	<style> 
             * {
                 margin: 0;
                 padding: 0;
@@ -80,9 +81,7 @@
             }
 
         </style>
-    </head>
 
-    <body>
         <div class="header">
             <h1>Header</h1>
         </div>
@@ -96,7 +95,7 @@
         </div>
         <div id="AboutMe"> 
             <h1 id="AboutMe-hdr">About Me</h1>
-            <img id="self-portrait" src="Ugly-Pigeon.jpg" alt="self-portrait"/>
+            <img id="self-portrait" src="{% static 'images/Ugly-Pigeon.jpg' %}" alt="self-portrait"/>
             <h2 id="name">Julia Moyer :D</h2>    
             <p class="bio">I am rly gud @ code!</p>
         </div>
@@ -113,5 +112,4 @@
             </div>
         </div>
         <div id="LinkedIn">www.mylinkedIn(me,juliamoyer).com</div>
-    </body>
-</html>
+{% endblock %}
