@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,20 +24,21 @@ IS_PRODUCTION = 'IS_PRODUCTION' in os.environ
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '7i(&e_bsji-xyc9_a0+^ajisq1lz7uhyf@@#*$2q-v(l3@3o@a'
-if IS_PRODUCTION:
-    SECRET_KEY = os.environ['CODESQUAD_DJANGO_SECRET']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-if IS_PRODUCTION:
-    DEBUG = False
 
 ALLOWED_HOSTS = []
 
+if IS_PRODUCTION:
+    SECRET_KEY = os.environ['CODESQUAD_DJANGO_SECRET']
+    ALLOWED_HOSTS = ['codesquad-dev.herokuapp.com']
+    DEBUG = False
 
 # Application definition
 
 INSTALLED_APPS = [
+    'dashboard',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,12 +57,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# AUTH_USER_MODEL = 'dashboard.User'
+
 ROOT_URLCONF = 'codesquad.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['dashboard/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,6 +89,11 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# update database configuration with heroku config
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -123,5 +132,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 STATIC_URL = '/static/'
 STATIC_ROOT = 'staticfiles'
