@@ -4,5 +4,6 @@ from django.http import HttpResponse
 
 # Create your views here.
 @login_required(login_url='login/')
-def index(request):
-    return HttpResponse("hello world")
+def dashboard(request):
+    return render(request, "student_dashboard.html", {})
+

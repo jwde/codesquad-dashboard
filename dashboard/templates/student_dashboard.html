@@ -1,48 +1,43 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load staticfiles %}
 
-<html>
-
-  <head>
-    <title>Student Dashboard</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="style.css" />
-    </head>
-
-    <body>
-    <div id="AboutMe"> 
-    <h1 id="AboutMe_header">About Me</h1>
-    <img id="self-portrait" src="example_image.jpg" alt="self-portrait"/>
-    <h2 id="name">My Name</h2>    
-    <p class="information">Something about myself</p>
+{% block styles %}
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/editforms.css' %}">        
+{% endblock %}
 
 
-    </div>
+{% block content %}
+        <div class="header">
+            <img src="http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_1440,w_720,f_auto/v1/50529/code_squad_bnzkih.png" id="CodeSquad-logo" alt="CodeSquad"/>
+            <h1>My Dashboard</h1>
+        </div>
 
-    
+        <div class="menu">
+            <ul>
+                <li><a>Home</a></li>
+                <li><a>Dashboard</a></li>
+                <li><a>My Forms</a></li>
+            </ul>
+        </div>
+        <div class="profile">
+            <div id="AboutMe"> 
+                <h1 id="AboutMe-hdr">About Me</h1>
+                <img id="self-portrait" src="{% static 'images/Ugly-Pigeon.jpg' %}" alt="self-portrait"/>
+                <h2 id="name">Julia Moyer :D</h2>    
+                <p class="bio">I am rly gud @ code!</p>
+            </div>
 
-    <div id="Projects"> 
-    <h1>Projects</h1>
-    <div>My Projects
-    <ul>
-    <li>Project 1</li> 
-    <li>Project 2</li>
-    <li>Project 3</li>
-    </ul>
-
-
-    </div>
-
-
-
-    </div>
-
-
-
-    <div id="LinkedIn"> 
-
-    </div>
-                            
-
-
-    </body>
-</html>
+            <div id="projects"> 
+                <h1>Projects</h1>
+                <div id="projectList">
+                    <ul>
+                        <li>leg0s</li> 
+                        <li>knitting scarf</li>
+                        <li>robotic squirrel</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="LinkedIn">www.mylinkedIn(me-juliamoyer).com</div>
+        </div>
+{% endblock %}
