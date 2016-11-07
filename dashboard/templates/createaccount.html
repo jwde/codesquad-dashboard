@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="loginform-open">
+    <img src="http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_1440,w_720,f_auto/v1/50529/code_squad_bnzkih.png" id="CodeSquad-logo" alt="CodeSquad"/>
+    CodeSquad
+</div>
+
+<form class="createuser-form" method='post' action="{% url 'create_user' %}">
+    {% csrf_token %}
+    <a href="" class="form-close bounce"><i class="fa fa-times fa-lg"></i></a>
+    {{ form.first_name.label_tag }}
+    {{ form.first_name }}
+    {{ form.last_name.label_tag }}
+    {{ form.last_name }}
+    {{ form.email.label_tag }}
+    {{ form.email }}
+    {{ form.username.label_tag }}
+    {{ form.username }}
+    {{ form.password1.label_tag }}
+    {{ form.password1 }}
+    {{ form.password2.label_tag }}
+    {{ form.password2 }}
+    {{ form.role }}
+    <!-- remember me does nothing right now, should be integrated into forms when it does -->
+    <button type="submitnewaccount">Create Account</button>
+    <input type='hidden' name='next' value='{{ next }}' />
+</form>
+{% endblock %}
+
+{% block  javascript %}
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}
