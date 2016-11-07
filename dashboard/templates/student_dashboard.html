@@ -1,48 +1,115 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load staticfiles %}
 
-<html>
-
-  <head>
-    <title>Student Dashboard</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="style.css" />
-    </head>
-
-    <body>
-    <div id="AboutMe"> 
-    <h1 id="AboutMe_header">About Me</h1>
-    <img id="self-portrait" src="example_image.jpg" alt="self-portrait"/>
-    <h2 id="name">My Name</h2>    
-    <p class="information">Something about myself</p>
+{% block styles %}
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/editforms.css' %}">        
+{% endblock %}
 
 
-    </div>
+{% block content %}
+	<style> 
+            * {
+                margin: 0;
+                padding: 0;
+                font-family: Montserrat, sans-serif;
+                /*box-sizing: border-box;*/
+            }
 
-    
+            body, html {
+                height: 100%;
+            }
 
-    <div id="Projects"> 
-    <h1>Projects</h1>
-    <div>My Projects
-    <ul>
-    <li>Project 1</li> 
-    <li>Project 2</li>
-    <li>Project 3</li>
-    </ul>
+            .header {
+                position: relative;
+                width: 100%;
+                background-color: #CEB5A7;
+            }
 
+            .footer {
+                position: relative;
+                width: 100%;
+                background-color: #CEB5A7;
+            }
 
-    </div>
+            .menu {
+                /*float: left;*/
+                width: 20%;
+                margin-bottom: 10px;
+            }
 
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                width: 200px;
+                background-color: #FFF9FB;
+            }
 
+            li a {
+                display: block;
+                color: #000;
+                padding: 8px 16px;
+                text-decoration: none;
+            }
 
-    </div>
+            li a:hover {
+                background-color: #383D66;
+                color: white;
+            }
 
+            .buildform {
+                width: 80%;
+                margin-bottom: 10px;
+            }
 
+            .buildform#templates {
+                display: inline-block;
+                width: 20%;
+                height: 80%;
+                background-color: lightgray;
+                margin-right: 100px;
+                margin-left: 100px;
 
-    <div id="LinkedIn"> 
+            }
 
-    </div>
-                            
+            .buildform#building {
+                display: inline-block;
+                width: 50%;
+                height: 80%;
+                background-color: lightgray;
+            }
 
+        </style>
 
-    </body>
-</html>
+        <div class="header">
+            <h1>Header</h1>
+        </div>
+
+        <div class="menu">
+            <ul>
+                <li><a>Home</a></li>
+                <li><a>Dashboard</a></li>
+                <li><a>My Forms</a></li>
+            </ul>
+        </div>
+        <div id="AboutMe"> 
+            <h1 id="AboutMe-hdr">About Me</h1>
+            <img id="self-portrait" src="{% static 'images/Ugly-Pigeon.jpg' %}" alt="self-portrait"/>
+            <h2 id="name">Julia Moyer :D</h2>    
+            <p class="bio">I am rly gud @ code!</p>
+        </div>
+
+        <div id="Projects"> 
+            <h1>Projects</h1>
+            <div id="projectList">
+                My Projects
+                <ul>
+                    <li>leg0s</li> 
+                    <li>knitting scarf</li>
+                    <li>robotic squirrel</li>
+                </ul>
+            </div>
+        </div>
+        <div id="LinkedIn">www.mylinkedIn(me,juliamoyer).com</div>
+{% endblock %}

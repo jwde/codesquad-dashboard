@@ -38,6 +38,7 @@ if IS_PRODUCTION:
 # Application definition
 
 INSTALLED_APPS = [
+    'dashboard',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,12 +57,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# AUTH_USER_MODEL = 'dashboard.User'
+
 ROOT_URLCONF = 'codesquad.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['dashboard/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,5 +132,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 STATIC_URL = '/static/'
 STATIC_ROOT = 'staticfiles'
