@@ -15,6 +15,13 @@ body, html {
 	background-color: #CEB5A7;
 }
 
+#CodeSquad-logo {
+	width: 9%;
+	height: 9%;
+	float: left;
+	padding-right: 10px;
+}
+
 .footer {
 	position: relative;
 	width: 100%;
@@ -48,9 +55,18 @@ li a:hover {
 }
 
 #self-portrait {
-	background-size: 400px 400px;
+	height: 30%;
+	width: 30%;
+	margin: 10px;
 }
 
+#projects {
+	margin: 10px;
+}
+
+.profile {
+	margin-left: 20%;
+}
 
 .buildform {
 	width: 80%;

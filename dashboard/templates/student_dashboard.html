@@ -9,7 +9,8 @@
 
 {% block content %}
         <div class="header">
-            <h1>Header</h1>
+            <img src="http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_1440,w_720,f_auto/v1/50529/code_squad_bnzkih.png" id="CodeSquad-logo" alt="CodeSquad"/>
+            <h1>My Dashboard</h1>
         </div>
 
         <div class="menu">
@@ -19,23 +20,24 @@
                 <li><a>My Forms</a></li>
             </ul>
         </div>
-        <div id="AboutMe"> 
-            <h1 id="AboutMe-hdr">About Me</h1>
-            <img id="self-portrait" src="{% static 'images/Ugly-Pigeon.jpg' %}" alt="self-portrait"/>
-            <h2 id="name">Julia Moyer :D</h2>    
-            <p class="bio">I am rly gud @ code!</p>
-        </div>
-
-        <div id="Projects"> 
-            <h1>Projects</h1>
-            <div id="projectList">
-                My Projects
-                <ul>
-                    <li>leg0s</li> 
-                    <li>knitting scarf</li>
-                    <li>robotic squirrel</li>
-                </ul>
+        <div class="profile">
+            <div id="AboutMe"> 
+                <h1 id="AboutMe-hdr">About Me</h1>
+                <img id="self-portrait" src="{% static 'images/Ugly-Pigeon.jpg' %}" alt="self-portrait"/>
+                <h2 id="name">Julia Moyer :D</h2>    
+                <p class="bio">I am rly gud @ code!</p>
             </div>
+
+            <div id="projects"> 
+                <h1>Projects</h1>
+                <div id="projectList">
+                    <ul>
+                        <li>leg0s</li> 
+                        <li>knitting scarf</li>
+                        <li>robotic squirrel</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="LinkedIn">www.mylinkedIn(me-juliamoyer).com</div>
         </div>
-        <div id="LinkedIn">www.mylinkedIn(me,juliamoyer).com</div>
 {% endblock %}
