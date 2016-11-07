@@ -21,8 +21,13 @@ class RegisterForm(UserCreationForm):
     password1 = forms.CharField(label='Password:', max_length=30,\
                                widget=forms.PasswordInput(attrs={'name': 'password',\
                                                                  'type': 'password'}))
-    password2 = forms.CharField(label='Password:', max_length=30,\
+    password2 = forms.CharField(label='Confirm Password:', max_length=30,\
                                widget=forms.PasswordInput(attrs={'name': 'password',\
                                                                  'type': 'password'}),\
                                help_text=_('Enter the same password as above, for verification'))
-    role = forms.ChoiceField(label='Role:', choices=['Student', 'Teacher', 'Employer'])
+    role = forms.ChoiceField(label='Role:',\
+            choices=(
+                (1, _('Student')),
+                (2, ('Teacher')),
+                (3, ('Employer')),
+            ))
