@@ -46,38 +46,3 @@ li a:hover {
 	background-color: #383D66;
 	color: white;
 }
-
-#self-portrait {
-	background-size: 400px 400px;
-}
-
-
-.buildform {
-	width: 80%;
-	margin-bottom: 10px;
-}
-
-.buildform#templates {
-	display: inline-block;
-	width: 20%;
-	height: 80%;
-	background-color: lightgray;
-	margin-right: 100px;
-	margin-left: 100px;
-
-}
-
-.buildform#building {
-	display: inline-block;
-	width: 50%;
-	height: 80%;
-	background-color: lightgray;
-}
-
-
-
-
-
-
-
-
