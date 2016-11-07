@@ -3,7 +3,8 @@
 
 {% block styles %}
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'css/editforms.css' %}">        
+        <link rel="stylesheet" href="{% static 'css/master.css' %}">        
+        <link rel="stylesheet" href="{% static 'css/studentdash.css' %}">        
 {% endblock %}
 
 
@@ -18,6 +19,12 @@
                 <li><a>Home</a></li>
                 <li><a>Dashboard</a></li>
                 <li><a>My Forms</a></li>
+                <li><a>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Log Out"></input>
+                    </form>
+                </a></li>
             </ul>
         </div>
         <div class="profile">
