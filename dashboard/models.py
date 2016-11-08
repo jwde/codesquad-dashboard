@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, UserManager
 from django.utils import timezone
 import datetime
 
@@ -28,9 +28,10 @@ class Student(User):
 	def __str__(self):
 		return self.username
 
+
 class Course(models.Model):
 	name = models.CharField(max_length=200)
-	enrolled_users = models.ManyToManyField(User, through='Enrollment')
+	enrolled_students = models.ManyToManyField(Student, through='Enrollment')
 	created_at = models.DateTimeField(editable=False,default=timezone.now)
 	updated_at = models.DateTimeField(default=timezone.now)
 
@@ -45,7 +46,7 @@ class Course(models.Model):
 		return self.name
 
 class Enrollment(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	student = models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
 	course = models.ForeignKey(Course, on_delete=models.CASCADE)
 	start_date = models.DateField()
 	created_at = models.DateTimeField(editable=False,default=timezone.now)
@@ -56,3 +57,29 @@ class Enrollment(models.Model):
 			self.created_at = datetime.datetime.today()
 		self.last_modified = datetime.datetime.today()
 		return super(Enrollment,self).save(*args, **kwargs)
+
+class Teacher(User):
+
+	created_at = models.DateTimeField(default=timezone.now)
+	course = models.ManyToManyField(Course)
+
+	def save(self, *args, **kwargs):
+		if not self.id:
+			self.created_at = datetime.datetime.today()
+		return super(Teacher,self).save(*args, **kwargs)
+
+	def __str__(self):
+		return self.username
+
+class Employer(User):
+
+	created_at = models.DateTimeField(default=timezone.now)
+	description = models.TextField()
+
+	def save(self, *args, **kwargs):
+		if not self.id:
+			self.created_at = datetime.datetime.today()
+		return super(Employer,self).save(*args, **kwargs)
+
+	def __str__(self):
+		return self.username
