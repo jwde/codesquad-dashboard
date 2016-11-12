@@ -1,31 +1,72 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from models import Student
+from forms import RegisterForm
 
 # Create your views here.
 @login_required(login_url='login/')
 def dashboard(request):
     return render(request, "student_dashboard.html", {})
 
-def create_user(request):
+def register(request):
+    form = RegisterForm()
     if request.method == 'POST':
-        form = form_class(data=request.POST)
+        form = RegisterForm(data=request.POST)
         if form.is_valid():
             first_name = request.POST.get('first_name')
             last_name = request.POST.get('last_name')
             email = request.POST.get('email')
             username = request.POST.get('username')
             password = request.POST.get('password1')
-            user = User.objects.create(first_name=first_name,\
+            role = request.POST.get('role')
+            user = User.objects.create_user(
+                                       username,\
+                                       email,\
+                                       password,\
                                        last_name=last_name,\
-                                       email=email,\
-                                       username=username,\
-                                       password=password)
+                                       first_name=first_name)
             user.save()
-            if request.role == 'student':
-                student = Student(user_ptr = user)
+            if role == 'student':
+                student = Student(user = user,\
+                                  privacy_setting = 'PR')
                 student.save()
-                return HttpResponse('<h1>It\'s a Student!</h1>')
-    return HttpResponse()
+            user = authenticate(username = username, password = password)
+            if user is not None:
+                login(request, user)
+                return redirect('dashboard')
+    return render(request, 'createaccount.html', {'form': form})
+
+def create_user(request):
+    if request.method == 'POST':
+        form = RegisterForm(data=request.POST)
+        if form.is_valid():
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            email = request.POST.get('email')
+            username = request.POST.get('username')
+            password = request.POST.get('password1')
+            role = request.POST.get('role')
+            user = User.objects.create_user(
+                                       username,\
+                                       email,\
+                                       password,\
+                                       last_name=last_name,\
+                                       first_name=first_name)
+            user.save()
+            if role == 'student':
+                student = Student(user = user,\
+                                  privacy_setting = 'PR')
+                student.save()
+            user = authenticate(username = username, password = password)
+            if user is not None:
+                login(request, user)
+            return redirect('dashboard')
+        return render(request, 'createaccount.html')
+    return redirect('register')
+
+
+
+    url(r'^register/$', CreateView.as_view(template_name='createaccount.html', form_class=RegisterForm, success_url='/'), name='register'),

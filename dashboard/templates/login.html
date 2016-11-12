@@ -24,7 +24,7 @@
     </label>
     <button type="submit">Login</button>
     <button type='button' id="forgot-password">Forgot Password? </button>
-    <a href='/create_user'><button type='button' id="create-account">Create Account</button></a>
+    <button onclick='location.href="/register"' type='button' id="create-account">Create Account</button>
     <input type='hidden' name='next' value='{{ next }}' />
 </form>
 {% endblock %}
