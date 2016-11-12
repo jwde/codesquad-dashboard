@@ -38,35 +38,3 @@ def register(request):
                 login(request, user)
                 return redirect('dashboard')
     return render(request, 'createaccount.html', {'form': form})
-
-def create_user(request):
-    if request.method == 'POST':
-        form = RegisterForm(data=request.POST)
-        if form.is_valid():
-            first_name = request.POST.get('first_name')
-            last_name = request.POST.get('last_name')
-            email = request.POST.get('email')
-            username = request.POST.get('username')
-            password = request.POST.get('password1')
-            role = request.POST.get('role')
-            user = User.objects.create_user(
-                                       username,\
-                                       email,\
-                                       password,\
-                                       last_name=last_name,\
-                                       first_name=first_name)
-            user.save()
-            if role == 'student':
-                student = Student(user = user,\
-                                  privacy_setting = 'PR')
-                student.save()
-            user = authenticate(username = username, password = password)
-            if user is not None:
-                login(request, user)
-            return redirect('dashboard')
-        return render(request, 'createaccount.html')
-    return redirect('register')
-
-
-
-    url(r'^register/$', CreateView.as_view(template_name='createaccount.html', form_class=RegisterForm, success_url='/'), name='register'),
