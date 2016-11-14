@@ -20,10 +20,39 @@ class Profile(BaseModel):
                                 on_delete=models.CASCADE,\
                                 primary_key=True,\
                                 related_name='profile')
-    class Meta:
-        abstract = True
+    _is_student = models.BooleanField(default=True)
+    _is_teacher = models.BooleanField(default=False)
+    teacher_approved = models.BooleanField(default=False)
+    _is_employer = models.BooleanField(default=False)
+    employer_approved = models.BooleanField(default=False)
 
-class Student(Profile):
+    @property
+    def is_student(self):
+        return self._is_student
+    @property
+    def is_teacher(self):
+        return self._is_teacher and self.teacher_approved
+    @property
+    def is_employer(self):
+        return self._is_employer and self.employer_approved
+    @property
+    def type(self):
+        if self.is_employer:
+            return 'employer'
+        elif self.is_teacher:
+            return 'teacher'
+        elif self.is_student:
+            return 'student'
+        else:
+            return 'pending'
+    def __str__(self):
+        return self.user.__str__()
+
+class Student(BaseModel):
+    profile = models.OneToOneField(Profile,\
+                                   on_delete=models.CASCADE,\
+                                   primary_key=True,\
+                                   related_name='student')
     PRIVATE = 'PR'
     PUBLIC = 'PU'
     PRIVACY_CHOICES = (
@@ -36,15 +65,34 @@ class Student(Profile):
         default=PRIVATE,
     )
     def __str__(self):
-        return self.user.username
+        return self.profile.user.username
 
 class Course(BaseModel):
     name = models.CharField(max_length=200)
-    enrolled_users = models.ManyToManyField(User, through='Enrollment')
+    enrolled_students = models.ManyToManyField(Student, through='Enrollment')
+    start_date = models.DateField()
+    end_date = models.DateField()
     def __str__(self):
         return self.name
 
 class Enrollment(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    start_date = models.DateField()
+
+class Teacher(BaseModel):
+    profile = models.OneToOneField(Profile,\
+                                   on_delete=models.CASCADE,\
+                                   primary_key=True,\
+                                   related_name='teacher')
+    courses = models.ManyToManyField(Course)
+    def __str__(self):
+        return self.profile.user.username
+
+class Employer(BaseModel):
+    profile = models.OneToOneField(Profile,\
+                                   on_delete=models.CASCADE,\
+                                   primary_key=True,\
+                                   related_name='employer')
+    description = models.TextField()
+    def __str__(self):
+        return self.profile.user.username
