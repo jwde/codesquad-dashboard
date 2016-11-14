@@ -1,0 +1,13 @@
+<div class="menu">
+    <ul>
+        <li><a>Home</a></li>
+        <li><a>Dashboard</a></li>
+        <li><a>My Forms</a></li>
+        <li><a>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <input type="submit" value="Log Out"></input>
+            </form>
+        </a></li>
+    </ul>
+</div>
