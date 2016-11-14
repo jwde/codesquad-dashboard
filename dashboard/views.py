@@ -9,9 +9,10 @@ from forms import RegisterForm
 # Create your views here.
 @login_required(login_url='login/')
 def dashboard(request):
+    if request.method == 'GET':
+        print request.GET
     return render(request, "student_dashboard.html", {})
-def view_user(request):
-    return render(request, "temp_user.html", {})
+
 def register(request):
     form = RegisterForm()
     if request.method == 'POST':
