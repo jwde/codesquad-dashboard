@@ -23,8 +23,8 @@
         <input type="checkbox" checked="checked"/>
     </label>
     <button type="submit">Login</button>
-    <button id="forgot-password">Forgot Password? </button>
-    <button id="create-account">Create Account</button>
+    <button type='button' id="forgot-password">Forgot Password? </button>
+    <button onclick='location.href="/register"' type='button' id="create-account">Create Account</button>
     <input type='hidden' name='next' value='{{ next }}' />
 </form>
 {% endblock %}
