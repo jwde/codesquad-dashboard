@@ -3,31 +3,32 @@ from django import forms
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(label='Username:', max_length=30,\
-                               widget=forms.TextInput(attrs={'name': 'username'}))
-    password = forms.CharField(label='Password:', max_length=30,\
-                               widget=forms.PasswordInput(attrs={'name': 'password',\
-                                                                 'type': 'password'}))
+    pass
 
 class RegisterForm(UserCreationForm):
     first_name = forms.CharField(label='First Name:', max_length=30,\
-                               widget=forms.TextInput(attrs={'name': 'first_name'}))
+                               widget=forms.TextInput(attrs={'name': 'first_name'}),\
+                               required=False)
     last_name = forms.CharField(label='Last Name:', max_length=30,\
-                               widget=forms.TextInput(attrs={'name': 'last_name'}))
-    email = forms.CharField(label='Email:', max_length=75,\
-                               widget=forms.TextInput(attrs={'name': 'email'}))
-    username = forms.CharField(label='Username:', max_length=30,\
-                               widget=forms.TextInput(attrs={'name': 'username'}))
-    password1 = forms.CharField(label='Password:', max_length=30,\
-                               widget=forms.PasswordInput(attrs={'name': 'password',\
-                                                                 'type': 'password'}))
-    password2 = forms.CharField(label='Confirm Password:', max_length=30,\
-                               widget=forms.PasswordInput(attrs={'name': 'password',\
+                               widget=forms.TextInput(attrs={'name': 'last_name'}),\
+                               required=False)
+    email = forms.EmailField(label='Email:', required=True)
+    username = forms.CharField(label='Username:', max_length=150,\
+                               widget=forms.TextInput(attrs={'name': 'username'}),\
+                               required=True)
+    password1 = forms.CharField(label='Password:',\
+                               widget=forms.PasswordInput(attrs={'name': 'password1',\
                                                                  'type': 'password'}),\
-                               help_text=_('Enter the same password as above, for verification'))
+                               required=True)
+    password2 = forms.CharField(label='Confirm Password:',\
+                               widget=forms.PasswordInput(attrs={'name': 'password2',\
+                                                                 'type': 'password'}),\
+                               help_text=_('Enter the same password as above, for verification'),\
+                               required=True)
     role = forms.ChoiceField(label='Role:',\
             choices=(
-                (1, _('Student')),
-                (2, ('Teacher')),
-                (3, ('Employer')),
-            ))
+                ('student', _('Student')),
+                ('teacher', _('Teacher')),
+                ('employer', _('Employer')),
+            ),\
+            required=True)
