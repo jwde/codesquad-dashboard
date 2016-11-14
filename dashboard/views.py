@@ -6,4 +6,3 @@ from django.http import HttpResponse
 @login_required(login_url='login/')
 def dashboard(request):
     return render(request, "student_dashboard.html", {})
-
