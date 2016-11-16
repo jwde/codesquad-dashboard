@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.core import validators
+from django.contrib.postgres.fields import JSONField
 from django.utils import timezone
 import datetime
 
@@ -96,3 +98,39 @@ class Employer(BaseModel):
     description = models.TextField()
     def __str__(self):
         return self.profile.user.username
+
+class FormTemplate(models.Model):
+    question_list = models.CharField(max_length=200, validators=[validators.validate_comma_separated_integer_list])
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
+
+class Question(models.Model):
+
+    LONGFORM = 'LF'
+    SHORTFORM = 'SF'
+    MULTIPLE_CHOICE = 'MC'
+    SLIDING_SCALE = 'SS'
+    QUESTION_TYPES = (
+        ('LF', 'Long Form Text'),
+        ('SF', 'Short Form Text'),
+        ('MC', 'Multiple Choice'),
+        ('SS', 'Sliding Scale'),
+    )
+    question_type = models.CharField(
+        max_length=2,
+        choices=QUESTION_TYPES,
+        default=LONGFORM,
+    )
+    additional_info = JSONField()
+    question_text = models.TextField()
+    question_number = models.IntegerField(default=1)
+
+class FormResponse(models.Model):
+    form_template = models.ForeignKey(FormTemplate, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class QuestionResponse(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    response_text = models.TextField

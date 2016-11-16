@@ -1,5 +1,5 @@
 from django.test import TestCase
-from models import Profile, Student, Teacher, Employer, Course, Enrollment
+from models import Profile, Student, Teacher, Employer, Course, Enrollment, FormTemplate, Question, FormResponse, QuestionResponse
 from django.test import Client
 from django.contrib.auth.models import User
 import datetime
@@ -58,6 +58,93 @@ class CreateUserTestCase(TestCase):
                                                     'role': 'student'})
         student = User.objects.get(username='craycray').profile.student
         self.assertEqual(student.profile.user.first_name, 'Max')
+
+class QuestionTestCase(TestCase):
+    def setUp(self):
+        user = User.objects.create_user(username='horsecrzy85',\
+                                        password='i<3horses',\
+                                        first_name='Droolia',\
+                                        last_name='Boyer',\
+                                        email='dboyer@gmail.com')
+        user.save()
+
+        question = Question.objects.create(question_type='MC',\
+                                           question_text='Why do you want to join CodeSquad?',\
+                                           additional_info='{}',\
+                                           question_number=5)
+        question.save()
+
+        response = QuestionResponse.objects.create(user=user,question=question)
+        response.save()
+
+    def test_question(self):
+        type_of_5 = Question.objects.get(question_number=5).question_type
+        self.assertEqual(type_of_5,'MC')
+
+    def test_question_response(self):
+        q1 = Question.objects.get(question_text='Why do you want to join CodeSquad?')
+        response = QuestionResponse.objects.get(question=q1)
+
+        self.assertEqual(response.user.first_name, 'Droolia')
+
+class FormTemplateTestCase(TestCase):
+    def setUp(self):
+        question1 = Question.objects.create(question_type='MC',\
+                                           question_text='Why do you want to join CodeSquad?',\
+                                           additional_info='{}',\
+                                           question_number=1)
+        question2 = Question.objects.create(question_type='LT',\
+                                           question_text='What is your favorite hobby?',\
+                                           additional_info='{}',\
+                                           question_number=3)
+        question1.save()
+        question2.save()
+
+        template = FormTemplate.objects.create(name='Quiz1',question_list='1,4,5')
+        template.save()
+
+    def test_form_template(self):
+        questions = FormTemplate.objects.get(name='Quiz1').question_list
+        self.assertEqual(questions.split(',')[0],'1')
+
+    def test_retrieve_question(self):
+
+        q1 = Question.objects.get(question_text='Why do you want to join CodeSquad?').question_number
+        q2 = Question.objects.get(question_text='What is your favorite hobby?').question_number
+
+        template = FormTemplate.objects.create(name='Quiz2',question_list='{},{}'.format(q1,q2))
+        template.save()
+
+        self.assertEqual(template.question_list, '1,3')
+
+class FormResponseTestCase(TestCase):
+    def setUp(self):
+        template = FormTemplate.objects.create(name='Quiz1',question_list='1,4,5')
+        template.save()
+
+        user = User.objects.create_user(username='horsecrzy85',\
+                                        password='i<3horses',\
+                                        first_name='Droolia',\
+                                        last_name='Boyer',\
+                                        email='dboyer@gmail.com')
+        user.save()
+
+        dboyer = Student.objects.create(user=user,\
+                                        privacy_setting='PR')
+        dboyer.save()
+
+        form_response = FormResponse.objects.create(user=user,\
+                                                    form_template=template)
+        form_response.save()
+
+    def test_form_response(self):
+
+        user = User.objects.get(first_name='Droolia')
+        response = FormResponse.objects.get(user=user)
+        user.formresponse_set.add(response)
+
+        self.assertEqual(response.form_template.name,'Quiz1')
+        self.assertEqual(user.formresponse_set.count(), 1)
 
 class PromoteUserTestCase(TestCase):
     def setUp(self):
