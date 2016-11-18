@@ -10,8 +10,10 @@ from forms import RegisterForm
 @login_required(login_url='login/')
 def dashboard(request):
     if request.method == 'GET':
-        print request.GET
-    return render(request, "student_dashboard.html", {})
+        print request.user.first_name
+        # print request.GET.get('first_name')
+    return render(request, "student_dashboard.html", 
+                {'name': request.user.first_name + " " + request.user.last_name})
 
 def register(request):
     form = RegisterForm()
