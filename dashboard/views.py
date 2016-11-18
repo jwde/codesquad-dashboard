@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from models import Student
+from models import Profile, Student, Teacher, Employer
 from forms import RegisterForm
 
 # Create your views here.
@@ -31,8 +31,19 @@ def register(request):
                                        last_name=last_name,\
                                        first_name=first_name)
             user.save()
-            if role == 'student':
-                student = Student(user = user,\
+            profile = Profile.objects.create(user=user,\
+                                             _is_student=(role == 'student'),\
+                                             _is_teacher=(role == 'teacher'),\
+                                             _is_employer=(role == 'employer'),\
+                                             )
+            if role == 'teacher':
+                teacher = Teacher(profile = profile)
+                teacher.save()
+            elif role == 'employer':
+                employer = Employer(profile = profile)
+                employer.save()
+            else:
+                student = Student(profile = profile,\
                                   privacy_setting = 'PR')
                 student.save()
             user = authenticate(username = username, password = password)
