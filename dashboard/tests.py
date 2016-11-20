@@ -129,7 +129,12 @@ class FormResponseTestCase(TestCase):
                                         email='dboyer@gmail.com')
         user.save()
 
-        dboyer = Student.objects.create(user=user,\
+        profile = Profile.objects.create(user=user,\
+                                         _is_student=True,\
+                                         _is_teacher=False,\
+                                         _is_employer=False)
+
+        dboyer = Student.objects.create(profile=profile,\
                                         privacy_setting='PR')
         dboyer.save()
 

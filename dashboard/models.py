@@ -100,7 +100,7 @@ class Employer(BaseModel):
         return self.profile.user.username
 
 class FormTemplate(models.Model):
-    question_list = models.CharField(max_length=200, validators=[validators.validate_comma_separated_integer_list])
+    question_list = models.TextField(validators=[validators.validate_comma_separated_integer_list])
     name = models.CharField(max_length=100)
     def __str__(self):
         return self.name
