@@ -133,4 +133,4 @@ class FormResponse(models.Model):
 class QuestionResponse(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    response_text = models.TextField
+    response_text = models.TextField()
