@@ -70,52 +70,44 @@ class QuestionTestCase(TestCase):
 
         question = Question.objects.create(question_type='MC',\
                                            question_text='Why do you want to join CodeSquad?',\
-                                           additional_info='{}',\
-                                           question_number=5)
+                                           additional_info='{}')
         question.save()
 
-        response = QuestionResponse.objects.create(user=user,question=question)
+        response = QuestionResponse.objects.create(user=user,\
+                                                   question=question,\
+                                                   response_text='bc codesquad is so dope, man')
         response.save()
 
     def test_question(self):
-        type_of_5 = Question.objects.get(question_number=5).question_type
-        self.assertEqual(type_of_5,'MC')
+        type_of_q = Question.objects.get(question_text='Why do you want to join CodeSquad?').question_type
+        self.assertEqual(type_of_q,'MC')
 
     def test_question_response(self):
         q1 = Question.objects.get(question_text='Why do you want to join CodeSquad?')
         response = QuestionResponse.objects.get(question=q1)
-
         self.assertEqual(response.user.first_name, 'Droolia')
 
 class FormTemplateTestCase(TestCase):
     def setUp(self):
         question1 = Question.objects.create(question_type='MC',\
                                            question_text='Why do you want to join CodeSquad?',\
-                                           additional_info='{}',\
-                                           question_number=1)
+                                           additional_info='{}')
         question2 = Question.objects.create(question_type='LT',\
                                            question_text='What is your favorite hobby?',\
-                                           additional_info='{}',\
-                                           question_number=3)
+                                           additional_info='{}')
         question1.save()
         question2.save()
 
-        template = FormTemplate.objects.create(name='Quiz1',question_list='1,4,5')
+        template = FormTemplate.objects.create(name='Quiz1',\
+                                               question_list='{},{}'\
+                                               .format(question1.id, question2.id))
         template.save()
 
     def test_form_template(self):
-        questions = FormTemplate.objects.get(name='Quiz1').question_list
-        self.assertEqual(questions.split(',')[0],'1')
-
-    def test_retrieve_question(self):
-
-        q1 = Question.objects.get(question_text='Why do you want to join CodeSquad?').question_number
-        q2 = Question.objects.get(question_text='What is your favorite hobby?').question_number
-
-        template = FormTemplate.objects.create(name='Quiz2',question_list='{},{}'.format(q1,q2))
-        template.save()
-
-        self.assertEqual(template.question_list, '1,3')
+        question_ids = FormTemplate.objects.get(name='Quiz1').question_list.split(',')
+        questions = [Question.objects.get(id=int(q)) for q in question_ids]
+        self.assertEqual(questions[0].question_type, 'MC')
+        self.assertEqual(questions[1].question_text, 'What is your favorite hobby?')
 
 class FormResponseTestCase(TestCase):
     def setUp(self):
@@ -143,10 +135,8 @@ class FormResponseTestCase(TestCase):
         form_response.save()
 
     def test_form_response(self):
-
         user = User.objects.get(first_name='Droolia')
         response = FormResponse.objects.get(user=user)
-        user.formresponse_set.add(response)
 
         self.assertEqual(response.form_template.name,'Quiz1')
         self.assertEqual(user.formresponse_set.count(), 1)

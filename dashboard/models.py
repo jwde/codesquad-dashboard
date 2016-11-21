@@ -99,14 +99,13 @@ class Employer(BaseModel):
     def __str__(self):
         return self.profile.user.username
 
-class FormTemplate(models.Model):
+class FormTemplate(BaseModel):
     question_list = models.TextField(validators=[validators.validate_comma_separated_integer_list])
     name = models.CharField(max_length=100)
     def __str__(self):
         return self.name
 
-class Question(models.Model):
-
+class Question(BaseModel):
     LONGFORM = 'LF'
     SHORTFORM = 'SF'
     MULTIPLE_CHOICE = 'MC'
@@ -124,13 +123,12 @@ class Question(models.Model):
     )
     additional_info = JSONField()
     question_text = models.TextField()
-    question_number = models.IntegerField(default=1)
 
-class FormResponse(models.Model):
+class FormResponse(BaseModel):
     form_template = models.ForeignKey(FormTemplate, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-class QuestionResponse(models.Model):
+class QuestionResponse(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     response_text = models.TextField()
