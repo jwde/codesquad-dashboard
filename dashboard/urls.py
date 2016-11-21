@@ -10,7 +10,6 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, {'template_name': 'login.html',\
                                         'authentication_form': LoginForm},\
         name='login'),
-    url(r'^view_user/$', views.view_user, name='view_user'),
     url(r'^register/$', views.register, name='register'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
     url(r'^password_change/$', auth_views.password_change, name='password_change'),
