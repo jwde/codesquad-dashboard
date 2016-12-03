@@ -2,6 +2,7 @@ from django.test import TestCase
 from models import Profile, Student, Teacher, Employer, Course, Enrollment, FormTemplate, Question, FormResponse, QuestionResponse
 from django.test import Client
 from django.contrib.auth.models import User
+from utils import order
 import datetime
 
 
@@ -208,10 +209,6 @@ class QuestionResponseTestCase(TestCase):
         q2_response2.save()
 
     def test_get_question_response(self):
-        def order(field, vals):
-            cases = ' '.join('WHEN {}={} THEN {}'.format(field, v, i)\
-                             for i,v in enumerate(vals))
-            return 'CASE {} END'.format(cases)
         form = FormTemplate.objects.get(name='Quiz1')
         question_ids = [int(q) for q in form.question_list.split(',')]
         user = User.objects.get(username='horsecrzy85')

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+<form method='post' action="/form/{{ form_id }}/">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
+
+{% block  javascript %}
+{% endblock %}
