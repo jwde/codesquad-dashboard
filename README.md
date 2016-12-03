@@ -87,6 +87,12 @@
 
     `    export DATABASE_URL="postgres://postgres:password@localhost:5432/codesquad"`
 
+11. Runnning the server
+
+    in your terminal, type:
+
+    `   python manage.py runserver`
+
 
 ## Workflow
 
