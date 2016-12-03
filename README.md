@@ -89,8 +89,6 @@
 
 11. Runnning the server
 
-    in your terminal, type:
-
     `   python manage.py runserver`
 
 
