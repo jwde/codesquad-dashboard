@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Student, Teacher, Employer, Course, Enrollment
+from models import Student, Teacher, Employer, Course, Enrollment, FormTemplate, Question, FormResponse, QuestionResponse
 
 # Register your models here.
 class StudentAdmin(admin.ModelAdmin):
@@ -12,9 +12,21 @@ class CourseAdmin(admin.ModelAdmin):
     list_display = ('name',)
 class EnrollmentAdmin(admin.ModelAdmin):
     list_display = ('student', 'course')
+class FormTemplateAdmin(admin.ModelAdmin):
+    list_display = ('name', 'course', 'question_list', 'students_allowed', 'teachers_allowed', 'employers_allowed', 'pk')
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('question_text', 'question_type', 'additional_info', 'pk')
+class FormResponseAdmin(admin.ModelAdmin):
+    list_display = ('form_template', 'user')
+class QuestionResponseAdmin(admin.ModelAdmin):
+    list_display = ('user', 'question', 'response_text')
 
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Teacher, TeacherAdmin)
 admin.site.register(Employer, EmployerAdmin)
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Enrollment, EnrollmentAdmin)
+admin.site.register(FormTemplate, FormTemplateAdmin)
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(FormResponse, FormResponseAdmin)
+admin.site.register(QuestionResponse, QuestionResponseAdmin)

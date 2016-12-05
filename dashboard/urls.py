@@ -19,4 +19,5 @@ urlpatterns = [
             auth_views.password_reset_confirm, name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
     url(r'^create_form$', views.create_form, name='create_form')
+    url(r'^form/([0-9]+)/$', views.form, name='form')
 ]

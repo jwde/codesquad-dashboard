@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.core import validators
-from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields import JSONField, ArrayField
 from django.utils import timezone
 import datetime
 
@@ -66,6 +66,10 @@ class Student(BaseModel):
     	choices=PRIVACY_CHOICES,
         default=PRIVATE,
     )
+
+    about_me = models.TextField()
+    projects = models.TextField()
+
     def __str__(self):
         return self.profile.user.username
 
@@ -101,6 +105,10 @@ class Employer(BaseModel):
 
 class FormTemplate(BaseModel):
     question_list = models.TextField(validators=[validators.validate_comma_separated_integer_list])
+    course = models.ForeignKey(Course, blank=True, null=True)
+    students_allowed = models.BooleanField(default=False)
+    teachers_allowed = models.BooleanField(default=False)
+    employers_allowed = models.BooleanField(default=False)
     name = models.CharField(max_length=100)
     def __str__(self):
         return self.name
@@ -115,6 +123,7 @@ class Question(BaseModel):
         ('SF', 'Short Form Text'),
         ('MC', 'Multiple Choice'),
         ('SS', 'Sliding Scale'),
+        ('SM', 'Select Multiple'),
     )
     question_type = models.CharField(
         max_length=2,

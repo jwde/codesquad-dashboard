@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block styles %}
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/master.css' %}">        
+        <!--<link rel="stylesheet" href="{% static 'css/studentdash.css' %}"> -->   
+{% endblock %}
+
+{% block content %}
+        <div class="header">
+            <img src="http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_1440,w_720,f_auto/v1/50529/code_squad_bnzkih.png" id="CodeSquad-logo" alt="CodeSquad"/>
+            <h1>My Dashboard</h1>
+        </div>
+
+        <div class="menu">
+            <ul>
+                <li><a>Home</a></li>
+                <li><a>Dashboard</a></li>
+                <li><a>My Forms</a></li>
+                <li><a>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Log Out"></input>
+                    </form>
+                </a></li>
+            </ul>
+        </div>
+        <div class="teacher-profile">
+            <div id="AboutMe"> 
+                <h1 id="AboutMe-hdr">About Me</h1>
+                <img id="self-portrait" src="{% static 'images/baby-goat.jpg' %}" alt="self-portrait"/>
+                <h2 id="name">{{ name }}</h2>    
+                <p class="course">Front-End Development</p>
+            </div>
+
+            <div id="students"> 
+                <h1>Students</h1>
+                <div id="student-list">
+                    <ul>
+                        <li>Student 1</li> 
+                        <li>Student 2</li>
+                        <li>Student 3</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="LinkedIn">www.mylinkedIn(me-juliamoyer).com</div>
+        </div>
+{% endblock %}
