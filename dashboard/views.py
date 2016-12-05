@@ -52,3 +52,10 @@ def register(request):
                 login(request, user)
                 return redirect('dashboard')
     return render(request, 'createaccount.html', {'form': form})
+
+def create_form(request):
+    if request.method == 'GET':
+        if request.user.profile.is_teacher:
+            return render(request, "editforms.html", {});
+        #else:
+            # return whatever prohibited thing
