@@ -99,7 +99,15 @@ class FormTemplateTestCase(TestCase):
         question1.save()
         question2.save()
 
+        user = User.objects.create_user(username='horsecrzy85',\
+                                        password='i<3horses',\
+                                        first_name='Droolia',\
+                                        last_name='Boyer',\
+                                        email='dboyer@gmail.com')
+        user.save()
+
         template = FormTemplate.objects.create(name='Quiz1',\
+                                               owner=user,\
                                                question_list='{},{}'\
                                                .format(question1.id, question2.id))
         template.save()
@@ -112,15 +120,17 @@ class FormTemplateTestCase(TestCase):
 
 class FormResponseTestCase(TestCase):
     def setUp(self):
-        template = FormTemplate.objects.create(name='Quiz1',question_list='1,4,5')
-        template.save()
-
         user = User.objects.create_user(username='horsecrzy85',\
                                         password='i<3horses',\
                                         first_name='Droolia',\
                                         last_name='Boyer',\
                                         email='dboyer@gmail.com')
         user.save()
+
+        template = FormTemplate.objects.create(name='Quiz1',\
+                                               owner=user,\
+                                               question_list='1,4,5')
+        template.save()
 
         profile = Profile.objects.create(user=user,\
                                          _is_student=True,\
@@ -152,16 +162,17 @@ class QuestionResponseTestCase(TestCase):
                                            additional_info='{}')
         question1.save()
         question2.save()
-        template = FormTemplate.objects.create(name='Quiz1',\
-                                               question_list='{},{}'\
-                                               .format(question1.id, question2.id))
-        template.save()
         user = User.objects.create_user(username='horsecrzy85',\
                                         password='i<3horses',\
                                         first_name='Droolia',\
                                         last_name='Boyer',\
                                         email='dboyer@gmail.com')
         user.save()
+        template = FormTemplate.objects.create(name='Quiz1',\
+                                               owner=user,\
+                                               question_list='{},{}'\
+                                               .format(question1.id, question2.id))
+        template.save()
         profile = Profile.objects.create(user=user,\
                                          _is_student=True,\
                                          _is_teacher=False,\

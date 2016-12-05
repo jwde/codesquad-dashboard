@@ -109,6 +109,7 @@ class FormTemplate(BaseModel):
     students_allowed = models.BooleanField(default=False)
     teachers_allowed = models.BooleanField(default=False)
     employers_allowed = models.BooleanField(default=False)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     def __str__(self):
         return self.name
