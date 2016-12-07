@@ -3,8 +3,9 @@
 
 {% block styles %}
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'css/master.css' %}">        
-        <link rel="stylesheet" href="{% static 'css/studentdash.css' %}">        
+        <!-- <link rel="stylesheet" href="{% static 'css/master.css' %}">         -->
+        <!-- <link rel="stylesheet" href="{% static 'css/studentdash.css' %}">         -->
+        <link rel="stylesheet" href="{% static 'css/dashboardtest.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -13,37 +14,40 @@
             <h1>My Dashboard</h1>
         </div>
 
-        <div class="menu">
-            <ul>
-                <li><a>Home</a></li>
-                <li><a>Dashboard</a></li>
-                <li><a>My Forms</a></li>
-                <li><a>
-                    <form method="post" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                        <input type="submit" value="Log Out"></input>
-                    </form>
-                </a></li>
-            </ul>
-        </div>
-        <div class="profile">
-            <div id="AboutMe"> 
-                <h1 id="AboutMe-hdr">About Me</h1>
-                <img id="self-portrait" src="{% static 'images/Ugly-Pigeon.jpg' %}" alt="self-portrait"/>
-                <h2 id="name">{{ name }}</h2>    
-                <p class="bio">I am rly gud @ code!</p>
+        
+            <div class="menu">
+                <ul>
+                    <li><a>Home</a></li>
+                    <li><a>Dashboard</a></li>
+                    <li><a>My Forms</a></li>
+                    <li><a>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <input type="submit" value="Log Out"></input>
+                        </form>
+                    </a></li>
+                </ul>
             </div>
-
-            <div id="projects"> 
-                <h1>Projects</h1>
-                <div id="projectList">
-                    <ul>
-                        <li>leg0s</li> 
-                        <li>knitting scarf</li>
-                        <li>robotic squirrel</li>
-                    </ul>
+        <div class="container">
+            <div class="profile">
+                <div id="AboutMe"> 
+                    <h1 id="AboutMe-hdr">About Me</h1>
+                    <img id="self-portrait" src="{% static 'images/Ugly-Pigeon.jpg' %}" alt="self-portrait"/>
+                    <h2 id="name">{{ name }}</h2>    
+                    <p class="bio">I am rly gud @ code!</p>
                 </div>
+
+                <div id="projects dashboard-obj"> 
+                    <h1>Projects</h1>
+                    <div id="projectList">
+                        <ul>
+                            <li>leg0s</li> 
+                            <li>knitting scarf</li>
+                            <li>robotic squirrel</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="LinkedIn">www.mylinkedIn(me-juliamoyer).com</div>
             </div>
-            <div id="LinkedIn">www.mylinkedIn(me-juliamoyer).com</div>
         </div>
 {% endblock %}
