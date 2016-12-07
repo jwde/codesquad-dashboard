@@ -31,17 +31,18 @@
                 <h1 id="AboutMe-hdr">About Me</h1>
                 <img id="self-portrait" src="{% static 'images/Ugly-Pigeon.jpg' %}" alt="self-portrait"/>
                 <h2 id="name">{{ name }}</h2>    
-                <p class="bio">I am rly gud @ code!</p>
+                <p class="bio">{{ about }}</p>
             </div>
 
             <div id="projects"> 
                 <h1>Projects</h1>
                 <div id="projectList">
-                    <ul>
+                    {{ projects }}
+                    <!--<ul>
                         <li>leg0s</li> 
                         <li>knitting scarf</li>
                         <li>robotic squirrel</li>
-                    </ul>
+                    </ul>-->
                 </div>
             </div>
             <div id="LinkedIn">www.mylinkedIn(me-juliamoyer).com</div>

@@ -1,7 +1,9 @@
 from django.contrib import admin
-from models import Student, Teacher, Employer, Course, Enrollment, FormTemplate, Question, FormResponse, QuestionResponse
+from models import Profile, Student, Teacher, Employer, Course, Enrollment, FormTemplate, Question, FormResponse, QuestionResponse
 
 # Register your models here.
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'type')
 class StudentAdmin(admin.ModelAdmin):
     list_display = ('profile', 'privacy_setting', 'created_at', 'updated_at')
 class TeacherAdmin(admin.ModelAdmin):
@@ -9,7 +11,7 @@ class TeacherAdmin(admin.ModelAdmin):
 class EmployerAdmin(admin.ModelAdmin):
     list_display = ('profile', 'description')
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'pk')
 class EnrollmentAdmin(admin.ModelAdmin):
     list_display = ('student', 'course')
 class FormTemplateAdmin(admin.ModelAdmin):
@@ -21,6 +23,7 @@ class FormResponseAdmin(admin.ModelAdmin):
 class QuestionResponseAdmin(admin.ModelAdmin):
     list_display = ('user', 'question', 'response_text')
 
+admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Teacher, TeacherAdmin)
 admin.site.register(Employer, EmployerAdmin)

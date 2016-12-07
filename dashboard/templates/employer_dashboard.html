@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block styles %}
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/master.css' %}">        
+{% endblock %}
+
+{% block content %}
+
+<h1>Students:</h1>
+{% for student in students %}
+<h2>{{ student.name }}</h2>
+<h2>{{ student.about }}</h2>
+<h2>{{ student.projects }}</h2>
+{% endfor %}
+
+{% endblock %}
