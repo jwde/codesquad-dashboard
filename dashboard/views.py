@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseForbidden
 from models import Profile, Student, Teacher, Employer, FormTemplate, Enrollment, Question, FormResponse, QuestionResponse
 from forms import RegisterForm, DynamicForm
 from utils import order
@@ -90,9 +90,29 @@ def register(request):
                 return redirect('dashboard')
     return render(request, 'createaccount.html', {'form': form})
 
+@login_required(login_url='login/')
 def create_form(request):
+    #if request.method == 'GET' and request.user.profile.is_teacher:
+    #    return render(request, "editforms.html", {});
+    #return HttpResponseForbidden()
+    return render(request, "editforms.html", {});
+
+def template_short_answer(request):
     if request.method == 'GET':
-        if request.user.profile.is_teacher:
-            return render(request, "editforms.html", {});
-        #else:
-            # return whatever prohibited thing
+        return render(request, "question_templates/short_answer.html", {});
+
+def template_long_answer(request):
+    if request.method == 'GET':
+        return render(request, "question_templates/long_answer.html", {});
+
+def template_multiple_choice(request):
+    if request.method == 'GET':
+        return render(request, "question_templates/multiple_choice.html", {});
+
+def template_slider(request):
+    if request.method == 'GET':
+        return render(request, "question_templates/slider.html", {});
+
+def template_invalid_form(request):
+    if request.method == 'GET':
+        return render(request, "question_templates/invalid_form.html", {});

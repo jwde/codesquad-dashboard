@@ -18,6 +18,12 @@ urlpatterns = [
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', 
             auth_views.password_reset_confirm, name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
-    url(r'^create_form$', views.create_form, name='create_form')
-    url(r'^form/([0-9]+)/$', views.form, name='form')
+    url(r'^create_form$', views.create_form, name='create_form'),
+    url(r'^form/([0-9]+)/$', views.form, name='form'),
+    url(r'^question/short_answer', views.template_short_answer, name=''),
+    url(r'^question/long_answer', views.template_long_answer, name=''),
+    url(r'^question/multiple_choice', views.template_multiple_choice, name=''),
+    url(r'^question/multiple_select', views.template_multiple_choice, name=''),
+    url(r'^question/slider', views.template_slider, name=''),
+    url(r'^question/invalid_form', views.template_invalid_form, name='')
 ]
