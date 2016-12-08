@@ -2,6 +2,7 @@ from django.test import TestCase
 from models import Profile, Student, Teacher, Employer, Course, Enrollment, FormTemplate, Question, FormResponse, QuestionResponse
 from django.test import Client
 from django.contrib.auth.models import User
+from utils import order
 import datetime
 
 
@@ -98,7 +99,15 @@ class FormTemplateTestCase(TestCase):
         question1.save()
         question2.save()
 
+        user = User.objects.create_user(username='horsecrzy85',\
+                                        password='i<3horses',\
+                                        first_name='Droolia',\
+                                        last_name='Boyer',\
+                                        email='dboyer@gmail.com')
+        user.save()
+
         template = FormTemplate.objects.create(name='Quiz1',\
+                                               owner=user,\
                                                question_list='{},{}'\
                                                .format(question1.id, question2.id))
         template.save()
@@ -111,15 +120,17 @@ class FormTemplateTestCase(TestCase):
 
 class FormResponseTestCase(TestCase):
     def setUp(self):
-        template = FormTemplate.objects.create(name='Quiz1',question_list='1,4,5')
-        template.save()
-
         user = User.objects.create_user(username='horsecrzy85',\
                                         password='i<3horses',\
                                         first_name='Droolia',\
                                         last_name='Boyer',\
                                         email='dboyer@gmail.com')
         user.save()
+
+        template = FormTemplate.objects.create(name='Quiz1',\
+                                               owner=user,\
+                                               question_list='1,4,5')
+        template.save()
 
         profile = Profile.objects.create(user=user,\
                                          _is_student=True,\
@@ -151,16 +162,17 @@ class QuestionResponseTestCase(TestCase):
                                            additional_info='{}')
         question1.save()
         question2.save()
-        template = FormTemplate.objects.create(name='Quiz1',\
-                                               question_list='{},{}'\
-                                               .format(question1.id, question2.id))
-        template.save()
         user = User.objects.create_user(username='horsecrzy85',\
                                         password='i<3horses',\
                                         first_name='Droolia',\
                                         last_name='Boyer',\
                                         email='dboyer@gmail.com')
         user.save()
+        template = FormTemplate.objects.create(name='Quiz1',\
+                                               owner=user,\
+                                               question_list='{},{}'\
+                                               .format(question1.id, question2.id))
+        template.save()
         profile = Profile.objects.create(user=user,\
                                          _is_student=True,\
                                          _is_teacher=False,\
@@ -208,10 +220,6 @@ class QuestionResponseTestCase(TestCase):
         q2_response2.save()
 
     def test_get_question_response(self):
-        def order(field, vals):
-            cases = ' '.join('WHEN {}={} THEN {}'.format(field, v, i)\
-                             for i,v in enumerate(vals))
-            return 'CASE {} END'.format(cases)
         form = FormTemplate.objects.get(name='Quiz1')
         question_ids = [int(q) for q in form.question_list.split(',')]
         user = User.objects.get(username='horsecrzy85')

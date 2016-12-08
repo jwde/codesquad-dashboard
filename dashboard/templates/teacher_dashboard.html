@@ -4,7 +4,7 @@
 {% block styles %}
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/master.css' %}">        
-        <link rel="stylesheet" href="{% static 'css/studentdash.css' %}">        
+        <!--<link rel="stylesheet" href="{% static 'css/studentdash.css' %}"> -->   
 {% endblock %}
 
 {% block content %}
@@ -26,23 +26,22 @@
                 </a></li>
             </ul>
         </div>
-        <div class="profile">
+        <div class="teacher-profile">
             <div id="AboutMe"> 
                 <h1 id="AboutMe-hdr">About Me</h1>
-                <img id="self-portrait" src="{% static 'images/Ugly-Pigeon.jpg' %}" alt="self-portrait"/>
+                <img id="self-portrait" src="{% static 'images/baby-goat.jpg' %}" alt="self-portrait"/>
                 <h2 id="name">{{ name }}</h2>    
-                <p class="bio">{{ about }}</p>
+                <p class="course">Front-End Development</p>
             </div>
 
-            <div id="projects"> 
-                <h1>Projects</h1>
-                <div id="projectList">
-                    {{ projects }}
-                    <!--<ul>
-                        <li>leg0s</li> 
-                        <li>knitting scarf</li>
-                        <li>robotic squirrel</li>
-                    </ul>-->
+            <div id="students"> 
+                <h1>Students</h1>
+                <div id="student-list">
+                    <ul>
+                        <li>Student 1</li> 
+                        <li>Student 2</li>
+                        <li>Student 3</li>
+                    </ul>
                 </div>
             </div>
             <div id="LinkedIn">www.mylinkedIn(me-juliamoyer).com</div>
