@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block styles %}
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/master.css' %}">        
+{% endblock %}
+
+{% block content %}
+
+<a href="{% url 'create_form' %}"><h2>Create Form</h2></a>
+<h1>Manage forms:</h1>
+{% for form in own_forms %}
+<a href="/form_responses/{{ form.id }}"><h2>{{ form.name }}</h2></a>
+{% endfor %}
+<h1>Fill out forms:</h1>
+{% for form in view_forms %}
+<a href="/form/{{ form.id }}"><h2>{{ form.name }}</h2></a>
+{% endfor %}
+
+{% endblock %}

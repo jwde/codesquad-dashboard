@@ -1,50 +1,118 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Forms</title>
+{% extends 'base.html' %}
+{% load staticfiles %}
 
-    <!-- linking to styling stuff (google fonts, etc.) -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link rel="stylesheet" href="editforms.css">
+{% block styles %}
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.5.3/css/bootstrap-slider.css">        
+        <link rel="stylesheet" href="{% static 'css/master.css' %}">        
+        <link rel="stylesheet" href="{% static 'css/createform.css' %}">
+{% endblock %}
 
-</head>
-<body>
-    <div class="header">
-        <h1>Header</h1>
-        
-    </div>
+{% block content %}
 
-    <div class="menu">
-        <ul>
-            <li><a>Home</a></li>
-            <li><a>Dashboard</a></li>
-            <li><a>My Forms</a></li>
-        </ul>
-    </div>
+        <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                        <div class="col-md-2">
+                        <div class="navbar-header">
+                        <a class="navbar-brand" href="#">
+                        <img src="http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_1440,w_720,f_auto/v1/50529/code_squad_bnzkih.png" id="CodeSquad-logo" alt="CodeSquad"/>
+                        </a>
+                        <p class="navbar-text">
+                        My Dashboard
+                        </p>
+                        </p>
+                        </div>
+                        </div>
+                        <div class="col-md-8">
+                        </div>
+                </div>
+        </nav>
+        <div class="container-fluid">
+                <div class="col-md-2">
+                        <ul class="nav nav-pills nav-stacked">
+                                <li><a>Home</a></li>
+                                <li><a>Dashboard</a></li>
+                                <li class="active"><a>My Forms</a></li>
+                                <hr>
+                                <li><a class="text-danger">Log Out</a></li>
+                        </ul>
+                </div>
+                <div class="col-md-8">
+                        <div class="page-header">
+                                <h1>Create a Form</h1>
+                        </div>
+                        <div class="row">
+                                <div class="col-md-12">
+                                <div class="panel panel-default">
+                                <div class="panel-body">        
+                                <div class="input-group input-group-lg form-name">
+                                        <input type="text" class="form-control" id="form-title" placeholder="Form Title">
+                                        <br>
+                                        <span class="input-group-addon">
+                                                <input type="checkbox" id="is-graded">
+                                                Graded
+                                        </span>
+                                </div>
+                                <hr>
+                                <!-- questions rendered here -->
+                                <div id="questions">
+                                        <div class="well well-sm">
+                                                No questions
+                                        </div>
+                                        <hr>
+                                </div>
+                                <!-- end of questions -->
+                                <div id="form-controls">
+                                <div class="btn-group dropup">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Add Question <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                                <li id="add-short-answer"><a href="#">Short Answer</a></li>
+                                                                <li id="add-long-answer"><a href="#">Long Answer</a></li>
+                                                                <li id="add-multiple-choice"><a href="#">Multiple Choice</a></li>
+                                                                <li id="add-multiple-select"><a href="#">Multiple Select</a></li>
+                                                                <li id="add-slider"><a href="#">Slider</a></li>
+                                                        </ul>
+                                </div>
+                                <div class="btn-group submit-form">
+                                        <button type="button" class="btn btn-success" id="submit-form">Save Form</button>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                        </div>
+                        </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+        </div>
 
-    <div class="buildform" id="templates">
-        <p> Templates </p>
-        <div id="onetemplate"> </div>
-    </div>
+        <!-- 
+        <div class="header">
+            <h1>My Dashboard</h1>
+        </div>
 
-
-    <div class="buildform" id="building">
-        <p> This is where you build the form. </p>
-    </div>
-
-
-    <div class="class">
-
-    </div>
-
-    <div class="footer">
-        <h1>Footer</h1>
-
-    </div>
-
-</body>
-</html>
-
-
-
+        <div class="menu">
+            <ul>
+                <li><a>Home</a></li>
+                <li><a>Dashboard</a></li>
+                <li><a>My Forms</a></li>
+                <li><a>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Log Out"></input>
+                    </form>
+                </a></li>
+            </ul>
+        </div>
+        -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.5.3/bootstrap-slider.js"></script>
+        <script>
+            csrf_token = '{{ csrf_token }}';
+        </script>
+        <script src="{% static 'js/create_form.js' %}"></script>
+{% endblock %}

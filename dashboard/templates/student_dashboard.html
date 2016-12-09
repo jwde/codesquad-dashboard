@@ -13,40 +13,40 @@
             <img src="http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_1440,w_720,f_auto/v1/50529/code_squad_bnzkih.png" id="CodeSquad-logo" alt="CodeSquad"/>
             <h1>My Dashboard</h1>
         </div>
-
-        
-            <div class="menu">
-                <ul>
-                    <li><a>Home</a></li>
-                    <li><a>Dashboard</a></li>
-                    <li><a>My Forms</a></li>
-                    <li><a>
-                        <form method="post" action="{% url 'logout' %}">
-                            {% csrf_token %}
-                            <input type="submit" value="Log Out"></input>
-                        </form>
-                    </a></li>
-                </ul>
-            </div>
+        <div class="menu">
+            <ul>
+                <li><a>Home</a></li>
+                <li><a>Dashboard</a></li>
+                <li><a href="{% url 'my_forms' %}">My Forms</a></li>
+                <li><a>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Log Out"></input>
+                    </form>
+                </a></li>
+            </ul>
+        </div>
         <div class="container">
             <div class="profile">
                 <div id="AboutMe"> 
                     <h1 id="AboutMe-hdr">About Me</h1>
                     <img id="self-portrait" src="{% static 'images/Ugly-Pigeon.jpg' %}" alt="self-portrait"/>
                     <h2 id="name">{{ name }}</h2>    
-                    <p class="bio">I am rly gud @ code!</p>
+                    <p class="bio">{{ about }}</p>
                 </div>
 
                 <div id="projects dashboard-obj"> 
                     <h1>Projects</h1>
                     <div id="projectList">
-                        <ul>
+                        {{ projects }}
+                        <!--<ul>
                             <li>leg0s</li> 
                             <li>knitting scarf</li>
                             <li>robotic squirrel</li>
-                        </ul>
+                        </ul>-->
                     </div>
                 </div>
+                <a href="{% url 'edit_profile' %}">Edit Profile</a>
                 <div id="LinkedIn">www.mylinkedIn(me-juliamoyer).com</div>
             </div>
         </div>
