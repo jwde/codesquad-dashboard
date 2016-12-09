@@ -17,7 +17,7 @@
             <ul>
                 <li><a>Home</a></li>
                 <li><a>Dashboard</a></li>
-                <li><a>My Forms</a></li>
+                <li><a href="{% url 'my_forms' %}">My Forms</a></li>
                 <li><a>
                     <form method="post" action="{% url 'logout' %}">
                         {% csrf_token %}
@@ -45,6 +45,7 @@
                     </ul>-->
                 </div>
             </div>
+            <a href="{% url 'edit_profile' %}">Edit Profile</a>
             <div id="LinkedIn">www.mylinkedIn(me-juliamoyer).com</div>
         </div>
 {% endblock %}
