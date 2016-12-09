@@ -111,5 +111,8 @@
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.5.3/bootstrap-slider.js"></script>
+        <script>
+            csrf_token = '{{ csrf_token }}';
+        </script>
         <script src="{% static 'js/create_form.js' %}"></script>
 {% endblock %}

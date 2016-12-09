@@ -18,7 +18,7 @@
                 // check each question 
                 $("#questions .question input").each(function () {
                         // check if input value is falsey
-                        if (this.value == false) {
+                        if (this.value != 0 && this.value == false) {
                                 valid = false;
                         }
 
@@ -37,8 +37,8 @@
 
         function parse_form_object() {
 
-                var name = $("#form-title").value;
-                var graded = $("#is-graded").value;
+                var name = $("#form-title").val();
+                var graded = $("#is-graded").val();
                 var questions = [];
 
                 $("#questions .question").each(function () {
@@ -64,7 +64,7 @@
 
                 });
 
-                return questions;
+                return {name: name, graded: graded, questions: questions};
 
         }
 
@@ -141,7 +141,21 @@
 
         $("#submit-form").on("click", function() {
                 if (form_is_valid()) {
-                        parse_form_object();
+                        form_object = parse_form_object();
+                        $.ajax({
+                            type: 'POST',
+                            url: "/create_form",
+                            data: {form: JSON.stringify(form_object),
+                                   csrfmiddlewaretoken: csrf_token},
+                            success: function(result) {
+                                window.location.href = "/dashboard";
+                            },
+                            error: function(xhr, status, error) {
+                                $.get("question/invalid_form", function(t) {
+                                        $("#questions").prepend(t);
+                                });
+                            },
+                        });
                 } else {
                         $.get("question/invalid_form", function(t) {
                                 $("#questions").prepend(t);

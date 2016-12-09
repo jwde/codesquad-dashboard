@@ -2,20 +2,88 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse,HttpResponseForbidden
-from models import Profile, Student, Teacher, Employer, FormTemplate, Enrollment, Question, FormResponse, QuestionResponse
-from forms import RegisterForm, DynamicForm
+from django.http import HttpResponse, HttpResponseForbidden
+from models import Profile, Student, Teacher, Employer, FormTemplate, Enrollment, Question, FormResponse, QuestionResponse, Course
+from forms import RegisterForm, DynamicForm, EditProfileForm
 from utils import order
+import datetime
+import json
+import bleach
 
 # Create your views here.
-@login_required(login_url='login/')
-def dashboard(request):
-    if request.method == 'GET':
+@login_required(login_url='/login/')
+def dashboard(request, type_requested=None):
+    def validate(type_requested):
+        return type_requested in ('student', 'teacher', 'employer') and\
+               {'student': lambda: request.user.profile.is_student,\
+                'teacher': lambda: request.user.profile.is_teacher,\
+                'employer': lambda: request.user.profile.is_employer}[type_requested]()
+    def student_dashboard():
         return render(request, "student_dashboard.html", 
                       {'name': request.user.first_name + " " + 
-                               request.user.last_name})
+                               request.user.last_name,\
+                       'about': request.user.profile.student.about_me,\
+                       'projects': request.user.profile.student.projects})
+    def teacher_dashboard():
+        active_courses = [c for c in request.user.profile.teacher.courses\
+                          if c.end_date >= datetime.date.today()]
+        student_sets = [frozenset(c.enrolled_students.all()) for c in active_courses.all()]
+        students = frozenset().union(*student_sets)
+        student_names = ['{} {}'.format(s.profile.user.first_name, s.profile.user.last_name)\
+                         for s in students]
+        return render(request, "teacher_dashboard.html",\
+                      {'students': student_names})
+    def employer_dashboard():
+        active_courses = Course.objects.filter(end_date__gte = datetime.date.today())
+        student_sets = [frozenset(c.enrolled_students.filter(privacy_setting='PU'))\
+                        for c in active_courses.all()]
+        students = frozenset().union(*student_sets)
+        student_profiles = []
+        for s in students:
+            name = '{} {}'.format(s.profile.user.first_name, s.profile.user.last_name)
+            profile = {'name': name, 'about': s.about_me, 'projects': s.projects}
+            student_profiles.append(profile)
+        return render(request, "employer_dashboard.html",\
+                      {'students': student_profiles})
+    def pending_dashboard():
+        return render(request, "pending_dashboard.html")
+    type_returned = type_requested if validate(type_requested)\
+                    else request.user.profile.type
+    if request.method == 'GET':
+        return\
+        {'student': student_dashboard,\
+         'teacher': teacher_dashboard,\
+         'employer': employer_dashboard,\
+         'pending': pending_dashboard}[type_returned]()
 
-@login_required(login_url='login/')
+@login_required(login_url='/login/')
+def edit_profile(request):
+    if request.user.profile.is_student:
+        form = EditProfileForm(request.POST or None, student=request.user.profile.student)
+        if request.method == 'POST':
+            if form.is_valid():
+                request.user.profile.student.about_me = form.cleaned_data['about_me']
+                request.user.profile.student.projects = form.cleaned_data['projects']
+                request.user.profile.student.save()
+                return redirect('dashboard')
+        return render(request, 'edit_profile.html', {'form': form})
+    return redirect('dashboard')
+
+@login_required(login_url='/login/')
+def my_forms(request):
+    created_forms = FormTemplate.objects.filter(owner=request.user)
+    viewable_forms_sets = []
+    if request.user.profile.is_student:
+        viewable_forms_sets.append(frozenset(FormTemplate.objects.filter(students_allowed=True)))
+    if request.user.profile.is_teacher:
+        viewable_forms_sets.append(frozenset(FormTemplate.objects.filter(teachers_allowed=True)))
+    if request.user.profile.is_employer:
+        viewable_forms_sets.append(frozenset(FormTemplate.objects.filter(employers_allowed=True)))
+    viewable_forms = frozenset().union(*viewable_forms_sets)
+    return render(request, 'my_forms.html',\
+                  {'forms': frozenset(created_forms).union(viewable_forms)})
+
+@login_required(login_url='/login/')
 def form(request, form_id):
     def form_allowed(user, form):
         student_in_class = user.profile.is_student and\
@@ -68,12 +136,13 @@ def register(request):
                                        password,\
                                        last_name=last_name,\
                                        first_name=first_name)
-            user.save()
             profile = Profile.objects.create(user=user,\
                                              _is_student=(role == 'student'),\
                                              _is_teacher=(role == 'teacher'),\
                                              _is_employer=(role == 'employer'),\
                                              )
+            user.save()
+            profile.save()
             if role == 'teacher':
                 teacher = Teacher(profile = profile)
                 teacher.save()
@@ -92,9 +161,39 @@ def register(request):
 
 @login_required(login_url='login/')
 def create_form(request):
-    #if request.method == 'GET' and request.user.profile.is_teacher:
-    #    return render(request, "editforms.html", {});
-    #return HttpResponseForbidden()
+    if request.method == 'POST':# and request.user.profile.is_teacher:
+        try:
+            form_json = json.loads(request.POST.get('form'))
+            name = bleach.clean(form_json['name'])
+            questions = []
+            for question in form_json['questions']:
+                question_type = question['question_type']
+                question_text = bleach.clean(question['question_text'])
+                additional_info = question['additional_info']
+                if not question_type in frozenset(('LF', 'SF', 'MC', 'SS', 'SM')):
+                    return HttpResponseForbidden()
+                if 'choices' in additional_info:
+                    additional_info['choices'] = bleach.clean(additional_info['choices'])
+                if 'range_max' in additional_info:
+                    additional_info['range_max'] = int(additional_info['range_max'])
+                if 'range_min' in additional_info:
+                    additional_info['range_min'] = int(additional_info['range_min'])
+                additional_info = {k: additional_info[k]\
+                                   for k in ['choices', 'range_max', 'range_min']\
+                                   if k in additional_info}
+                additional_info_json = json.dumps(additional_info)
+                question_model = Question.objects.create(question_type=question_type,\
+                                                         question_text=question_text,\
+                                                         additional_info=additional_info_json)
+                question_model.save()
+                questions.append(str(question_model.pk))
+            # right now we have no idea what course this is for -- must add that
+            form_template = FormTemplate.objects.create(question_list=','.join(questions),\
+                                                        owner=request.user,\
+                                                        name=name)
+            form_template.save()
+        except:
+            return HttpResponseForbidden()
     return render(request, "editforms.html", {});
 
 def template_short_answer(request):

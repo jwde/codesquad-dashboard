@@ -33,6 +33,19 @@ class RegisterForm(UserCreationForm):
             ),\
             required=True)
 
+class EditProfileForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        student = kwargs.pop('student')
+        super(EditProfileForm, self).__init__(*args, **kwargs)
+        self.fields['about_me'] = forms.CharField(label='About Me:', max_length=1000,\
+                                        widget=forms.TextInput(attrs={'name': 'about_me'}),\
+                                        initial=student.about_me,\
+                                        required=False)
+        self.fields['projects'] = forms.CharField(label='Projects:', max_length=1000,\
+                                        widget=forms.TextInput(attrs={'name': 'projects'}),\
+                                        initial=student.projects,\
+                                        required=False)
+
 class DynamicForm(forms.Form):
     def set_fields(self, fields):
         def question_to_field(question, name):

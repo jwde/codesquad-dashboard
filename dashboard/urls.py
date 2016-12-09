@@ -3,10 +3,15 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic.edit import CreateView
 from dashboard.forms import LoginForm, RegisterForm
+from django.views.generic import RedirectView
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.dashboard, name='dashboard'),
+    url(r'^$', RedirectView.as_view(url='/dashboard')),
+    url(r'^dashboard/$', views.dashboard, name='dashboard'),
+    url(r'^dashboard/([a-z]+)$', views.dashboard),
+    url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
+    url(r'^my_forms/$', views.my_forms, name='my_forms'),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html',\
                                         'authentication_form': LoginForm},\
         name='login'),
