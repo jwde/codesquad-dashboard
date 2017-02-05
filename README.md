@@ -34,20 +34,23 @@
 5. Activate the virtualenv (do this every time you work on it)
 
     `    source venv/bin/activate`
+    
+6. Install postgres -- The remote server will be running version 9.5.4, but you'll be unlikely to have problems as long as you're running a version >= 9.3.14.
 
-6. Install the python package requirements to your virtualenv
+7. Install the python package requirements to your virtualenv
 
     `    cd codesquad-dashboard`
 
     `    pip install -r requirements.txt`
-
-7. Install postgres -- The remote server will be running version 9.5.4, but you'll be unlikely to have problems as long as you're running a version >= 9.3.14.
 
 8. Start postgres service
 
     This is platform dependent. On Ubuntu, the command is:
 
     `    sudo /etc/init.d/postgresql start`
+    On OSX it's:
+    
+    `    pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start`
 
 9. Make codesquad database
 
