@@ -3,7 +3,7 @@
 
 {% block styles %}
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'css/master.css' %}">        
+        <link rel="stylesheet" href="{% static 'css/teacher_dashboard.css' %}">        
         <!--<link rel="stylesheet" href="{% static 'css/studentdash.css' %}"> -->   
 {% endblock %}
 
@@ -26,7 +26,8 @@
                 </a></li>
             </ul>
         </div>
-        <div class="teacher-profile">
+    <div class="container">
+        <div class="teacher-profile dashboard-obj">
             <div id="AboutMe"> 
                 <h1 id="AboutMe-hdr">About Me</h1>
                 <img id="self-portrait" src="{% static 'images/baby-goat.jpg' %}" alt="self-portrait"/>
@@ -34,7 +35,7 @@
                 <p class="course">Front-End Development</p>
             </div>
 
-            <div id="students"> 
+            <div id="students dashboard-obj"> 
                 <h1>Students</h1>
                 <div id="student-list">
                     <ul>
@@ -46,4 +47,5 @@
             </div>
             <div id="LinkedIn">www.mylinkedIn(me-juliamoyer).com</div>
         </div>
+    </div>
 {% endblock %}

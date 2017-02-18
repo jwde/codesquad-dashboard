@@ -261,6 +261,32 @@ class PromoteUserTestCase(TestCase):
         profile.save()
         self.assertEqual(profile.type, 'employer')
 
+class AugmentedProfileTest(TestCase):
+    def setUp(self):
+        user = User.objects.create_user(username='horsecrzy85',\
+                                        password='i<3horses',\
+                                        first_name='Droolia',\
+                                        last_name='Boyer',\
+                                        email='dboyer@gmail.com')
+        user.save()
+        profile = Profile.objects.create(user=user,\
+                                             _is_student=True,\
+                                             _is_teacher=False,\
+                                             _is_employer=False,\
+                                             )
+        profile._is_employer = True
+        profile.bio = 'Hello. My name is Droolia.'
+        profile.desired_position = 'Web Developer'
+        profile.languages = ['HTML','CSS','Javascript']
+
+        profile.save()
+
+    def test_profile(self):
+        profile = User.objects.get(username='horsecrzy85').profile
+        self.assertEqual(profile.bio, 'Hello. My name is Droolia.')
+        self.assertEqual(Profile.objects.filter(languages__contains=['CSS']).values_list('bio', flat=True)[0],
+                         'Hello. My name is Droolia.')
+
 # example mock / test case
 class AlwaysPassThisTest(TestCase):
     def setUp(self):
