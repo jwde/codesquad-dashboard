@@ -28,6 +28,21 @@ class Profile(BaseModel):
     _is_employer = models.BooleanField(default=False)
     employer_approved = models.BooleanField(default=False)
 
+    # Augmented Profile fields
+    image = models.ImageField(null=True)
+    bio = models.TextField(null=True)
+    desired_position = models.CharField(max_length=500, null=True)
+    languages = ArrayField(
+        models.CharField(max_length=200, null=True),
+        null=True,
+    )
+    frameworks = ArrayField(
+        models.CharField(max_length=200, null=True),
+        null=True,
+    )
+    linkedin = models.TextField(null=True) # Dummy for now
+
+
     @property
     def is_student(self):
         return self._is_student
