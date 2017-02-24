@@ -24,6 +24,7 @@ def dashboard(request, type_requested=None):
                       {'name': request.user.first_name + " " + 
                                request.user.last_name,\
                        'about': request.user.profile.student.about_me,\
+                       'image': request.user.profile.image if hasattr(request.user.profile.image, 'url') else False,\
                        'projects': request.user.profile.student.projects})
     def teacher_dashboard():
         active_courses = [c for c in request.user.profile.teacher.courses\
@@ -60,11 +61,15 @@ def dashboard(request, type_requested=None):
 @login_required(login_url='/login/')
 def edit_profile(request):
     if request.user.profile.is_student:
-        form = EditProfileForm(request.POST or None, student=request.user.profile.student)
+        form = EditProfileForm(data=request.POST or None,
+                               files=request.FILES or None,
+                               student=request.user.profile.student)
         if request.method == 'POST':
             if form.is_valid():
                 request.user.profile.student.about_me = form.cleaned_data['about_me']
                 request.user.profile.student.projects = form.cleaned_data['projects']
+                request.user.profile.image = form.cleaned_data['image']
+                request.user.profile.save()
                 request.user.profile.student.save()
                 return redirect('dashboard')
         return render(request, 'edit_profile.html', {'form': form})
