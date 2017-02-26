@@ -2,48 +2,87 @@
 {% load staticfiles %}
 
 {% block styles %}
+
+    <!--BOOTSTRAP-->
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link href="teacherdashboard.css" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/master.css' %}">        
         <!--<link rel="stylesheet" href="{% static 'css/studentdash.css' %}"> -->   
 {% endblock %}
 
 {% block content %}
-        <div class="header">
-            <img src="http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_1440,w_720,f_auto/v1/50529/code_squad_bnzkih.png" id="CodeSquad-logo" alt="CodeSquad"/>
-            <h1>My Dashboard</h1>
-        </div>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
 
-        <div class="menu">
-            <ul>
-                <li><a>Home</a></li>
-                <li><a>Dashboard</a></li>
-                <li><a>My Forms</a></li>
-                <li><a>
-                    <form method="post" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                        <input type="submit" value="Log Out"></input>
-                    </form>
-                </a></li>
-            </ul>
-        </div>
+<div class="btn-group">
+  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="bar"></div>
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="#">Forms</a>
+    <a class="dropdown-item" href="#">Settings</a>
+    <a class="dropdown-item" href="#">Log Out</a>
+  </div>
+</div>
+
+
+      <a class="navbar-brand" href="#"><img class="img-responsive" src="logobw.png"></a>
+ 
+
+      
+    </div>
+</nav>
+
+<div id="teachheader"><h1>Teacher Dashboard</h1></div>
+
+<div id="sort" class="col-md-3">
+                    <h2>Sort students:</h2>
+                    <div class="method">Alphabetically</div>
+                    <a class="method-button">A to Z</a>
+                    <a class="method-button">Z to A</a>
+                    <div class="method">Class Time</div>
+                    <a class="method-button">AM to PM</a>
+                    <a class="method-button">PM to AM</a>
+                </div>
+
+<div class="container">
+        
         <div class="teacher-profile">
-            <div id="AboutMe"> 
+            <!--<div id="AboutMe"> 
                 <h1 id="AboutMe-hdr">About Me</h1>
                 <img id="self-portrait" src="{% static 'images/baby-goat.jpg' %}" alt="self-portrait"/>
                 <h2 id="name">{{ name }}</h2>    
                 <p class="course">Front-End Development</p>
-            </div>
+            </div>-->
 
-            <div id="students"> 
-                <h1>Students</h1>
-                <div id="student-list">
+            <div id="students">
+                <div id="student-list" class="col-md-9">
                     <ul>
-                        <li>Student 1</li> 
-                        <li>Student 2</li>
-                        <li>Student 3</li>
+                        <li><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/17241-200.png" class="student-icon">Student 1</li> 
+                        <li><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/17239-200.png" class="student-icon">Student 2</li>
+                        <li><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/17241-200.png" class="student-icon">Student 3</li>
+                        <li><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/17239-200.png" class="student-icon">Student 4</li>
+                        <br>
+                        <li><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/17241-200.png" class="student-icon">Student 1</li> 
+                        <li><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/17239-200.png" class="student-icon">Student 2</li>
+                        <li><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/17241-200.png" class="student-icon">Student 3</li>
+                        <li><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/17239-200.png" class="student-icon">Student 4</li>
                     </ul>
                 </div>
             </div>
-            <div id="LinkedIn">www.mylinkedIn(me-juliamoyer).com</div>
         </div>
+</div>
 {% endblock %}
