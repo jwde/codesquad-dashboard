@@ -29,7 +29,7 @@ class Profile(BaseModel):
     employer_approved = models.BooleanField(default=False)
 
     # Augmented Profile fields
-    image = models.ImageField(null=True)
+    image = models.ImageField(upload_to='profile_pics', null=True)
     bio = models.TextField(null=True)
     desired_position = models.CharField(max_length=500, null=True)
     languages = ArrayField(

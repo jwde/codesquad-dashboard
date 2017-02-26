@@ -30,7 +30,8 @@
             <div class="profile">
                 <div id="AboutMe"> 
                     <h1 id="AboutMe-hdr">About Me</h1>
-                    <img id="self-portrait" src="{% static 'images/Ugly-Pigeon.jpg' %}" alt="self-portrait"/>
+                    <img id="self-portrait" src="{{ image.url }}" alt="self-portrait"
+                     onerror='this.src="{% static 'images/Ugly-Pigeon.jpg' %}"'/>
                     <h2 id="name">{{ name }}</h2>    
                     <p class="bio">{{ about }}</p>
                 </div>
