@@ -1,0 +1,22 @@
+JumboCode
+Usability Test
+Codesquad Dashboard
+
+Introduction:
+
+	Hello, thank you for participating in our study today. Codesquad is a computer science bootcamp. The site we designed allows the students of the bootcamps to have a profile displaying their information and projects, the teachers to organize their courses and students, and employers to search through the students for recruiting. This session will last about 15 minutes. During this time, we will be asking you to act as two different users (students and teachers) as they use the Codesquad website. We will ask you to navigate through this website and perform specific tasks, in addition to getting your holistic opinion on the product. Before each task, we will explain the full scenario.  	
+	Please keep in mind that we are not evaluating your performance during this study, but rather working together to evaluate a product. We want you to find errors so we can make sure we are creating the best product. During this study, we ask that you think out loud. This will help us understand your thought process as you interact with the product.
+	
+Tasks:
+
+Scenario 1:
+
+You are a student of the Codesquad bootcamp. You are interested in displaying your work for potential employers and completing coursework given to you by your bootcamp teacher.
+
+1. 
+
+Scenario 2:
+
+You are a teacher for the Codesquad bootcamp. You are interested in keeping track of the status of students in your class, as well as creating coursework through forms to distribute to your students.
+
+1. 
