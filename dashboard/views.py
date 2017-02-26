@@ -68,7 +68,8 @@ def edit_profile(request):
             if form.is_valid():
                 request.user.profile.student.about_me = form.cleaned_data['about_me']
                 request.user.profile.student.projects = form.cleaned_data['projects']
-                request.user.profile.image = form.cleaned_data['image']
+                if not form.cleaned_data['image'] == None:
+                    request.user.profile.image = form.cleaned_data['image']
                 request.user.profile.save()
                 request.user.profile.student.save()
                 return redirect('dashboard')
