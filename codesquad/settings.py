@@ -25,6 +25,10 @@ IS_PRODUCTION = 'IS_PRODUCTION' in os.environ
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '7i(&e_bsji-xyc9_a0+^ajisq1lz7uhyf@@#*$2q-v(l3@3o@a'
 
+# get your key from Max and put it in your environment variables
+CODESQUAD_AWS_ACCESS_ID = os.environ['CODESQUAD_AWS_ID']
+CODESQUAD_AWS_SECRET_KEY = os.environ['CODESQUAD_AWS_SECRET']
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -45,6 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
+    'custom_storages',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -138,3 +144,22 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 STATIC_ROOT = 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+
+AWS_STORAGE_BUCKET_NAME = 'codesquad-dashboard-pics'
+AWS_ACCESS_KEY_ID = CODESQUAD_AWS_ACCESS_ID
+AWS_SECRET_ACCESS_KEY = CODESQUAD_AWS_SECRET_KEY
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+STATICFILES_LOCATION = 'static'
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+
+STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
+MEDIAFILES_LOCATION = 'media'
+
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+
+MEDIA_ROOT = '/var/media/'

@@ -23,8 +23,9 @@ class RegisterForm(UserCreationForm):
     password2 = forms.CharField(label='Confirm Password:',\
                                widget=forms.PasswordInput(attrs={'name': 'password2',\
                                                                  'type': 'password'}),\
-                               help_text=_('Enter the same password as above, for verification'),\
+                               error_messages={'required': 'Enter the same password as above, for verification'},\
                                required=True)
+    error_css_class='error_message'
     role = forms.ChoiceField(label='Role:',\
             choices=(
                 ('student', _('Student')),
@@ -45,6 +46,7 @@ class EditProfileForm(forms.Form):
                                         widget=forms.TextInput(attrs={'name': 'projects'}),\
                                         initial=student.projects,\
                                         required=False)
+        self.fields['image'] = forms.ImageField(label='Profile Picture:', required=False)
 
 class DynamicForm(forms.Form):
     def set_fields(self, fields):

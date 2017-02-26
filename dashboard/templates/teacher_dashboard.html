@@ -18,14 +18,17 @@
 
 
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
         <link href="teacherdashboard.css" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/master.css' %}">        
+
         <!--<link rel="stylesheet" href="{% static 'css/studentdash.css' %}"> -->   
 {% endblock %}
 
 {% block content %}
 <nav class="navbar navbar-default">
     <div class="container-fluid">
+
 
 <div class="btn-group">
   <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -62,14 +65,34 @@
         
         <div class="teacher-profile">
             <!--<div id="AboutMe"> 
+
+        <div class="menu">
+            <ul>
+                <li><a>Home</a></li>
+                <li><a>Dashboard</a></li>
+                <li><a>My Forms</a></li>
+                <li><a>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Log Out"></input>
+                    </form>
+                </a></li>
+            </ul>
+        </div>
+    <div class="container">
+        <div class="teacher-profile dashboard-obj">
+            <div id="AboutMe"> 
+
                 <h1 id="AboutMe-hdr">About Me</h1>
                 <img id="self-portrait" src="{% static 'images/baby-goat.jpg' %}" alt="self-portrait"/>
                 <h2 id="name">{{ name }}</h2>    
                 <p class="course">Front-End Development</p>
             </div>-->
 
+
             <div id="students">
                 <div id="student-list" class="col-md-9">
+
                     <ul>
                         <li><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/17241-200.png" class="student-icon">Student 1</li> 
                         <li><img src="https://d30y9cdsu7xlg0.cloudfront.net/png/17239-200.png" class="student-icon">Student 2</li>
@@ -84,5 +107,7 @@
                 </div>
             </div>
         </div>
+
 </div>
+
 {% endblock %}
