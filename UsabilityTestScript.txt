@@ -2,6 +2,8 @@ JumboCode
 Usability Test
 Codesquad Dashboard
 
+(teacher stuff doesn't actually include creating forms for coursework)
+
 Introduction:
 
 	Hello, thank you for participating in our study today. Codesquad is a computer science bootcamp. The site we designed allows the students of the bootcamps to have a profile displaying their information and projects, the teachers to organize their courses and students, and employers to search through the students for recruiting. This session will last about 15 minutes. During this time, we will be asking you to act as two different users (students and teachers) as they use the Codesquad website. We will ask you to navigate through this website and perform specific tasks, in addition to getting your holistic opinion on the product. Before each task, we will explain the full scenario.  	
@@ -13,10 +15,15 @@ Scenario 1:
 
 You are a student of the Codesquad bootcamp. You are interested in displaying your work for potential employers and completing coursework given to you by your bootcamp teacher.
 
-1. 
+1. make an account
+2. edit profile
+3. add information
+4. add aproject
 
-Scenario 2:
+
+
+Scenario 2: 
 
 You are a teacher for the Codesquad bootcamp. You are interested in keeping track of the status of students in your class, as well as creating coursework through forms to distribute to your students.
 
-1. 
+1. Find details about X student
