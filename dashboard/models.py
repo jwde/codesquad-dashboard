@@ -42,7 +42,6 @@ class Profile(BaseModel):
     )
     linkedin = models.TextField(null=True) # Dummy for now
 
-
     @property
     def is_student(self):
         return self._is_student
@@ -65,6 +64,22 @@ class Profile(BaseModel):
     def __str__(self):
         return self.user.__str__()
 
+class Project(BaseModel):
+    student = models.ForeignKey(Student,
+                                on_delete=models.CASCADE,
+                                related_name='projects')
+    image = models.ImageField(upload_to='project_pics', null=True)
+    description = models.TextField()
+    link = models.URLField()
+    languages = ArrayField(
+        models.CharField(max_length=200, null=True),
+        null=True,
+    )
+    frameworks = ArrayField(
+        models.CharField(max_length=200, null=True),
+        null=True,
+    )
+
 class Student(BaseModel):
     profile = models.OneToOneField(Profile,\
                                    on_delete=models.CASCADE,\
@@ -83,7 +98,7 @@ class Student(BaseModel):
     )
 
     about_me = models.TextField()
-    projects = models.TextField()
+    #projects = models.TextField()
 
     def __str__(self):
         return self.profile.user.username

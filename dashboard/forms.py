@@ -42,10 +42,10 @@ class EditProfileForm(forms.Form):
                                         widget=forms.TextInput(attrs={'name': 'about_me'}),\
                                         initial=student.about_me,\
                                         required=False)
-        self.fields['projects'] = forms.CharField(label='Projects:', max_length=1000,\
-                                        widget=forms.TextInput(attrs={'name': 'projects'}),\
-                                        initial=student.projects,\
-                                        required=False)
+#        self.fields['projects'] = forms.CharField(label='Projects:', max_length=1000,\
+#                                        widget=forms.TextInput(attrs={'name': 'projects'}),\
+#                                        initial=student.projects,\
+#                                        required=False)
         self.fields['image'] = forms.ImageField(label='Profile Picture:', required=False)
 
 class DynamicForm(forms.Form):
