@@ -2,28 +2,35 @@ JumboCode
 Usability Test
 Codesquad Dashboard
 
-(teacher stuff doesn't actually include creating forms for coursework)
-
 Introduction:
 
-	Hello, thank you for participating in our study today. Codesquad is a computer science bootcamp. The site we designed allows the students of the bootcamps to have a profile displaying their information and projects, the teachers to organize their courses and students, and employers to search through the students for recruiting. This session will last about 15 minutes. During this time, we will be asking you to act as two different users (students and teachers) as they use the Codesquad website. We will ask you to navigate through this website and perform specific tasks, in addition to getting your holistic opinion on the product. Before each task, we will explain the full scenario.  	
+	Hello, thank you for participating in our study today. Codesquad is a computer science bootcamp. The site we designed allows the students of the bootcamps to have a profile displaying their information and projects, the teachers to organize their courses and students, and employers to search through the students for recruiting. This session will last about 15 minutes. During this time, we will be asking you to act as two different users -- students and teachers -- as they use the Codesquad website. We will ask you to navigate through this website and perform specific tasks, in addition to getting your holistic opinion on the product. Before each task, we will explain the full scenario.  	
 	Please keep in mind that we are not evaluating your performance during this study, but rather working together to evaluate a product. We want you to find errors so we can make sure we are creating the best product. During this study, we ask that you think out loud. This will help us understand your thought process as you interact with the product.
 	
 Tasks:
 
 Scenario 1:
 
-You are a student of the Codesquad bootcamp. You are interested in displaying your work for potential employers and completing coursework given to you by your bootcamp teacher.
+You are a student of the Codesquad bootcamp. You are interested in displaying your work for potential employers.
 
-1. make an account
-2. edit profile
-3. add information
-4. add aproject
+1. Create an account.
+2. Edit your profile and include the skill "Python".
+3. Add information, including your job as a computer science TA in COMP 15.
+4. Add a project that you've worked on called "Spring Break" with the website "www.whenisspringbreak.com".
 
+What do you think of the workflow of the student portal? Are there any buttons that were in a different position that you expected? Are there any buttons that had an unexpected result when clicked?
 
 
 Scenario 2: 
 
-You are a teacher for the Codesquad bootcamp. You are interested in keeping track of the status of students in your class, as well as creating coursework through forms to distribute to your students.
+You are a teacher for the Codesquad bootcamp. You are interested in keeping track of the status of students in your class.
 
-1. Find details about X student
+1. Find out what skills X student has.
+
+What do you think of the workflow of the teacher portal? Are there any buttons that were in a different position that you expected? Are there any buttons that had an unexpected result when clicked?
+
+Final Questions:
+
+What do you like about the Codesquad website? What do you think can be improved? What features would you like to see?
+
+Thank you for participating in our study!
