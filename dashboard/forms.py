@@ -46,6 +46,7 @@ class EditProfileForm(forms.Form):
                                         widget=forms.TextInput(attrs={'name': 'projects'}),\
                                         initial=student.projects,\
                                         required=False)
+        self.fields['image'] = forms.ImageField(label='Profile Picture:', required=False)
 
 class DynamicForm(forms.Form):
     def set_fields(self, fields):
