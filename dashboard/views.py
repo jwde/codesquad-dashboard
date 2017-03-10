@@ -42,8 +42,7 @@ def dashboard(request, type_requested=None):
         student_profiles = []
         for s in students:
             name = '{} {}'.format(s.profile.user.first_name, s.profile.user.last_name)
-            profile = {'name': name, 'about': s.about_me, 'projects': s.projects, \
-                       'image': s.profile.image if hasattr(s.profile.image, 'url') else False,}
+            profile = {'name': name, 'about': s.about_me, 'projects': s.projects,}
             student_profiles.append(profile)
         return render(request, "employer_dashboard.html",\
                       {'students': student_profiles})
