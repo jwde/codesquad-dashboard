@@ -1,5 +1,4 @@
 /* Student Dashboard CSS */
-
 a:hover {transition-duration:400ms;}
 
 nav {
@@ -37,8 +36,6 @@ nav {
 	float: left;
 	z-index: 99999;
 }
-
-#dropdown:hover .bar {width:0px;}
 
 .bar {
 	width: 50px;
@@ -104,29 +101,14 @@ nav {
 
 #LinkedIn {padding:10px;}
 
-@media(max-width: 990px) {
-	  #AboutMe {width:40%;min-width:300px!important;border:1px solid #ccc;
-	  margin:50px auto;padding: 10px;position:relative;background:#d13f3f;border-radius:5px;
-	  display:block;}
-	  #projects {margin: 50px auto;}
-	  #professional {margin:50px auto;min-width:300px;width:40%;
-	background:#d13f3f;color:#ffffff;padding:15px;border-radius:5px;
-	letter-spacing:1px!important;position:relative;font-weight:lighter;}
- 	.linkedlogo {width:50%;margin-left:-35px;position:relative;margin-bottom:0px;}
-
+@media(max-width: 800px) {
+	  #AboutMe {margin: 50px auto;position:relative;min-width:300px;} 
 }
 
-@media(min-width: 991px) {
-	  #AboutMe {margin-left:3%;width:15%;min-width:150px!important;border:1px solid #ccc;
-	  margin-top:50px;padding: 10px;position:relative;background:#d13f3f;border-radius:5px;
-	  }
-	  #projects {margin-left:5%;}
-	  #professional {margin-top:50px;width:15%;margin-left:6%;
-	background:#d13f3f;color:#ffffff;padding:15px;border-radius:5px;
-	letter-spacing:1px!important;position:relative;font-weight:lighter;}
-	.linkedlogo {width:100%;margin-left:-35px;position:relative;margin-bottom:0px;}
-
+@media(min-width: 801px) {
+	  #AboutMe {margin-left:3%;width:15%;min-width:150px!important;border:1px solid #ccc;margin-top:50px;padding: 10px;position:relative;background:red;border-radius:5px;}
 }
+
 
 .col-md-3 {min-width:150px!important;}
 
@@ -144,12 +126,18 @@ background:#d13f3f;padding:10px;left:0px;color:#fff;border-radius:5px;}
 
 .edit-prof:hover {background:#b33939;color:#ffffff;}
 
-#projects {text-align:center;margin-top:15px;}
+#projects {text-align:center;margin-left:5%;margin-top:15px;}
+
+#professional {margin-top:50px;width:15%;margin-left:6%;
+	background:#d13f3f;color:#ffffff;padding:15px;border-radius:5px;
+	letter-spacing:1px!important;position:relative;font-weight:lighter;}
 
 .linkedin-block {position:absolute;bottom: -80px;left: 0;}
 
 .linkedin {background:#d13f3f;color:#ffffff;padding:6px 10px;
 	border-radius:13px;font-weight:bold;display:block;}
+
+.linkedlogo {width:100%;margin-left:-35px;position:relative;margin-bottom:0px;}
 
 .linkedin:hover {color:#ffffff;background:#b33939;text-decoration:none;}
 
