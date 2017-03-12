@@ -34,10 +34,16 @@
     </div>
 </nav>
 
+<div> Edit Dashboard </div>
 <div class="container" style="padding:50px">
     <form method='post' enctype="multipart/form-data" action="{% url 'edit_profile' %}">
         {% csrf_token %}
-        {{ form }}
+        <div>{{ form.about_me.label_tag }}</div>
+        <div>{{ form.about_me }}</div>
+        <div>{{ form.projects.label_tag }}</div>
+        <div>{{ form.projects }}</div>
+        <div>{{ form.image.label_tag }}</div>
+        <div>{{ form.image }}</div>
         <button type="submit">submit</button>
     </form>
 </div>
