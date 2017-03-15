@@ -83,7 +83,10 @@ class Student(BaseModel):
     )
 
     about_me = models.TextField()
-    projects = models.TextField()
+    projects = ArrayField(
+        models.TextField(null=True),
+        null=True,
+    )
 
     def __str__(self):
         return self.profile.user.username
