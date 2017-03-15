@@ -98,8 +98,7 @@ class Student(BaseModel):
     )
 
     about_me = models.TextField()
-    #projects = models.TextField()
-
+    
     def __str__(self):
         return self.profile.user.username
 
