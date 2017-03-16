@@ -11,6 +11,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> 
     <link rel="stylesheet" href="{% static 'css/studentdashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/editprofile.css' %}">
+
        
 {% endblock %}
 
@@ -34,8 +36,9 @@
     </div>
 </nav>
 
-<div> Edit Dashboard </div>
+
 <div class="container" style="padding:50px">
+    <h3 class="header"> Edit Dashboard </h3>
     <form method='post' enctype="multipart/form-data" action="{% url 'edit_profile' %}">
         {% csrf_token %}
         <div>{{ form.about_me.label_tag }}</div>
