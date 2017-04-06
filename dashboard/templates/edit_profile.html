@@ -9,8 +9,10 @@
 {% block content %}
 <form method='post' enctype="multipart/form-data" action="{% url 'edit_profile' %}">
     {% csrf_token %}
-    {{ form }}
-    <button type="submit">submit</button>
+    {{ form.about_me }}
+    <h1>TESTING!</h1>
+    {{ form.languages }}
+    <button type="submit">Submit</button>
 </form>
 
 

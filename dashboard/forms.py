@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django import forms
+from django.contrib.postgres.fields import JSONField, ArrayField
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 class LoginForm(AuthenticationForm):
@@ -42,6 +43,17 @@ class EditProfileForm(forms.Form):
                                         widget=forms.TextInput(attrs={'name': 'about_me'}),\
                                         initial=student.about_me,\
                                         required=False)
+        self.fields['languages'] = forms.CharField(label='Languages', max_length=200,\
+                                          required=False)
+                                          #label='Languages:', max_length=200
+                                          #widget=forms.TextInput(attrs={'name': 'languages'}),\
+                                          #initial=student.languages,\
+                                          #required=False)
+        #changed here
+        # self.fields['languages'] = ArrayField(forms.CharField(label='Languages:', max_length=200,\
+        #                                 widget=forms.TextInput(attrs={'name': 'languages'}),\
+        #                                 # initial=student.languages,\
+        #                                 required=False))
 #        self.fields['projects'] = forms.CharField(label='Projects:', max_length=1000,\
 #                                        widget=forms.TextInput(attrs={'name': 'projects'}),\
 #                                        initial=student.projects,\

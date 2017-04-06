@@ -94,14 +94,11 @@ class Project(BaseModel):
     image = models.ImageField(upload_to='project_pics', null=True)
     description = models.TextField()
     link = models.URLField()
-    languages = ArrayField(
+    languagesframeworks = ArrayField(
         models.CharField(max_length=200, null=True),
         null=True,
     )
-    frameworks = ArrayField(
-        models.CharField(max_length=200, null=True),
-        null=True,
-    )
+    role = models.TextField()
 
 class Course(BaseModel):
     name = models.CharField(max_length=200)
