@@ -27,8 +27,7 @@ def dashboard(request, type_requested=None):
                        'image': request.user.profile.image if hasattr(request.user.profile.image, 'url') else False,\
                        'projects': request.user.profile.student.projects})
     def teacher_dashboard():
-        active_courses = [c for c in request.user.profile.teacher.courses\
-                          if c.end_date >= datetime.date.today()]
+        active_courses = Course.objects.filter(end_date__gte = datetime.date.today())
         student_sets = [frozenset(c.enrolled_students.all()) for c in active_courses.all()]
         students = frozenset().union(*student_sets)
         student_profiles = []

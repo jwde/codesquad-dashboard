@@ -98,6 +98,10 @@ nav {
 	color: #ffffff;
 }
 
+#profile_modal {
+	color: black;
+}
+
 .dropdown-menu {padding:none;background:transparent!important;outline:none;
 	box-shadow:none;border:1px solid #b33939;padding:0!important;
 	margin-top:20px;height:auto;}
