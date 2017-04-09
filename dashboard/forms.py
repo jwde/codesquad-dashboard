@@ -60,6 +60,22 @@ class EditProfileForm(forms.Form):
 #                                        required=False)
         self.fields['image'] = forms.ImageField(label='Profile Picture:', required=False)
 
+
+class EditProjectForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        student = kwargs.pop('sutdent')
+        super(EditProfileForm, self).__init__(*args, **kwargs)
+        self.fields['project_title'] = forms.CharField(label='Project Title', max_length=1000,\
+                                             widget=forms.TextInput(attrs={'name': 'project_title'}),\
+                                             required=True)
+
+
+
+
+
+
+
+
 class DynamicForm(forms.Form):
     def set_fields(self, fields):
         def question_to_field(question, name):

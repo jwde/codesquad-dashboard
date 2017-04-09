@@ -91,6 +91,7 @@ class Project(BaseModel):
     student = models.ForeignKey(Student,
                                 on_delete=models.CASCADE,
                                 related_name='projects')
+    title = models.CharField(max_length=1000, null=True)
     image = models.ImageField(upload_to='project_pics', null=True)
     description = models.TextField()
     link = models.URLField()
@@ -98,7 +99,7 @@ class Project(BaseModel):
         models.CharField(max_length=200, null=True),
         null=True,
     )
-    role = models.TextField()
+    role = models.TextField(null=True)
 
 class Course(BaseModel):
     name = models.CharField(max_length=200)

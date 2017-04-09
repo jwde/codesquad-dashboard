@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^dashboard/$', views.dashboard, name='dashboard'),
     url(r'^dashboard/([a-z]+)$', views.dashboard),
     url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
+    url(r'^edit_project/$', views.edit_project, name='edit_project'),
     url(r'^my_forms/$', views.my_forms, name='my_forms'),
     url(r'^form_responses/([0-9]+)/$', views.form_responses, name='form_responses'),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html',\

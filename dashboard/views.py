@@ -81,6 +81,42 @@ def edit_profile(request):
         return render(request, 'edit_profile.html', {'form': form})
     return redirect('dashboard')
 
+
+@login_required(login_url='/login/')
+def edit_project(request):
+  # print request
+  #   if request.user.profile.is_student:
+  #       form = EditProjectForm(data=request.POST or None,
+  #                             files=request.FILES or None,
+  #                             student=request.user.profile.student)
+
+  #       if request.method == 'POST':
+  #         if form.is_valid():
+  #             print "HOLAY"  
+
+  #       # return render(request, '', {'form': form})
+  # return redirect('dashboard')
+  print request
+  if request.user.profile.is_student:
+        form = EditProjectForm(data=request.POST or None,
+                               files=request.FILES or None,
+                               student=request.user.profile.student)
+        if request.method == 'POST':
+            if form.is_valid():
+                request.user.profile.student.about_me = form.cleaned_data['about_me']
+                print(form.cleaned_data['languages'].split(','))
+                if not form.cleaned_data['languages'] == None:
+                    request.user.profile.languages = form.cleaned_data['languages'].split(',') #Changed
+                #request.user.profile.student.projects = form.cleaned_data['projects']
+                if not form.cleaned_data['image'] == None:
+                    request.user.profile.image = form.cleaned_data['image']
+                request.user.profile.save()
+                print request.user.profile.languages
+                request.user.profile.student.save()
+                return redirect('dashboard')
+        return render(request, 'edit_profile.html', {'form': form})
+  return redirect('edit_profile')
+
 @login_required(login_url='/login/')
 def my_forms(request):
     created_forms = FormTemplate.objects.filter(owner=request.user)
