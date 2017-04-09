@@ -28,14 +28,19 @@ def dashboard(request, type_requested=None):
                        'languages': ' '.join(request.user.profile.languages),\
                        'projects': request.user.profile.student.projects})
     def teacher_dashboard():
-        active_courses = [c for c in request.user.profile.teacher.courses\
-                          if c.end_date >= datetime.date.today()]
+        active_courses = Course.objects.filter(end_date__gte = datetime.date.today())
         student_sets = [frozenset(c.enrolled_students.all()) for c in active_courses.all()]
         students = frozenset().union(*student_sets)
-        student_names = ['{} {}'.format(s.profile.user.first_name, s.profile.user.last_name)\
-                         for s in students]
+        student_profiles = []
+        for s in students:
+            name = '{} {}'.format(s.profile.user.first_name, s.profile.user.last_name)
+            profile = {'name': name, 'about': s.about_me, 'projects': s.projects}
+            student_profiles.append(profile)
+        # students = frozenset().union(*student_sets)
+        # student_names = ['{} {}'.format(s.profile.user.first_name, s.profile.user.last_name)\
+        #                  for s in students]
         return render(request, "teacher_dashboard.html",\
-                      {'students': student_names})
+                      {'students': student_profiles}) #student_names})
     def employer_dashboard():
         active_courses = Course.objects.filter(end_date__gte = datetime.date.today())
         student_sets = [frozenset(c.enrolled_students.filter(privacy_setting='PU'))\
