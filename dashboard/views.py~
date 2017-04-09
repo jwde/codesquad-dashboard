@@ -28,34 +28,14 @@ def dashboard(request, type_requested=None):
                        'languages': ' '.join(request.user.profile.languages),\
                        'projects': request.user.profile.student.projects})
     def teacher_dashboard():
-        active_courses = Course.objects.filter(end_date__gte = datetime.date.today())
+        active_courses = [c for c in request.user.profile.teacher.courses\
+                          if c.end_date >= datetime.date.today()]
         student_sets = [frozenset(c.enrolled_students.all()) for c in active_courses.all()]
         students = frozenset().union(*student_sets)
-        student_profiles = []
-        for s in students:
-            name = '{} {}'.format(s.profile.user.first_name, s.profile.user.last_name)
-            profile = {'name': name, 'about': s.about_me, 'projects': s.projects, 'image': s.profile.image}
-            student_profiles.append(profile)
-        # students = frozenset().union(*student_sets)
-        # student_names = ['{} {}'.format(s.profile.user.first_name, s.profile.user.last_name)\
-        #                  for s in students]
-# =======
-#         courses = request.user.profile.teacher.courses;
-#         if not courses:
-#             active_courses = [c for c in request.user.profile.teacher.courses\
-#                           if c.end_date >= datetime.date.today()]
-#             student_sets = [frozenset(c.enrolled_students.all()) for c in active_courses.all()]
-#             students = frozenset().union(*student_sets)
-#             student_names = ['{} {}'.format(s.profile.user.first_name, s.profile.user.last_name)\
-#                          for s in students]              
-#         else: 
-#             active_courses = []
-#             students = []
-#             student_names = []
-# >>>>>>> Stashed changes
+        student_names = ['{} {}'.format(s.profile.user.first_name, s.profile.user.last_name)\
+                         for s in students]
         return render(request, "teacher_dashboard.html",\
-                      {'students': student_profiles,\
-                      'name': request.user.first_name}) #student_names})
+                      {'students': student_names})
     def employer_dashboard():
         active_courses = Course.objects.filter(end_date__gte = datetime.date.today())
         student_sets = [frozenset(c.enrolled_students.filter(privacy_setting='PU'))\
@@ -70,10 +50,8 @@ def dashboard(request, type_requested=None):
                       {'students': student_profiles})
     def pending_dashboard():
         return render(request, "pending_dashboard.html")
-    
     type_returned = type_requested if validate(type_requested)\
                     else request.user.profile.type
-    
     if request.method == 'GET':
         return\
         {'student': student_dashboard,\
