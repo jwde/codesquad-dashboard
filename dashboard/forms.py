@@ -63,11 +63,25 @@ class EditProfileForm(forms.Form):
 
 class EditProjectForm(forms.Form):
     def __init__(self, *args, **kwargs):
-        student = kwargs.pop('sutdent')
-        super(EditProfileForm, self).__init__(*args, **kwargs)
-        self.fields['project_title'] = forms.CharField(label='Project Title', max_length=1000,\
+        student = kwargs.pop('student')
+        super(EditProjectForm, self).__init__(*args, **kwargs)
+        self.fields['project_title'] = forms.CharField(label='Project Title', max_length=100,\
                                              widget=forms.TextInput(attrs={'name': 'project_title'}),\
                                              required=True)
+        self.fields['project_description'] = forms.CharField(label='Project Descrition', max_length=500,\
+                                            widget=forms.TextInput(attrs={'name' : 'project_description'}),\
+                                            required=True)
+        self.fields['project_role'] = forms.CharField(label='My Role', max_length=150,\
+                                            widget=forms.TextInput(attrs={'name' : 'project_role'}),\
+                                            required=True)
+        self.fields['project_link'] = forms.URLField(label='Project URL', max_length=100,\
+                                            widget=forms.URLInput(attrs={'name' : 'project_link'}),\
+                                            required=False)
+        self.fields['project_languagesframeworks'] = forms.CharField(label='Languages', max_length=200,\
+                                                    required=True)
+
+        self.fields['project_image'] = forms.ImageField(label='Project Image:', required=False)
+
 
 
 

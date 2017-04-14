@@ -44,23 +44,25 @@
            	{% csrf_token %}
 	      	<p class="category_title">Project Title</p>
 	      	{{ form.project_title }}
-
 	        <p class="category_title">Role</p>
-	        <!--input form -->
+	        {{ form.project_role}}
 	        <p class="category_title">Languages/Frameworks/Tools</p>
-	        <!--input form -->
+	        {{ form.project_languagesframeworks}}
 	        <p class="category_title">Project Description</p>
-	        <!--input form (paragraph)-->
+	        {{form.project_description}}
+	        <p class="category_title">Link to Project</p>
+	        {{form.project_link}}
 	        <p class="category_title">Project Picture</p>
-	         <!--upload image-->
-      	</form>
+	        {{form.project_image}}
+      	
 	    
       </div>
       <div class="modal-footer">
      	 <a class="edit-proj" href="{% url 'edit_project' %}">
-			<button type="button" class="btn btn-default">Save Project</button>
+			<button type="submit" class="btn btn-default">Save Project</button>
          </a> 
       </div>
+      </form>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
