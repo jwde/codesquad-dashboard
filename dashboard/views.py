@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseBadRequest
 from models import Profile, Student, Teacher, Employer, FormTemplate, Enrollment, Question, FormResponse, QuestionResponse, Course, Project
 from forms import RegisterForm, DynamicForm, EditProfileForm, EditProjectForm
 from utils import order
@@ -10,6 +10,7 @@ from collections import defaultdict
 import datetime
 import json
 import bleach
+from django.forms.models import model_to_dict
 
 # Create your views here.
 @login_required(login_url='/login/')
@@ -62,52 +63,52 @@ def dashboard(request, type_requested=None):
 @login_required(login_url='/login/')
 def edit_profile(request):
     if request.user.profile.is_student:
-        form = EditProfileForm(data=request.POST or None,
+        profile_form = EditProfileForm(data=request.POST or None,
                                files=request.FILES or None,
                                student=request.user.profile.student)
+        project_form = EditProjectForm(None, None,
+                               student=request.user.profile.student)
         if request.method == 'POST':
-            if form.is_valid():
-                request.user.profile.student.about_me = form.cleaned_data['about_me']
-                print(form.cleaned_data['languages'].split(','))
-                if not form.cleaned_data['languages'] == None:
-                    request.user.profile.languages = form.cleaned_data['languages'].split(',') #Changed
+            if profile_form.is_valid():
+                request.user.profile.student.about_me = profile_form.cleaned_data['about_me']
+                print(profile_form.cleaned_data['languages'].split(','))
+                if not profile_form.cleaned_data['languages'] == None:
+                    request.user.profile.languages = profile_form.cleaned_data['languages'].split(',') #Changed
                 #request.user.profile.student.projects = form.cleaned_data['projects']
-                if not form.cleaned_data['image'] == None:
-                    request.user.profile.image = form.cleaned_data['image']
+                if not profile_form.cleaned_data['image'] == None:
+                    request.user.profile.image = profile_form.cleaned_data['image']
                 request.user.profile.save()
                 print request.user.profile.languages
                 request.user.profile.student.save()
                 return redirect('dashboard')
-        return render(request, 'edit_profile.html', {'form': form})
+        return render(request, 'edit_profile.html', {'profile_form': profile_form, 'project_form': project_form})
     return redirect('dashboard')
 
 
 @login_required(login_url='/login/')
 def edit_project(request):
-  if request.user.profile.is_student:
+  if request.user.profile.is_student and request.method == 'POST':
         form = EditProjectForm(data=request.POST or None,
                                files=request.FILES or None,
                                student=request.user.profile.student)
-        if request.method == 'POST':
-            if form.is_valid():
-                p = Project()
-                p.title = request.POST.get('project_title')
-                p.description = request.POST.get('project_description')
-                p.role = request.POST.get('project_role')
-                p.languagesframeworks = request.POST.get('project_languagesframeworks').split(',')
-                p.image = request.FILES['project_image']
-                p.student = request.user.profile.student
-                p.link = request.POST.get('project_link')
-                p.save()
-                # request.profile.student.about_me = form.cleaned_data['about_me']
-                # print(form.cleaned_data['languages'].split(','))
-                # if not form.cleaned_data['languages'] == None:
-                #     request.user.profile.languages = form.cleaned_data['languages'].split(',') #Changed
-                # #request.user.profile.student.projects = form.cleaned_data['projects']
-                # if not form.cleaned_data['image'] == None:
-                #     request.user.profile.image = form.cleaned_data['image']
-        return render(request, 'edit_profile.html', {'form': form})
-  return redirect('edit_profile')
+
+        if form.is_valid():
+            p = Project()
+            p.title = form.cleaned_data['project_title']
+            p.description = form.cleaned_data['project_description']
+            p.role = form.cleaned_data['project_role']
+            p.languagesframeworks = form.cleaned_data['project_languagesframeworks'].split(',')
+            print form.cleaned_data['project_image']
+            if not form.cleaned_data['project_image'] == None:
+                request.user.profile.image = form.cleaned_data['project_image']
+            p.student = request.user.profile.student
+            p.link = form.cleaned_data['project_link']
+            p.save()
+            response_dict = model_to_dict(p)
+            response_dict = {k:response_dict[k] for k in response_dict if not response_dict[k] == None}
+            return HttpResponse(json.dumps(response_dict), content_type='application/json')
+        return HttpResponseBadRequest()
+  return ('')
 
 @login_required(login_url='/login/')
 def my_forms(request):
@@ -206,6 +207,7 @@ def register(request):
                                              _is_student=(role == 'student'),\
                                              _is_teacher=(role == 'teacher'),\
                                              _is_employer=(role == 'employer'),\
+                                             languages=[]
                                              )
             user.save()
             profile.save()
