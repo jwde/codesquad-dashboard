@@ -3,6 +3,8 @@ from django import forms
 from django.contrib.postgres.fields import JSONField, ArrayField
 from django.utils.translation import ugettext, ugettext_lazy as _
 
+import json
+
 class LoginForm(AuthenticationForm):
     pass
 
@@ -44,7 +46,9 @@ class EditProfileForm(forms.Form):
                                         initial=student.about_me,\
                                         required=False)
         self.fields['languages'] = forms.CharField(label='Languages', max_length=200,\
-                                          required=False)
+                                         widget=forms.TextInput(attrs={'name': 'languages'}),\
+                                         #initial=json.dumps(student.profile.languages),\
+                                         required=False)
                                           #label='Languages:', max_length=200
                                           #widget=forms.TextInput(attrs={'name': 'languages'}),\
                                           #initial=student.languages,\

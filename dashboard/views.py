@@ -65,6 +65,7 @@ def edit_profile(request):
     if request.user.profile.is_student:
         profile_form = EditProfileForm(data=request.POST or None,
                                files=request.FILES or None,
+                               initial={'languages': ','.join(request.user.profile.languages)},
                                student=request.user.profile.student)
         project_form = EditProjectForm(None, None,
                                student=request.user.profile.student)
