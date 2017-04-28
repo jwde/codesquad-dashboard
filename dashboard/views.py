@@ -21,6 +21,7 @@ def dashboard(request, type_requested=None):
                 'teacher': lambda: request.user.profile.is_teacher,\
                 'employer': lambda: request.user.profile.is_employer}[type_requested]()
     def student_dashboard():
+        print(request.user)
         return render(request, "student_dashboard.html", 
                       {'name': request.user.first_name + " " + 
                                request.user.last_name,\
@@ -89,6 +90,7 @@ def edit_profile(request):
                                files=request.FILES or None,
                                initial={'languages': ','.join(request.user.profile.languages)},
                                student=request.user.profile.student)
+        
         project_form = EditProjectForm(None, None,
                                student=request.user.profile.student)
         if request.method == 'POST':

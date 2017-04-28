@@ -6,14 +6,16 @@ $(document).ready(function() {
 
 	$('#edit_project_form').on('submit', function(event){
 		event.preventDefault();
+		//data does not include the image. need to turn into array where one part is data dn other part is the iamge
+		
+		$.post("edit_project/");
 		console.log("form submitted!");
-		create_post();
+		close_modal();
 	});
 });
 
 
-function create_post() {
-	console.log("create post is working!");
+function close_modal() {
 	$('.modal').modal('toggle');
-
 }
+
