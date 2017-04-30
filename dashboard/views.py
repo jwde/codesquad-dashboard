@@ -21,13 +21,18 @@ def dashboard(request, type_requested=None):
                 'teacher': lambda: request.user.profile.is_teacher,\
                 'employer': lambda: request.user.profile.is_employer}[type_requested]()
     def student_dashboard():
+        projects = [model_to_dict(p) for p in request.user.profile.student.projects.all()]
+        for project in projects:
+            if project['image']:
+                project['image'] = project['image'].url
+        projects = json.dumps(projects)
         return render(request, "student_dashboard.html", 
                       {'name': request.user.first_name + " " + 
                                request.user.last_name,\
                        'about': request.user.profile.student.about_me,\
-                       'image': request.user.profile.image if hasattr(request.user.profile.image, 'url') else False,\
-                       'languages': ' '.join(request.user.profile.languages),\
-                       'projects': request.user.profile.student.projects})
+                       'image': request.user.profile.student.image if hasattr(request.user.profile.student.image, 'url') else False,\
+                       'languages': ' '.join(request.user.profile.student.languages),\
+                       'projects': projects})
     def teacher_dashboard():
         active_courses = [c for c in request.user.profile.teacher.courses\
                           if c.end_date >= datetime.date.today()]
@@ -65,7 +70,7 @@ def edit_profile(request):
     if request.user.profile.is_student:
         profile_form = EditProfileForm(data=request.POST or None,
                                files=request.FILES or None,
-                               initial={'languages': ','.join(request.user.profile.languages)},
+                               initial={'languages': ','.join(request.user.profile.student.languages)},
                                student=request.user.profile.student)
         project_form = EditProjectForm(None, None,
                                student=request.user.profile.student)
@@ -74,11 +79,10 @@ def edit_profile(request):
                 request.user.profile.student.about_me = profile_form.cleaned_data['about_me']
                 print(profile_form.cleaned_data['languages'].split(','))
                 if not profile_form.cleaned_data['languages'] == None:
-                    request.user.profile.languages = profile_form.cleaned_data['languages'].split(',') #Changed
+                    request.user.profile.student.languages = profile_form.cleaned_data['languages'].split(',') #Changed
                 #request.user.profile.student.projects = form.cleaned_data['projects']
                 if not profile_form.cleaned_data['image'] == None:
-                    request.user.profile.image = profile_form.cleaned_data['image']
-                request.user.profile.save()
+                    request.user.profile.student.image = profile_form.cleaned_data['image']
                 print request.user.profile.languages
                 request.user.profile.student.save()
                 return redirect('dashboard')
@@ -92,7 +96,6 @@ def edit_project(request):
         form = EditProjectForm(data=request.POST or None,
                                files=request.FILES or None,
                                student=request.user.profile.student)
-
         if form.is_valid():
             p = Project()
             p.title = form.cleaned_data['project_title']
@@ -101,12 +104,13 @@ def edit_project(request):
             p.languagesframeworks = form.cleaned_data['project_languagesframeworks'].split(',')
             print form.cleaned_data['project_image']
             if not form.cleaned_data['project_image'] == None:
-                request.user.profile.image = form.cleaned_data['project_image']
+                p.image = form.cleaned_data['project_image']
             p.student = request.user.profile.student
             p.link = form.cleaned_data['project_link']
             p.save()
             response_dict = model_to_dict(p)
             response_dict = {k:response_dict[k] for k in response_dict if not response_dict[k] == None}
+            response_dict['image'] = response_dict['image'].url
             return HttpResponse(json.dumps(response_dict), content_type='application/json')
         return HttpResponseBadRequest()
   return ('')
@@ -208,7 +212,6 @@ def register(request):
                                              _is_student=(role == 'student'),\
                                              _is_teacher=(role == 'teacher'),\
                                              _is_employer=(role == 'employer'),\
-                                             languages=[]
                                              )
             user.save()
             profile.save()
@@ -220,7 +223,9 @@ def register(request):
                 employer.save()
             else:
                 student = Student(profile = profile,\
-                                  privacy_setting = 'PR')
+                                  privacy_setting = 'PR',
+                                  languages=[]
+                                  )
                 student.save()
             user = authenticate(username = username, password = password)
             if user is not None:
