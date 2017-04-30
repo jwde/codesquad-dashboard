@@ -15,9 +15,10 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-
+<script type='text/javascript' src="{% static 'js/student_dashboard.js' %}"></script>
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> 
 
+<script>var projects = '{{projects}}'</script>
 <link href="{% static 'css/master.css' %}" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/studentdashboard.css' %}">
 
@@ -65,52 +66,13 @@
 
                 <div id="projects" class="col-md-6"> 
                     <h1>Projects</h1>
-                    <div id="projectList">
-                        {{ projects }}
-                        <!--<div class="proj-wrap">
-                            <div class="proj-row">
-                                <div class="proj">
-                                    <div class="proj-image">
-                                    <img src="http://www.hubermann.com/assets/img/sliders/slider1.jpg">
-                                    <a class="proj-more" href="#">Learn More</a>
-                                    </div>
-                                </div>
-                                <div class="proj">
-                                    <div class="proj-image">
-                                    <img src="http://www.hubermann.com/assets/img/sliders/slider1.jpg">
-                                    <a class="proj-more" href="#">Learn More</a>
-                                    </div>                                    
-                                </div>
-                            </div>
-                            <div class="proj-row">
-                                <div class="proj">
-                                    <div class="proj-image">
-                                    <img src="http://www.hubermann.com/assets/img/sliders/slider1.jpg">
-                                    <a class="proj-more" href="#">Learn More</a>
-                                    </div>
-                                </div>
-                                <div class="proj">
-                                    <div class="proj-image">
-                                    <img src="http://www.hubermann.com/assets/img/sliders/slider1.jpg">
-                                    <a class="proj-more" href="#">Learn More</a>
-                                    </div>
-                                </div>
-
-                            </div>                             
-                        </div>
-                        -->
-                    </div>
+                    <ul id="projectList">
+                    </ul>
                 </div>
                 <div id="professional" class="col-md-3">
                 <b>Freelance Web Developer</b>
                 Languages:
                 <div id="languages"> {{ languages }} </div>
-                
-                <!-- <ul>
-                    <li>HTML</li>
-                    <li>CSS</li>
-                    <li>JavaScript</li>
-                </ul> -->
                 Frameworks
                 <ul>
                     <li>Bootstrap</li>
@@ -120,9 +82,30 @@
                 <img src="https://content.linkedin.com/content/dam/brand/site/img/logo/logo-tm.png" alt="linked in" class="linkedlogo"/>
                 <a href="www.mylinkedIn(me-juliamoyer).com" class="linkedin">Let's Connect</a></div>
             </div>
-
-
         </div>
+
+
+        <div class="modal fade" tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">New Project</h4>
+      </div>
+      <div class="modal-body">
+            <p class="category_title" id="project_title">Project Title</p>
+            <p class="category_title" id="project_role">Role</p>
+            <p class="category_title" id="project_languages">Languages/Frameworks/Tools</p>
+            <p class="category_title" id="project_description">Project Description</p>
+            <p class="category_title" id="project_linki">Link to Project</p>
+            <div class="category_title" id="project_picutre"></div>        
+      </div>
+      <div class="modal-footer">
+      </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 {% endblock %}
 
