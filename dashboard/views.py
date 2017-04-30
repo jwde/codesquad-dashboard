@@ -83,7 +83,6 @@ def edit_profile(request):
                 #request.user.profile.student.projects = form.cleaned_data['projects']
                 if not profile_form.cleaned_data['image'] == None:
                     request.user.profile.student.image = profile_form.cleaned_data['image']
-                print request.user.profile.languages
                 request.user.profile.student.save()
                 return redirect('dashboard')
         return render(request, 'edit_profile.html', {'profile_form': profile_form, 'project_form': project_form})
