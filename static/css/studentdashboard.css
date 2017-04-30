@@ -21,6 +21,7 @@ nav {
 
 .navbar-brand img {
 	width: 15%;
+	min-width:100px;
 	margin: 0 auto;
 }
 
@@ -30,83 +31,80 @@ nav {
 
 .container {
 	margin-top: 100px;
+	width:90%;
+	margin:8% auto;
 }
 
-#dropdown {
+.cdrop-menu {
 	width: 50px;
-	float: left;
+	position:fixed;
+	left:2%;top:5%;
 	z-index: 99999;
+	display:block;
 }
 
-#dropdown:hover .bar {width:0px;}
 
-.bar {
+.cbars {cursor:pointer;display:block;position:relative;}
+.cbar {
 	width: 50px;
 	height: 3px;
-	background: #ffffff;
-	margin-top: 50%;
+	background: white;
+	margin-top:0;
+	transition-duration:400ms;
 }
 
-.bar::before {
+.cbar2 {
 	width: 50px;
 	height: 3px;
-	content: "";
-	position:absolute;
-	background: #ffffff;
-	margin-top: -15px;
-	margin-left: -25px;
-}
-
-.bar::after {
-	width: 50px;
-	height: 3px;
-	content: "";
-	position:absolute;
 	background: #ffffff;
 	margin-top: 15px;
-	margin-left:-25px;
-
+	margin-left: 0px;
+	transition-duration:400ms;
 }
 
-
-.btn {
-	outline: none;
-	border: none;
-	background:none!important;
-	box-shadow: none!important;
-	display: inline;
-	width: auto;
-	height:70px;
+.cbar3 {
+	width: 50px;
+	height: 3px;
+	background: #ffffff;
+	margin-top: 15px;
+	margin-left:0px;
+	transition-duration:400ms;
 }
 
-.btn:hover {background:none!important;outline:none!important;
-	box-shadow:none!important;}
+.cbars {transition-duration:400ms;transform:none;display:block;background:#d13f3f;z-index:99999;}
 
-.dropdown-item {
+.copen {
+	transform:rotate(-45deg);
+	margin-left:5px;
+}
+
+.cmenu-item {
 	padding: 10px;
+	margin:0;
 	background: #D13F3F;
 	text-align:center;
 	color: #ffffff;
 	display: block;
 }
 
-.dropdown-item:hover {
+.cmenu-item:hover {
 	background:#b33939;
 	text-decoration: none;
 	color: #ffffff;
 }
 
-.dropdown-menu {padding:none;background:transparent!important;outline:none;
-	box-shadow:none;border:1px solid #b33939;padding:0!important;
-	margin-top:20px;height:auto;}
+.cthemenu {padding:none;outline:none;box-shadow:none;padding:0!important;border:1px solid #b33939;
+	margin-top:15px;margin-left:30px;height:auto;width:170px;opacity:0;
+	transition-duration:400ms;border-radius:3px;z-index:0;position:relative;background:#d13f3f;}
 
-.btn-group {position:absolute;z-index:9999!important;}
+.copen-menu {opacity:1;margin-top:-15px;}
+
 
 #LinkedIn {padding:10px;}
 
-@media(max-width: 990px) {
+@media (max-width: 599px) {
 	  #AboutMe {width:40%;min-width:300px!important;border:1px solid #ccc;
-	  margin:50px auto;padding: 10px;position:relative;background:#d13f3f;border-radius:5px;color:#ffffff;
+	  margin:8% auto;padding: 10px;position:relative;background:#d13f3f;border-radius:5px;color:#ffffff;
 	  display:block;}
 	  #projects {margin: 50px auto;}
 	  #professional {margin:50px auto;min-width:300px;width:40%;
@@ -116,12 +114,22 @@ nav {
 
 }
 
-@media(min-width: 991px) {
-	  #AboutMe {margin-left:3%;width:15%;min-width:150px!important;border:1px solid #ccc;color:#ffffff;
+@media (min-width: 600px) and (max-width: 999px) {
+	  #AboutMe {border:1px solid #ccc;padding: 10px;position:relative;background:#d13f3f;border-radius:5px;color:#ffffff;
+	  display:table-cell;float:left;width:48%;margin-right:2%;}
+	  #projects {display:table-footer-group;float:left;width:100%;margin-top:5%;}
+	  #professional {background:#d13f3f;color:#ffffff;padding:15px;border-radius:5px;
+	letter-spacing:1px!important;font-weight:lighter;display:table-cell;float:left top;width:48%;margin-left:2%;}
+ 	.linkedlogo {width:50%;margin-left:-35px;position:relative;margin-bottom:0px;z-index:-1;}
+
+}
+
+@media (min-width: 1000px) {
+	  #AboutMe {margin-left:3%;width:17%;min-width:150px!important;border:1px solid #ccc;color:#ffffff;
 	  margin-top:50px;padding: 10px;position:relative;background:#d13f3f;border-radius:5px;
 	  }
 	  #projects {margin-left:5%;}
-	  #professional {margin-top:50px;width:15%;margin-left:6%;
+	  #professional {margin-top:50px;width:17%;margin-left:6%;
 	background:#d13f3f;color:#ffffff;padding:15px;border-radius:5px;
 	letter-spacing:1px!important;position:relative;font-weight:lighter;}
 	.linkedlogo {width:100%;margin-left:-35px;position:relative;margin-bottom:0px;}

@@ -11,7 +11,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
-
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
@@ -21,15 +20,20 @@
 <link href="{% static 'css/master.css' %}" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/studentdashboard.css' %}">
 
+
 {% endblock %}
 
 {% block content %}
 <nav class="navbar navbar-default">
     <div class="container-fluid">
 
-<div class="btn-group">
+<!---<div class="btn-group">
   <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <div class="bars">
     <div class="bar"></div>
+    <div class="bar2"></div>
+    <div class="bar3"></div>
+    </div>
   </button>
   <div class="dropdown-menu">
     <a class="dropdown-item" href="{% url 'my_forms' %}">Forms</a>
@@ -38,8 +42,33 @@
     <form style="display:none" method="post" id="logout" action="{% url 'logout' %}" >{% csrf_token %} 
     </form>
   </div>
+</div> -->
+
+<div class="cdrop-menu">
+    <div class="cbars">
+        <div class="cbar"> </div>
+        <div class="cbar2"></div>
+        <div class="cbar3"></div>
+    </div>
+    <div class="cthemenu">
+        <a class="cmenu-item" href="{% url 'edit_profile' %}">Edit Profile</a>
+        <a class="cmenu-item" href="#">Settings</a>
+        <a class="cmenu-item" href="#" onclick="$('#logout').submit();">Log Out</a>
+        <form style="display:none" method="post" id="logout" action="{% url 'logout' %}" >{% csrf_token %} 
+        </form>
+    </div>
 </div>
 
+<script type="text/javascript">
+    $('.cbars').click(function(){
+    /*$('.bar').toggleClass('open1');
+    $('.bar2').toggleClass('open2');
+    $('.bar3').toggleClass('open3');
+    */
+        $('.cbars').toggleClass('copen');
+        $('.cthemenu').toggleClass('copen-menu');
+    });
+</script>
 
       <a class="navbar-brand" href="#"><img class="img-responsive" src="{% static 'images/logobw.png' %}"></a>
  
@@ -59,8 +88,6 @@
                      onerror='this.src="{% static 'images/Ugly-Pigeon.jpg' %}"'/>
                     <h2 id="name">{{ name }}</h2>    
                     <p class="bio">{{ about }}</p>
-
-                    <a class="edit-prof" href="{% url 'edit_profile' %}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                 </div>
 
                 <div id="projects" class="col-md-6"> 
@@ -102,8 +129,7 @@
                     </div>
                 </div>
                 <div id="professional" class="col-md-3">
-                <b>Freelance Web Developer</b>
-                Languages:
+                <p>Languages and Frameworks:<p>
                 <div id="languages"> {{ languages }} </div>
                 
                 <!-- <ul>
@@ -111,15 +137,11 @@
                     <li>CSS</li>
                     <li>JavaScript</li>
                 </ul> -->
-                Frameworks
-                <ul>
-                    <li>Bootstrap</li>
-                    <li>Angular.js</li>
-                </ul>
-                <div class="linkedin-block">
+               
+                <!--<div class="linkedin-block">
                 <img src="https://content.linkedin.com/content/dam/brand/site/img/logo/logo-tm.png" alt="linked in" class="linkedlogo"/>
                 <a href="www.mylinkedIn(me-juliamoyer).com" class="linkedin">Let's Connect</a></div>
-            </div>
+            --></div>
 
 
         </div>
