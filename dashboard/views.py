@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.utils.safestring import SafeString
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseBadRequest
 from models import Profile, Student, Teacher, Employer, FormTemplate, Enrollment, Question, FormResponse, QuestionResponse, Course, Project
 from forms import RegisterForm, DynamicForm, EditProfileForm, EditProjectForm
@@ -32,7 +33,7 @@ def dashboard(request, type_requested=None):
                        'about': request.user.profile.student.about_me,\
                        'image': request.user.profile.student.image if hasattr(request.user.profile.student.image, 'url') else False,\
                        'languages': ' '.join(request.user.profile.student.languages),\
-                       'projects': projects})
+                       'projects': SafeString(projects)})
     def teacher_dashboard():
         active_courses = [c for c in request.user.profile.teacher.courses\
                           if c.end_date >= datetime.date.today()]
@@ -83,7 +84,6 @@ def edit_profile(request):
                 #request.user.profile.student.projects = form.cleaned_data['projects']
                 if not profile_form.cleaned_data['image'] == None:
                     request.user.profile.student.image = profile_form.cleaned_data['image']
-                print request.user.profile.languages
                 request.user.profile.student.save()
                 return redirect('dashboard')
         return render(request, 'edit_profile.html', {'profile_form': profile_form, 'project_form': project_form})

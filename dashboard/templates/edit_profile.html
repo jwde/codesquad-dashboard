@@ -14,14 +14,53 @@
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-        <link rel="stylesheet" href="{% static 'css/master.css' %}">    
+        <link rel="stylesheet" href="{% static 'css/master.css' %}">   
+        <link rel="stylesheet" href="{% static 'css/studentdashboard.css' %}"> 
         <link rel="stylesheet" href="{% static 'css/editprof.css' %}">
         <script type='text/javascript' src="{% static 'js/editprof.js' %}"></script>
 
 {% endblock %}
 
 {% block content %}
-<form method='post' enctype="multipart/form-data" action="{% url 'edit_profile' %}">
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+
+<div class="cdrop-menu">
+    <div class="cbars">
+        <div class="cbar"> </div>
+        <div class="cbar2"></div>
+        <div class="cbar3"></div>
+    </div>
+    <div class="cthemenu">
+        <a class="cmenu-item" href="{% url 'edit_profile' %}">Edit Profile</a>
+        <a class="cmenu-item" href="#">Settings</a>
+        <a class="cmenu-item" href="#" onclick="$('#logout').submit();">Log Out</a>
+        <form style="display:none" method="post" id="logout" action="{% url 'logout' %}" >{% csrf_token %} 
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('.cbars').click(function(){
+    /*$('.bar').toggleClass('open1');
+    $('.bar2').toggleClass('open2');
+    $('.bar3').toggleClass('open3');
+    */
+        $('.cbars').toggleClass('copen');
+        $('.cthemenu').toggleClass('copen-menu');
+    });
+</script>
+
+      <a class="navbar-brand" href="#"><img class="img-responsive" src="{% static 'images/logobw.png' %}"></a>
+ 
+
+      
+    </div>
+</nav>
+
+
+<form method='post' enctype="multipart/form-data" action="{% url 'edit_profile' %}" id="main">
     {% csrf_token %}
     <div class="categ-title">About Me</div>
     {{ profile_form.about_me }}

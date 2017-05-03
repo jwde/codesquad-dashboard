@@ -165,11 +165,11 @@ background:#d13f3f;padding:10px;left:0px;color:#fff;border-radius:5px;}
 
 .proj-row {width:100%;display:table-row;}
 
-.proj {display:table-cell;width:50%;padding:10px;}
+.proj {display:table-cell;width:50%;padding:10px;position:relative}
 
-.proj-image {position:relative;width:100%;}
+.pectImages {position:relative;width:100%;}
 
-.proj-image img {width:100%;}
+.pectImages img {width:100%;}
 
 .proj-more {background:rgba(0,0,0,.8);color:#ffffff;padding:10px;
 position:absolute;left:50%;top:50%;transform:translateX(-50%)

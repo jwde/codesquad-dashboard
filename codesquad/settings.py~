@@ -146,20 +146,20 @@ STATIC_ROOT = 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
-AWS_STORAGE_BUCKET_NAME = 'codesquad-dashboard-pics'
-AWS_ACCESS_KEY_ID = CODESQUAD_AWS_ACCESS_ID
-AWS_SECRET_ACCESS_KEY = CODESQUAD_AWS_SECRET_KEY
+#AWS_STORAGE_BUCKET_NAME = 'codesquad-dashboard-pics'
+#AWS_ACCESS_KEY_ID = CODESQUAD_AWS_ACCESS_ID
+#AWS_SECRET_ACCESS_KEY = CODESQUAD_AWS_SECRET_KEY
 
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+#AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 STATICFILES_LOCATION = 'static'
-STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+#STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 
-STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+#STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 
 MEDIAFILES_LOCATION = 'media'
 
-MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
-DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+#MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+#DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
-MEDIA_ROOT = '/var/media/'
+#MEDIA_ROOT = '/var/media/'
