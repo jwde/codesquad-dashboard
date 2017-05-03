@@ -3,7 +3,7 @@ var projectTitles = [];
 
 $(document).ready(function() {
 	var projectList = document.getElementById('projectList'); 
-	var projectArray = JSON.parse(projects);
+	var projectArray = JSON.parse(projectList);
 	console.log(projectArray);
 
 
