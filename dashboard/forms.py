@@ -1,6 +1,9 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django import forms
+from django.contrib.postgres.fields import JSONField, ArrayField
 from django.utils.translation import ugettext, ugettext_lazy as _
+
+import json
 
 class LoginForm(AuthenticationForm):
     pass
@@ -42,11 +45,54 @@ class EditProfileForm(forms.Form):
                                         widget=forms.TextInput(attrs={'name': 'about_me'}),\
                                         initial=student.about_me,\
                                         required=False)
+        self.fields['languages'] = forms.CharField(label='Languages', max_length=200,\
+                                         widget=forms.TextInput(attrs={'name': 'languages'}),\
+                                         #initial=json.dumps(student.profile.languages),\
+                                         required=False)
+                                          #label='Languages:', max_length=200
+                                          #widget=forms.TextInput(attrs={'name': 'languages'}),\
+                                          #initial=student.languages,\
+                                          #required=False)
+        #changed here
+        # self.fields['languages'] = ArrayField(forms.CharField(label='Languages:', max_length=200,\
+        #                                 widget=forms.TextInput(attrs={'name': 'languages'}),\
+        #                                 # initial=student.languages,\
+        #                                 required=False))
 #        self.fields['projects'] = forms.CharField(label='Projects:', max_length=1000,\
 #                                        widget=forms.TextInput(attrs={'name': 'projects'}),\
 #                                        initial=student.projects,\
 #                                        required=False)
         self.fields['image'] = forms.ImageField(label='Profile Picture:', required=False)
+
+
+class EditProjectForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        student = kwargs.pop('student')
+        super(EditProjectForm, self).__init__(*args, **kwargs)
+        self.fields['project_title'] = forms.CharField(label='Project Title', max_length=100,\
+                                             widget=forms.TextInput(attrs={'name': 'project_title'}),\
+                                             required=True)
+        self.fields['project_description'] = forms.CharField(label='Project Descrition', max_length=500,\
+                                            widget=forms.TextInput(attrs={'name' : 'project_description'}),\
+                                            required=True)
+        self.fields['project_role'] = forms.CharField(label='My Role', max_length=150,\
+                                            widget=forms.TextInput(attrs={'name' : 'project_role'}),\
+                                            required=True)
+        self.fields['project_link'] = forms.URLField(label='Project URL', max_length=100,\
+                                            widget=forms.URLInput(attrs={'name' : 'project_link'}),\
+                                            required=False)
+        self.fields['project_languagesframeworks'] = forms.CharField(label='Languages', max_length=200,\
+                                                    required=True)
+
+        self.fields['project_image'] = forms.ImageField(label='Project Image:', required=False)
+
+
+
+
+
+
+
+
 
 class DynamicForm(forms.Form):
     def set_fields(self, fields):
