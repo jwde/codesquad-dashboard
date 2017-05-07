@@ -50,6 +50,7 @@ class Profile(BaseModel):
     def __str__(self):
         return self.user.__str__()
 
+
 class Student(BaseModel):
     profile = models.OneToOneField(Profile,\
                                    on_delete=models.CASCADE,\
@@ -66,12 +67,36 @@ class Student(BaseModel):
     	choices=PRIVACY_CHOICES,
         default=PRIVATE,
     )
-
-    about_me = models.TextField()
-    projects = models.TextField()
+    # Augmented Profile fields
+    image = models.ImageField(upload_to='profile_pics', null=True)
+    about_me = models.TextField(null=True)
+    desired_position = models.CharField(max_length=500, null=True)
+    languages = ArrayField(
+        models.CharField(max_length=200, null=True),
+        null=True,
+    )
+    frameworks = ArrayField(
+        models.CharField(max_length=200, null=True),
+        null=True,
+    )
+    linkedin = models.TextField(null=True)  # Dummy for now
 
     def __str__(self):
         return self.profile.user.username
+
+class Project(BaseModel):
+    student = models.ForeignKey(Student,
+                                on_delete=models.CASCADE,
+                                related_name='projects')
+    title = models.CharField(max_length=1000, null=True)
+    image = models.ImageField(upload_to='project_pics', null=True)
+    description = models.TextField()
+    link = models.URLField()
+    languagesframeworks = ArrayField(
+        models.CharField(max_length=200, null=True),
+        null=True,
+    )
+    role = models.TextField(null=True)
 
 class Course(BaseModel):
     name = models.CharField(max_length=200)

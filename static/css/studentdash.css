@@ -12,11 +12,17 @@
 	margin-left: 20%;
 }
 
+.container {
+    display: flex;
+}
 
+.dashboard-obj {
+    flex: 1;
+    border: 1px solid black;
+}
 
-
-
-
-
+*{
+  font-family: "Helvetica Neue", sans-serif;
+}
 
 

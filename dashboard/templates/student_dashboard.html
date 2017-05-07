@@ -1,51 +1,126 @@
+
 {% extends 'base.html' %}
 {% load staticfiles %}
 
 {% block styles %}
-        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'css/master.css' %}">        
-        <link rel="stylesheet" href="{% static 'css/studentdash.css' %}">        
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script type='text/javascript' src="{% static 'js/student_dashboard.js' %}"></script>
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> 
+
+<script>var projectsjson = {{projects}};</script>
+<link href="{% static 'css/master.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/studentdashboard.css' %}">
+
+
 {% endblock %}
 
 {% block content %}
-        <div class="header">
-            <img src="http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_1440,w_720,f_auto/v1/50529/code_squad_bnzkih.png" id="CodeSquad-logo" alt="CodeSquad"/>
-            <h1>My Dashboard</h1>
-        </div>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
 
-        <div class="menu">
-            <ul>
-                <li><a>Home</a></li>
-                <li><a>Dashboard</a></li>
-                <li><a href="{% url 'my_forms' %}">My Forms</a></li>
-                <li><a>
-                    <form method="post" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                        <input type="submit" value="Log Out"></input>
-                    </form>
-                </a></li>
-            </ul>
-        </div>
-        <div class="profile">
-            <div id="AboutMe"> 
-                <h1 id="AboutMe-hdr">About Me</h1>
-                <img id="self-portrait" src="{% static 'images/Ugly-Pigeon.jpg' %}" alt="self-portrait"/>
-                <h2 id="name">{{ name }}</h2>    
-                <p class="bio">{{ about }}</p>
-            </div>
+<div class="cdrop-menu">
+    <div class="cbars">
+        <div class="cbar"> </div>
+        <div class="cbar2"></div>
+        <div class="cbar3"></div>
+    </div>
+    <div class="cthemenu">
+        <a class="cmenu-item" href="{% url 'edit_profile' %}">Edit Profile</a>
+        <a class="cmenu-item" href="#">Settings</a>
+        <a class="cmenu-item" href="#" onclick="$('#logout').submit();">Log Out</a>
+        <form style="display:none" method="post" id="logout" action="{% url 'logout' %}" >{% csrf_token %} 
+        </form>
+    </div>
+</div>
 
-            <div id="projects"> 
-                <h1>Projects</h1>
-                <div id="projectList">
-                    {{ projects }}
-                    <!--<ul>
-                        <li>leg0s</li> 
-                        <li>knitting scarf</li>
-                        <li>robotic squirrel</li>
-                    </ul>-->
+<script type="text/javascript">
+    $('.cbars').click(function(){
+    /*$('.bar').toggleClass('open1');
+    $('.bar2').toggleClass('open2');
+    $('.bar3').toggleClass('open3');
+    */
+        $('.cbars').toggleClass('copen');
+        $('.cthemenu').toggleClass('copen-menu');
+    });
+</script>
+
+      <a class="navbar-brand" href="#"><img class="img-responsive" src="{% static 'images/logobw.png' %}"></a>
+ 
+
+      
+    </div>
+</nav>
+
+
+        <div class="container">
+            <div class="profile">
+                <div id="AboutMe" class="col-md-3"> 
+                    <h1 id="AboutMe-hdr">About Me</h1>
+
+                    <img id="self-portrait" src="{{ image.url }}" alt="self-portrait"
+                     onerror='this.src="{% static 'images/Ugly-Pigeon.jpg' %}"'/>
+                    <h2 id="name">{{ name }}</h2>    
+                    <p class="bio">{{ about }}</p>
                 </div>
-            </div>
-            <a href="{% url 'edit_profile' %}">Edit Profile</a>
-            <div id="LinkedIn">www.mylinkedIn(me-juliamoyer).com</div>
-        </div>
+
+                <div id="projects" class="col-md-6">
+                    <h1>Projects</h1>
+                    <ul id="projectList">
+                    </ul>
+                </div>
+                <div id="professional" class="col-md-3">
+                <p>Languages and Frameworks:<p>
+                <div id="languages">
+                    {% for language in languages %}
+                        <li> {{ language }} </li>
+                    {%  endfor %}
+                </div>
+                
+                <!-- <ul>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>JavaScript</li>
+                </ul> -->
+               
+                <!--<div class="linkedin-block">
+                <img src="https://content.linkedin.com/content/dam/brand/site/img/logo/logo-tm.png" alt="linked in" class="linkedlogo"/>
+                <a href="www.mylinkedIn(me-juliamoyer).com" class="linkedin">Let's Connect</a></div>
+            --></div>
+
+
+
+        <div class="modal fade" tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">New Project</h4>
+      </div>
+      <div class="modal-body">
+            <p class="category_title" id="project_title">Project Title</p>
+            <p class="category_title" id="project_role">Role</p>
+            <p class="category_title" id="project_languages">Languages/Frameworks/Tools</p>
+            <p class="category_title" id="project_description">Project Description</p>
+            <p class="category_title" id="project_linki">Link to Project</p>
+            <div class="category_title" id="project_picutre"></div>        
+      </div>
+      <div class="modal-footer">
+      </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 {% endblock %}
+
+
