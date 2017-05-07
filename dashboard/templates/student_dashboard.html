@@ -80,7 +80,11 @@
                 </div>
                 <div id="professional" class="col-md-3">
                 <p>Languages and Frameworks:<p>
-                <div id="languages"> {{ languages }} </div>
+                <div id="languages">
+                    {% for language in languages %}
+                        <li> {{ language }} </li>
+                    {%  endfor %}
+                </div>
                 
                 <!-- <ul>
                     <li>HTML</li>

@@ -32,7 +32,7 @@ def dashboard(request, type_requested=None):
                                request.user.last_name,\
                        'about': request.user.profile.student.about_me,\
                        'image': request.user.profile.student.image if hasattr(request.user.profile.student.image, 'url') else False,\
-                       'languages': ' '.join(request.user.profile.student.languages),\
+                       'languages': request.user.profile.student.languages,\
                        'projects': SafeString(projects)})
     def teacher_dashboard():
         active_courses = [c for c in request.user.profile.teacher.courses\
