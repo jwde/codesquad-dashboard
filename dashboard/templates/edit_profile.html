@@ -80,11 +80,16 @@
 	<p id="addproj">Add Project</p>
 
 
-
-
     <p>Languages</p>
     
   	{{ profile_form.languages }}
+
+    <p>Profile Picture</p>
+
+    <img id="curr_profile_image" src="{{ curr_profile_image.url }}" alt="current profile picture" />
+
+    {{ profile_form.image }}
+
     <button type="submit">Submit!</button>
 </form>
 

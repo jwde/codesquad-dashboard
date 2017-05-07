@@ -71,22 +71,22 @@ def edit_profile(request):
     if request.user.profile.is_student:
         profile_form = EditProfileForm(data=request.POST or None,
                                files=request.FILES or None,
-                               initial={'languages': ','.join(request.user.profile.student.languages)},
                                student=request.user.profile.student)
         project_form = EditProjectForm(None, None,
                                student=request.user.profile.student)
+        image = request.user.profile.student.image
         if request.method == 'POST':
             if profile_form.is_valid():
                 request.user.profile.student.about_me = profile_form.cleaned_data['about_me']
                 print(profile_form.cleaned_data['languages'].split(','))
                 if not profile_form.cleaned_data['languages'] == None:
                     request.user.profile.student.languages = profile_form.cleaned_data['languages'].split(',') #Changed
-                #request.user.profile.student.projects = form.cleaned_data['projects']
                 if not profile_form.cleaned_data['image'] == None:
                     request.user.profile.student.image = profile_form.cleaned_data['image']
                 request.user.profile.student.save()
                 return redirect('dashboard')
-        return render(request, 'edit_profile.html', {'profile_form': profile_form, 'project_form': project_form})
+        return render(request, 'edit_profile.html', {'profile_form': profile_form, 'project_form': project_form,
+                                                     'curr_profile_image': image})
     return redirect('dashboard')
 
 

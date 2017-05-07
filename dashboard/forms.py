@@ -47,7 +47,7 @@ class EditProfileForm(forms.Form):
                                         required=False)
         self.fields['languages'] = forms.CharField(label='Languages', max_length=200,\
                                          widget=forms.TextInput(attrs={'name': 'languages'}),\
-                                         #initial=json.dumps(student.profile.languages),\
+                                         initial= ', '.join(student.languages),\
                                          required=False)
                                           #label='Languages:', max_length=200
                                           #widget=forms.TextInput(attrs={'name': 'languages'}),\
@@ -62,7 +62,9 @@ class EditProfileForm(forms.Form):
 #                                        widget=forms.TextInput(attrs={'name': 'projects'}),\
 #                                        initial=student.projects,\
 #                                        required=False)
-        self.fields['image'] = forms.ImageField(label='Profile Picture:', required=False)
+        self.fields['image'] = forms.ImageField(label='Profile Picture:',
+                                                widget=forms.FileInput(attrs={'name': 'profile_image'}),
+                                                required=False)
 
 
 class EditProjectForm(forms.Form):
