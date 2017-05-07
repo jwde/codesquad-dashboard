@@ -33,9 +33,8 @@
     <div class="bar"></div>
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item" href="{% url 'my_forms' %}">Forms</a>
-    <a class="dropdown-item" href="#">Settings</a>
-    <a class="dropdown-item" href="#" onclick="$('#logout').submit();">Log Out</a>
+    <a class="dropdown-item">Settings</a>
+    <a class="dropdown-item" href={% url 'logout' %}>Log Out</a>
   </div>
 </div>
 
@@ -59,8 +58,9 @@
                         {% for student in students %}
                         <!-- here will be student.image -->
                         <!-- might need to be link to profile as well -->
-                        <li class="student_array"><img src="{{ student.image }}" class="student-icon">
-                            <div id='profile_modal'>{{ student.name }}</div>
+                        <li class="student_array"><img src="{{ student.profile.student.image.url }}" class="student-icon">
+                            <div id='profile_modal'>{{ student.profile.user.first_name }}
+                                {{ student.profile.user.last_name }}</div>
                             <div class="modal fade">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">

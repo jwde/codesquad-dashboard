@@ -35,14 +35,15 @@ def dashboard(request, type_requested=None):
                        'languages': request.user.profile.student.languages,\
                        'projects': SafeString(projects)})
     def teacher_dashboard():
-        active_courses = [c for c in request.user.profile.teacher.courses\
+        teacher_name = request.user.first_name + " " + request.user.last_name
+        print teacher_name
+        active_courses = [c for c in request.user.profile.teacher.courses.all()\
                           if c.end_date >= datetime.date.today()]
-        student_sets = [frozenset(c.enrolled_students.all()) for c in active_courses.all()]
+        student_sets = [frozenset(c.enrolled_students.all()) for c in active_courses]
         students = frozenset().union(*student_sets)
-        student_names = ['{} {}'.format(s.profile.user.first_name, s.profile.user.last_name)\
-                         for s in students]
         return render(request, "teacher_dashboard.html",\
-                      {'students': student_names})
+                      {'students': students,
+                      'name': teacher_name})
     def employer_dashboard():
         active_courses = Course.objects.filter(end_date__gte = datetime.date.today())
         student_sets = [frozenset(c.enrolled_students.filter(privacy_setting='PU'))\
