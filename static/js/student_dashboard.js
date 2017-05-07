@@ -2,9 +2,9 @@ var projectTitles = [];
 
 
 $(document).ready(function() {
-	var projectList = document.getElementById('projectList'); 
-	var projectArray = JSON.parse(projectList);
-	console.log(projectArray);
+	console.log(projectsjson);
+	var projectList = document.getElementById('projectList');
+	var projectArray = projectsjson;
 
 
 
