@@ -17,7 +17,6 @@
 <script type='text/javascript' src="{% static 'js/student_dashboard.js' %}"></script>
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> 
 
-<script>var projectsjson = {{projects}};</script>
 <link href="{% static 'css/master.css' %}" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/studentdashboard.css' %}">
 
@@ -35,11 +34,9 @@
         <div class="cbar3"></div>
     </div>
     <div class="cthemenu">
-        <a class="cmenu-item" href="{% url 'edit_profile' %}">Edit Profile</a>
+        <a class="cmenu-item" href={% url 'edit_profile' %}>Edit Profile</a>
         <a class="cmenu-item" href="#">Settings</a>
-        <a class="cmenu-item" href="#" onclick="$('#logout').submit();">Log Out</a>
-        <form style="display:none" method="post" id="logout" action="{% url 'logout' %}" >{% csrf_token %} 
-        </form>
+        <a class="cmenu-item" href={% url 'logout' %} onclick="$('#logout').submit();">Log Out</a>
     </div>
 </div>
 
@@ -54,7 +51,8 @@
     });
 </script>
 
-      <a class="navbar-brand" href="#"><img class="img-responsive" src="{% static 'images/logobw.png' %}"></a>
+      <a class="navbar-brand"><img class="img-responsive" src="{% static 'images/logobw.png' %}">
+      </a>
  
 
       
@@ -67,7 +65,7 @@
                 <div id="AboutMe" class="col-md-3"> 
                     <h1 id="AboutMe-hdr">About Me</h1>
 
-                    <img id="self-portrait" src="{{ image.url }}" alt="self-portrait"
+                    <img id="self-portrait" src="{{ image.url }}" alt="profile image"
                      onerror='this.src="{% static 'images/Ugly-Pigeon.jpg' %}"'/>
                     <h2 id="name">{{ name }}</h2>    
                     <p class="bio">{{ about }}</p>
@@ -76,6 +74,11 @@
                 <div id="projects" class="col-md-6">
                     <h1>Projects</h1>
                     <ul id="projectList">
+                        {% for project in projects %}
+                        <div class='pectImages'>
+                            <image class='pectImages' src ={{project.image.url}} alt={{project.title}}/>
+                        </div>
+                        {%  endfor %}
                     </ul>
                 </div>
                 <div id="professional" class="col-md-3">

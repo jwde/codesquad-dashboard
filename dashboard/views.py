@@ -22,18 +22,14 @@ def dashboard(request, type_requested=None):
                 'teacher': lambda: request.user.profile.is_teacher,\
                 'employer': lambda: request.user.profile.is_employer}[type_requested]()
     def student_dashboard():
-        projects = [model_to_dict(p) for p in request.user.profile.student.projects.all()]
-        for project in projects:
-            if project['image']:
-                project['image'] = project['image'].url
-        projects = json.dumps(projects)
-        return render(request, "student_dashboard.html", 
+        projects = request.user.profile.student.projects.all()
+        return render(request, "student_dashboard.html",
                       {'name': request.user.first_name + " " + 
                                request.user.last_name,\
                        'about': request.user.profile.student.about_me,\
                        'image': request.user.profile.student.image if hasattr(request.user.profile.student.image, 'url') else False,\
                        'languages': request.user.profile.student.languages,\
-                       'projects': SafeString(projects)})
+                       'projects': projects})
     def teacher_dashboard():
         teacher_name = request.user.first_name + " " + request.user.last_name
         print teacher_name

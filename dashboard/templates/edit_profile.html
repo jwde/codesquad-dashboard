@@ -33,11 +33,9 @@
         <div class="cbar3"></div>
     </div>
     <div class="cthemenu">
-        <a class="cmenu-item" href="{% url 'edit_profile' %}">Edit Profile</a>
+        <a class="cmenu-item" href={% url 'edit_profile' %}>Edit Profile</a>
         <a class="cmenu-item" href="#">Settings</a>
-        <a class="cmenu-item" href="#" onclick="$('#logout').submit();">Log Out</a>
-        <form style="display:none" method="post" id="logout" action="{% url 'logout' %}" >{% csrf_token %} 
-        </form>
+        <a class="cmenu-item" href={% url 'logout' %}>Log Out</a>
     </div>
 </div>
 
@@ -52,8 +50,8 @@
     });
 </script>
 
-      <a class="navbar-brand" href="#"><img class="img-responsive" src="{% static 'images/logobw.png' %}"></a>
- 
+    <a class="navbar-brand" href={% url 'dashboard' %}><img class="img-responsive" src="{% static 'images/logobw.png' %}">
+    </a>
 
       
     </div>
