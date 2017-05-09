@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.utils.safestring import SafeString
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseBadRequest
 from models import Profile, Student, Teacher, Employer, FormTemplate, Enrollment, Question, FormResponse, QuestionResponse, Course, Project
@@ -62,6 +63,11 @@ def dashboard(request, type_requested=None):
          'teacher': teacher_dashboard,\
          'employer': employer_dashboard,\
          'pending': pending_dashboard}[type_returned]()
+
+@login_required(login_url='/login/')
+def settings(request):
+    change_password = PasswordChangeForm(user=request.user, data=None)
+    return render(request, 'settings.html', {'change_password': change_password})
 
 @login_required(login_url='/login/')
 def edit_profile(request):
