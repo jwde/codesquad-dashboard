@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
@@ -66,8 +66,20 @@ def dashboard(request, type_requested=None):
 
 @login_required(login_url='/login/')
 def settings(request):
-    change_password = PasswordChangeForm(user=request.user, data=None)
+    change_password = PasswordChangeForm(user=request.user)
+
     return render(request, 'settings.html', {'change_password': change_password})
+
+def change_password(request):
+    if request.method == 'POST':
+        change_password = PasswordChangeForm(user=request.user, data=request.POST)
+        if change_password.is_valid():
+            change_password.save()
+            update_session_auth_hash(request, change_password.user)
+            return redirect('settings')
+        return HttpResponseBadRequest
+    else:
+        return ('')
 
 @login_required(login_url='/login/')
 def edit_profile(request):
