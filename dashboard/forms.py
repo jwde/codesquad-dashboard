@@ -42,7 +42,7 @@ class EditProfileForm(forms.Form):
         student = kwargs.pop('student')
         super(EditProfileForm, self).__init__(*args, **kwargs)
         self.fields['about_me'] = forms.CharField(label='About Me:', max_length=1000,\
-                                        widget=forms.TextInput(attrs={'name': 'about_me'}),\
+                                        widget=forms.TextArea(attrs={'name': 'about_me'}),\
                                         initial=student.about_me,\
                                         required=False)
         self.fields['languages'] = forms.CharField(label='Languages', max_length=200,\
@@ -75,10 +75,10 @@ class EditProjectForm(forms.Form):
                                              widget=forms.TextInput(attrs={'name': 'project_title'}),\
                                              required=True)
         self.fields['project_description'] = forms.CharField(label='Project Descrition', max_length=500,\
-                                            widget=forms.TextInput(attrs={'name' : 'project_description'}),\
+                                            widget=forms.TextArea(attrs={'name' : 'project_description'}),\
                                             required=True)
         self.fields['project_role'] = forms.CharField(label='My Role', max_length=150,\
-                                            widget=forms.TextInput(attrs={'name' : 'project_role'}),\
+                                            widget=forms.TextArea(attrs={'name' : 'project_role'}),\
                                             required=True)
         self.fields['project_link'] = forms.URLField(label='Project URL', max_length=100,\
                                             widget=forms.URLInput(attrs={'name' : 'project_link'}),\
