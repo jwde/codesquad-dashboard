@@ -79,7 +79,7 @@ def change_password(request):
             return redirect('settings')
         return HttpResponseBadRequest
     else:
-        return ('')
+        return HttpResponseBadRequest
 
 @login_required(login_url='/login/')
 def edit_profile(request):
