@@ -33,8 +33,9 @@
     <div class="bar"></div>
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item" href={% url 'settings' %}>Settings</a>
-    <a class="dropdown-item" href={% url 'logout' %}>Log Out</a>
+      <a class="cmenu-item" href={% url 'dashboard' %}>My Dashboard</a>
+      <a class="cmenu-item" href={% url 'settings' %}>Settings</a>
+      <a class="cmenu-item" href={% url 'logout' %} onclick="$('#logout').submit();">Log Out</a>
   </div>
 </div>
 
