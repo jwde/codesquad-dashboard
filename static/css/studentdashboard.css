@@ -1,14 +1,5 @@
 /* Student Dashboard CSS */
 
-
-
-.container {
-	margin-top: 100px;
-	width:90%;
-	margin:8% auto;
-}
-
-
 @media (max-width: 599px) {
 	  #AboutMe {width:40%;min-width:300px!important;border:1px solid #ccc;
 	  margin:8% auto;padding: 10px;position:relative;background:#d13f3f;border-radius:5px;color:#ffffff;

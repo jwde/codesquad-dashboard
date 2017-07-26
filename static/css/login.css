@@ -5,8 +5,8 @@
 .loginform-open{
   z-index: 10000;
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   width: 100%;
   background-color: #FFFFFF;
   border-bottom: 5px solid #222;
@@ -26,7 +26,6 @@ body{
 
 .login-form{
   max-width: 320px;
-  position: absolute;
   left:0;
   right:0;
   margin-top: 3%;
@@ -108,10 +107,10 @@ input[type="checkbox"] + label span {
 }
 
 .remember-me {
-  font-size: : 18px;
+  font-size: 18px;
   position: relative;
   display: block;
-  margin-bottom: : 15px;
+  margin-bottom: 15px;
   padding-left: 30px;
   cursor: pointer;
 }
