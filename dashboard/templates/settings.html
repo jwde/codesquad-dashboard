@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Settings</title>
-</head>
+{% extends "base.html" %}
+
 {% block content %}
-<body>
-<h3>Change Password</h3>
-    <form action="/change_password/" method="post">
+    <div class="w-100"></div>
+    <div class="row justify-content-center">
+      <h3>Change Password</h3>
+      <form action="/change_password/" method="post">
         {% csrf_token %}
-        {{ change_password }}
+        {{ change_password.as_p }}
         <input type="submit" value="Submit" />
-    </form>
-</body>
+      </form>
+    </div>
 {% endblock %}
-</html>
