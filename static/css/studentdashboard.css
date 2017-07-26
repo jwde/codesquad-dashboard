@@ -1,33 +1,6 @@
 /* Student Dashboard CSS */
 
-a:hover {transition-duration:400ms;}
 
-nav {
-	background: #D13F3F!important;
-	color: white;
-	position: fixed!important;
-	top: 0; 
-	left: 0;
-	right: 0;
-	z-index:9999;
-}
-
-.navbar-brand {
-	display: inline;
-	width: 100%;
-	position: relative;
-	float: none!important;
-}
-
-.navbar-brand img {
-	width: 15%;
-	min-width:100px;
-	margin: 0 auto;
-}
-
-.collapse {
-	display: inline!important;
-}
 
 .container {
 	margin-top: 100px;
@@ -35,72 +8,6 @@ nav {
 	margin:8% auto;
 }
 
-.cdrop-menu {
-	width: 50px;
-	position:fixed;
-	left:2%;top:5%;
-	z-index: 99999;
-	display:block;
-}
-
-
-.cbars {cursor:pointer;display:block;position:relative;}
-.cbar {
-	width: 50px;
-	height: 3px;
-	background: white;
-	margin-top:0;
-	transition-duration:400ms;
-}
-
-.cbar2 {
-	width: 50px;
-	height: 3px;
-	background: #ffffff;
-	margin-top: 15px;
-	margin-left: 0px;
-	transition-duration:400ms;
-}
-
-.cbar3 {
-	width: 50px;
-	height: 3px;
-	background: #ffffff;
-	margin-top: 15px;
-	margin-left:0px;
-	transition-duration:400ms;
-}
-
-.cbars {transition-duration:400ms;transform:none;display:block;background:#d13f3f;z-index:99999;}
-
-.copen {
-	transform:rotate(-45deg);
-	margin-left:5px;
-}
-
-.cmenu-item {
-	padding: 10px;
-	margin:0;
-	background: #D13F3F;
-	text-align:center;
-	color: #ffffff;
-	display: block;
-}
-
-.cmenu-item:hover {
-	background:#b33939;
-	text-decoration: none;
-	color: #ffffff;
-}
-
-.cthemenu {padding:none;outline:none;box-shadow:none;padding:0!important;border:1px solid #b33939;
-	margin-top:15px;margin-left:30px;height:auto;width:170px;opacity:0;
-	transition-duration:400ms;border-radius:3px;z-index:0;position:relative;background:#d13f3f;}
-
-.copen-menu {opacity:1;margin-top:-15px;}
-
-
-#LinkedIn {padding:10px;}
 
 @media (max-width: 599px) {
 	  #AboutMe {width:40%;min-width:300px!important;border:1px solid #ccc;
