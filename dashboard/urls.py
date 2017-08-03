@@ -12,8 +12,8 @@ urlpatterns = [
     url(r'^settings/$', views.settings, name='settings'),
     url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
     url(r'^edit_project/$', views.edit_project, name='edit_project'),
-    url(r'^my_forms/$', views.my_forms, name='my_forms'),
-    url(r'^form_responses/([0-9]+)/$', views.form_responses, name='form_responses'),
+    # url(r'^my_forms/$', views.my_forms, name='my_forms'),
+    # url(r'^form_responses/([0-9]+)/$', views.form_responses, name='form_responses'),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html',\
                                         'authentication_form': LoginForm},\
         name='login'),
@@ -25,12 +25,12 @@ urlpatterns = [
 #    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', 
 #            auth_views.password_reset_confirm, name='password_reset_confirm'),
 #    url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
-    url(r'^create_form$', views.create_form, name='create_form'),
-    url(r'^form/([0-9]+)/$', views.form, name='form'),
-    url(r'^question/short_answer', views.template_short_answer, name=''),
-    url(r'^question/long_answer', views.template_long_answer, name=''),
-    url(r'^question/multiple_choice', views.template_multiple_choice, name=''),
-    url(r'^question/multiple_select', views.template_multiple_choice, name=''),
-    url(r'^question/slider', views.template_slider, name=''),
-    url(r'^question/invalid_form', views.template_invalid_form, name='')
+#     url(r'^create_form$', views.create_form, name='create_form'),
+#     url(r'^form/([0-9]+)/$', views.form, name='form'),
+#     url(r'^question/short_answer', views.template_short_answer, name=''),
+#     url(r'^question/long_answer', views.template_long_answer, name=''),
+#     url(r'^question/multiple_choice', views.template_multiple_choice, name=''),
+#     url(r'^question/multiple_select', views.template_multiple_choice, name=''),
+#     url(r'^question/slider', views.template_slider, name=''),
+#     url(r'^question/invalid_form', views.template_invalid_form, name='')
 ]

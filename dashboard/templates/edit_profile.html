@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block styles %}
         <link rel="stylesheet" href="{% static 'css/editprof.css' %}">
@@ -9,37 +10,10 @@
 {% block content %}
 
     <form method='post' enctype="multipart/form-data" action="{% url 'edit_profile' %}" id="main">
-    {% csrf_token %}
-    <div class="categ-title">About Me</div>
-    {{ profile_form.about_me }}
-
-
-    <div id="projects">
-    	<div id="project_title">
-    	
-    	</div>
-    	<div id="project_image">
-
-    	</div>
-    	<div id="delete_x">
-    	
-    	</div>
-    </div>
-	<p id="addproj">Add Project</p>
-
-
-    <p>Languages (separate with commas)</p>
-    
-  	{{ profile_form.languages }}
-
-    <p>Profile Picture</p>
-
-    <img id="curr_profile_image" src="{{ curr_profile_image.url }}" alt="current profile picture" />
-
-    {{ profile_form.image }}
-
-    <button type="submit">Submit!</button>
-</form>
+        {% csrf_token %}
+        {{ profile_form|crispy }}
+        <input type="submit" value="Submit">
+    </form>
 
 
 <div class="modal fade" tabindex="-1" role="dialog" >

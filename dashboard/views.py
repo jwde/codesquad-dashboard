@@ -248,58 +248,58 @@ def register(request):
                 return redirect('dashboard')
     return render(request, 'createaccount.html', {'form': form})
 
-@login_required(login_url='login/')
-def create_form(request):
-    if request.method == 'POST':# and request.user.profile.is_teacher:
-        try:
-            form_json = json.loads(request.POST.get('form'))
-            name = bleach.clean(form_json['name'])
-            questions = []
-            for question in form_json['questions']:
-                question_type = question['question_type']
-                question_text = bleach.clean(question['question_text'])
-                additional_info = question['additional_info']
-                if not question_type in frozenset(('LF', 'SF', 'MC', 'SS', 'SM')):
-                    return HttpResponseForbidden()
-                if 'choices' in additional_info:
-                    additional_info['choices'] = bleach.clean(additional_info['choices'])
-                if 'range_max' in additional_info:
-                    additional_info['range_max'] = int(additional_info['range_max'])
-                if 'range_min' in additional_info:
-                    additional_info['range_min'] = int(additional_info['range_min'])
-                additional_info = {k: additional_info[k]\
-                                   for k in ['choices', 'range_max', 'range_min']\
-                                   if k in additional_info}
-                question_model = Question.objects.create(question_type=question_type,\
-                                                         question_text=question_text,\
-                                                         additional_info=additional_info)
-                question_model.save()
-                questions.append(str(question_model.pk))
-            # right now we have no idea what course this is for -- must add that
-            form_template = FormTemplate.objects.create(question_list=','.join(questions),\
-                                                        owner=request.user,\
-                                                        name=name)
-            form_template.save()
-        except:
-            return HttpResponseForbidden()
-    return render(request, "editforms.html", {});
+# @login_required(login_url='login/')
+# def create_form(request):
+#     if request.method == 'POST':# and request.user.profile.is_teacher:
+#         try:
+#             form_json = json.loads(request.POST.get('form'))
+#             name = bleach.clean(form_json['name'])
+#             questions = []
+#             for question in form_json['questions']:
+#                 question_type = question['question_type']
+#                 question_text = bleach.clean(question['question_text'])
+#                 additional_info = question['additional_info']
+#                 if not question_type in frozenset(('LF', 'SF', 'MC', 'SS', 'SM')):
+#                     return HttpResponseForbidden()
+#                 if 'choices' in additional_info:
+#                     additional_info['choices'] = bleach.clean(additional_info['choices'])
+#                 if 'range_max' in additional_info:
+#                     additional_info['range_max'] = int(additional_info['range_max'])
+#                 if 'range_min' in additional_info:
+#                     additional_info['range_min'] = int(additional_info['range_min'])
+#                 additional_info = {k: additional_info[k]\
+#                                    for k in ['choices', 'range_max', 'range_min']\
+#                                    if k in additional_info}
+#                 question_model = Question.objects.create(question_type=question_type,\
+#                                                          question_text=question_text,\
+#                                                          additional_info=additional_info)
+#                 question_model.save()
+#                 questions.append(str(question_model.pk))
+#             # right now we have no idea what course this is for -- must add that
+#             form_template = FormTemplate.objects.create(question_list=','.join(questions),\
+#                                                         owner=request.user,\
+#                                                         name=name)
+#             form_template.save()
+#         except:
+#             return HttpResponseForbidden()
+#     return render(request, "editforms.html", {});
 
-def template_short_answer(request):
-    if request.method == 'GET':
-        return render(request, "question_templates/short_answer.html", {});
-
-def template_long_answer(request):
-    if request.method == 'GET':
-        return render(request, "question_templates/long_answer.html", {});
-
-def template_multiple_choice(request):
-    if request.method == 'GET':
-        return render(request, "question_templates/multiple_choice.html", {});
-
-def template_slider(request):
-    if request.method == 'GET':
-        return render(request, "question_templates/slider.html", {});
-
-def template_invalid_form(request):
-    if request.method == 'GET':
-        return render(request, "question_templates/invalid_form.html", {});
+# def template_short_answer(request):
+#     if request.method == 'GET':
+#         return render(request, "question_templates/short_answer.html", {});
+#
+# def template_long_answer(request):
+#     if request.method == 'GET':
+#         return render(request, "question_templates/long_answer.html", {});
+#
+# def template_multiple_choice(request):
+#     if request.method == 'GET':
+#         return render(request, "question_templates/multiple_choice.html", {});
+#
+# def template_slider(request):
+#     if request.method == 'GET':
+#         return render(request, "question_templates/slider.html", {});
+#
+# def template_invalid_form(request):
+#     if request.method == 'GET':
+#         return render(request, "question_templates/invalid_form.html", {});

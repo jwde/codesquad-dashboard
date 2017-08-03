@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'storages',
     'custom_storages',
+    'crispy_forms'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -163,3 +164,7 @@ MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 MEDIA_ROOT = '/var/media/'
+
+# Crispy Forms Settings
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
