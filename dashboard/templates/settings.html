@@ -1,13 +1,21 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
 
 {% block content %}
-    <div class="w-100"></div>
-    <div class="row justify-content-center">
-      <h3>Change Password</h3>
-      <form action="/change_password/" method="post">
-        {% csrf_token %}
-        {{ change_password.as_p }}
-        <input type="submit" value="Submit" />
-      </form>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-5">
+          <h1>Change Password</h1>
+          <form action="/change_password/" method="post" id="main">
+            {% csrf_token %}
+              {{ change_password|crispy }}
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      </div>
     </div>
+
 {% endblock %}

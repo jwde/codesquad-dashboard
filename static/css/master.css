@@ -1,3 +1,7 @@
+body{
+	padding-top: 70px; /*Needed for bootstrap*/
+}
+
 nav {
 	background: #D13F3F!important;
 	color: white;
@@ -5,19 +9,12 @@ nav {
 	top: 0;
 	left: 0;
 	right: 0;
-	z-index:9999;
 }
 
 .navbar-center {
   transform: translateX(-50%);
   left: 50%;
   position: absolute;
-}
-
-.container {
-	margin-top: 100px;
-	width:90%;
-	margin:8% auto;
 }
 
 
@@ -129,11 +126,6 @@ nav {
     margin: 0;
     padding: 0;
     font-family: Montserrat, sans-serif;
-    /*box-sizing: border-box;*/
-}
-
-body, html {
-    height: 100%;
 }
 
 .header{
@@ -155,13 +147,6 @@ body, html {
 
 body{
   background-color: #fff9fb;
-  padding-top: 55px;
-}
-
-
-#CodeSquad-logo{
-  width: 7%;
-  height: 7%;
 }
 
 
@@ -203,10 +188,6 @@ li a:hover {
     background-color: #383D66;
     color: white;
 }
-
-
-h1 {font-weight: bold;}
-
 
 
 

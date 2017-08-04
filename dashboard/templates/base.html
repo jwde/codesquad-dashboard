@@ -33,6 +33,7 @@
     <body>
        <nav class="navbar navbar-default">
                 <div class="container-fluid">
+                  <div class="row">
       {% if user.is_authenticated %}
             <div class="cdrop-menu">
                 <div class="cbars">
@@ -66,6 +67,7 @@
 
 
 
+                </div>
                 </div>
             </nav>
         {% block content %}

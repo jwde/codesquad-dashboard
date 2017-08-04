@@ -41,30 +41,22 @@ class EditProfileForm(forms.Form):
     def __init__(self, *args, **kwargs):
         student = kwargs.pop('student')
         super(EditProfileForm, self).__init__(*args, **kwargs)
+        self.fields['image'] = forms.ImageField(label='Profile Picture:',
+                                                widget=forms.FileInput(attrs={'name': 'profile_image'}),
+                                                required=False)
         self.fields['about_me'] = forms.CharField(label='About Me:', max_length=1000,\
                                         widget=forms.Textarea(attrs={'name': 'about_me'}),\
                                         initial=student.about_me,\
                                         required=False)
         self.fields['languages'] = forms.CharField(label='Languages', max_length=200,\
                                          widget=forms.Textarea(attrs={'name': 'languages'}),\
-                                         initial= ', '.join(student.languages),\
+                                         initial= '\n'.join(student.languages),\
                                          required=False)
-                                          #label='Languages:', max_length=200
-                                          #widget=forms.TextInput(attrs={'name': 'languages'}),\
-                                          #initial=student.languages,\
-                                          #required=False)
-        #changed here
-        # self.fields['languages'] = ArrayField(forms.CharField(label='Languages:', max_length=200,\
-        #                                 widget=forms.TextInput(attrs={'name': 'languages'}),\
-        #                                 # initial=student.languages,\
-        #                                 required=False))
 #        self.fields['projects'] = forms.CharField(label='Projects:', max_length=1000,\
 #                                        widget=forms.TextInput(attrs={'name': 'projects'}),\
 #                                        initial=student.projects,\
 #                                        required=False)
-        self.fields['image'] = forms.ImageField(label='Profile Picture:',
-                                                widget=forms.FileInput(attrs={'name': 'profile_image'}),
-                                                required=False)
+
 
 
 class EditProjectForm(forms.Form):

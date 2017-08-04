@@ -95,7 +95,7 @@ def edit_profile(request):
                 request.user.profile.student.about_me = profile_form.cleaned_data['about_me']
                 print(profile_form.cleaned_data['languages'].split(','))
                 if not profile_form.cleaned_data['languages'] == None:
-                    request.user.profile.student.languages = profile_form.cleaned_data['languages'].split(',') #Changed
+                    request.user.profile.student.languages = profile_form.cleaned_data['languages'].split()
                 if not profile_form.cleaned_data['image'] == None:
                     request.user.profile.student.image = profile_form.cleaned_data['image']
                 request.user.profile.student.save()

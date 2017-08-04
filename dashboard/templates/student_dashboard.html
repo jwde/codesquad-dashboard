@@ -4,9 +4,9 @@
 
 {% block style_block %}
 
-<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
-<link rel="stylesheet" href="{% static 'css/studentdashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/studentdashboard.css' %}">
 
 
 {% endblock %}
@@ -14,63 +14,64 @@
 {% block content %}
 
     <div class="container">
-        <div class="profile">
-            <div id="AboutMe" class="col-md-3">
-                <h1 id="AboutMe-hdr">About Me</h1>
-
-                <img id="self-portrait" src="{{ image.url }}" alt="profile image"
-                 onerror='this.src="{% static 'images/Ugly-Pigeon.jpg' %}"'/>
-                <h2 id="name">{{ name }}</h2>
+        <div class="row">
+            <div class="col-sm-4">
+                <h2>{{ name }}</h2>
+                <img class="img-responsive" src="{{ image.url }}" alt="profile image"
+                     onerror='this.src="{% static 'images/Ugly-Pigeon.jpg' %}"'/>
+            </div>
+            <div class="col-sm-4">
+                <h3>About Me:</h3>
                 <p class="bio">{{ about }}</p>
             </div>
-
-            <div id="projects" class="col-md-6">
-                <h1>Projects</h1>
-                <ul id="projectList">
-                    {% for project in projects %}
-                    <div class='pectImages'>
-                        <image class='pectImages' src ={{project.image.url}} alt={{project.title}}/>
-                    </div>
-                    {%  endfor %}
-                </ul>
-            </div>
-            <div id="professional" class="col-md-3">
-            <p>Languages and Frameworks:<p>
-            <div id="languages">
+            <div class="col-sm-4">
+                <h3>Languages and Frameworks:</h3>
                 {% for language in languages %}
                     <li> {{ language }} </li>
                 {%  endfor %}
             </div>
-
-
-</div>
-
-
-
-    <div class="modal fade" tabindex="-1" role="dialog" >
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
-    <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title">New Project</h4>
-    </div>
-    <div class="modal-body">
-        <p class="category_title" id="project_title">Project Title</p>
-        <p class="category_title" id="project_role">Role</p>
-        <p class="category_title" id="project_languages">Languages/Frameworks/Tools</p>
-        <p class="category_title" id="project_description">Project Description</p>
-        <p class="category_title" id="project_linki">Link to Project</p>
-        <div class="category_title" id="project_picutre"></div>
-    </div>
-    <div class="modal-footer">
-    </div>
-    </form>
-    </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
         </div>
     </div>
+    <div id="projects" class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2>My Projects:</h2>
+            </div>
+        </div>
+        <div class="row">
+            {% for project in projects %}
+                <div class="col-xs-6 col-md-3">
+                    <a href="#myModal" role="button" data-toggle="modal" data-target="#{{ project.title }}">
+                        <image src="{{ project.image.url }}" alt="project.title" class="thumbnail img-responsive" />
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
 
+
+        {% for project in projects %}
+            <div class="modal fade" id="{{ project.title }}" tabindex="-1" role="dialog" >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">{{ project.title }}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p class="category_title" id="project_role">Role: {{ project.role }}</p>
+                            <p class="category_title" id="project_languages">Tools Used: {{ project.languagesframeworks }}</p>
+                            <p class="category_title" id="project_description">Description: {{ project.description }}</p>
+                            <p class="category_title" id="project_linki">Link: {{ project.link }}</p>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                        </form>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {% block javascript %}
