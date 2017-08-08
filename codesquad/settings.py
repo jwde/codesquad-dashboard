@@ -67,8 +67,8 @@ MIDDLEWARE_CLASSES = [
 
 # AUTH_USER_MODEL = 'dashboard.User'
 ACCOUNT_ACTIVATION_DAYS = 7
-LOGIN_REDIRECT_URL = '/dashboard/'
-
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/dashboard'
 ROOT_URLCONF = 'codesquad.urls'
 
 TEMPLATES = [

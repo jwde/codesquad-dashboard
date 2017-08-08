@@ -15,7 +15,7 @@ import bleach
 from django.forms.models import model_to_dict
 
 # Create your views here.
-@login_required(login_url='/login/')
+@login_required(login_url='/accounts/login/')
 def dashboard(request, type_requested=None):
     def validate(type_requested):
         return type_requested in ('student', 'teacher', 'employer') and\
