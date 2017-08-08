@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/createaccount.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <h1>Create An Account</h1>
+
+    <form method="post" action=".">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <input type="submit" value="Submit"/>
+    </form>
+{% endblock %}
+
+{% block  javascript %}
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="{% static 'js/login.js' %}"></script>
+{% endblock %}
