@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'storages',
     'custom_storages',
-    'crispy_forms'
+    'crispy_forms',
+    'registration',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -65,6 +66,8 @@ MIDDLEWARE_CLASSES = [
 ]
 
 # AUTH_USER_MODEL = 'dashboard.User'
+ACCOUNT_ACTIVATION_DAYS = 7
+LOGIN_REDIRECT_URL = '/dashboard/'
 
 ROOT_URLCONF = 'codesquad.urls'
 
@@ -120,6 +123,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
 
 
 # Internationalization

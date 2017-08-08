@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic.edit import CreateView
@@ -14,6 +14,8 @@ urlpatterns = [
     url(r'^edit_project/$', views.edit_project, name='edit_project'),
     # url(r'^my_forms/$', views.my_forms, name='my_forms'),
     # url(r'^form_responses/([0-9]+)/$', views.form_responses, name='form_responses'),
+    url(r'^accounts/',
+        include('registration.backends.simple.urls')),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html',\
                                         'authentication_form': LoginForm},\
         name='login'),
