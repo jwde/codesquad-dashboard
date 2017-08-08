@@ -20,62 +20,62 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <meta charset="utf-8">
-        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <title>Codesquad Dashboard</title>
-        <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300'>
-        <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
-        {% block styles %}
-        {% endblock %}
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Codesquad Dashboard</title>
+    <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300'>
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+    {% block styles %}
+    {% endblock %}
+</head>
 
-    <body>
-       <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                  <div class="row">
-      {% if user.is_authenticated %}
-            <div class="cdrop-menu">
-                <div class="cbars">
-                    <div class="cbar"> </div>
-                    <div class="cbar2"></div>
-                    <div class="cbar3"></div>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="row">
+            {% if user.is_authenticated %}
+                <div class="cdrop-menu">
+                    <div class="cbars">
+                        <div class="cbar"> </div>
+                        <div class="cbar2"></div>
+                        <div class="cbar3"></div>
+                    </div>
+                    <div class="cthemenu">
+                        <a class="cmenu-item" href={% url 'dashboard' %}>My Dashboard</a>
+                        <a class="cmenu-item" href={% url 'edit_profile' %}>Edit Profile</a>
+                        <a class="cmenu-item" href={% url 'settings' %}>Settings</a>
+                        <a class="cmenu-item" href={% url 'logout' %} onclick="$('#logout').submit();">Log Out</a>
+                    </div>
                 </div>
-                <div class="cthemenu">
-                    <a class="cmenu-item" href={% url 'dashboard' %}>My Dashboard</a>
-                    <a class="cmenu-item" href={% url 'edit_profile' %}>Edit Profile</a>
-                    <a class="cmenu-item" href={% url 'settings' %}>Settings</a>
-                    <a class="cmenu-item" href={% url 'logout' %} onclick="$('#logout').submit();">Log Out</a>
-                </div>
-            </div>
 
-            <script type="text/javascript">
-                $('.cbars').click(function(){
-                /*$('.bar').toggleClass('open1');
-                $('.bar2').toggleClass('open2');
-                $('.bar3').toggleClass('open3');
-                */
-                    $('.cbars').toggleClass('copen');
-                    $('.cthemenu').toggleClass('copen-menu');
-                });
-            </script>
-      {% endif %}
+                <script type="text/javascript">
+                    $('.cbars').click(function(){
+                        /*$('.bar').toggleClass('open1');
+                         $('.bar2').toggleClass('open2');
+                         $('.bar3').toggleClass('open3');
+                         */
+                        $('.cbars').toggleClass('copen');
+                        $('.cthemenu').toggleClass('copen-menu');
+                    });
+                </script>
+            {% endif %}
 
-                  <a class="">
-                      <img class="navbar-center" src="{% static 'images/logobw-square.png' %}" width="40" height="40" alt="">
-                  </a>
+            <a class="">
+                <img class="navbar-center" src="{% static 'images/logobw-square.png' %}" width="40" height="40" alt="">
+            </a>
 
 
 
-                </div>
-                </div>
-            </nav>
-        {% block content %}
+        </div>
+    </div>
+</nav>
+{% block content %}
 
-        {% endblock %}
+{% endblock %}
 
-        {% block javascript %}
-        {% endblock %}
-    </body>
+{% block javascript %}
+{% endblock %}
+</body>
 
 </html>

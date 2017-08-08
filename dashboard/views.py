@@ -24,6 +24,8 @@ def dashboard(request, type_requested=None):
                 'employer': lambda: request.user.profile.is_employer}[type_requested]()
     def student_dashboard():
         projects = request.user.profile.student.projects.all()
+        for project in projects:
+            project.languagesframeworks = ' '.join(project.languagesframeworks)
         return render(request, "student_dashboard.html",
                       {'name': request.user.first_name + " " + 
                                request.user.last_name,\
@@ -90,6 +92,7 @@ def edit_profile(request):
         project_form = EditProjectForm(None, None,
                                student=request.user.profile.student)
         image = request.user.profile.student.image
+        projects = request.user.profile.student.projects.all()
         if request.method == 'POST':
             if profile_form.is_valid():
                 request.user.profile.student.about_me = profile_form.cleaned_data['about_me']
@@ -101,7 +104,8 @@ def edit_profile(request):
                 request.user.profile.student.save()
                 return redirect('dashboard')
         return render(request, 'edit_profile.html', {'profile_form': profile_form, 'project_form': project_form,
-                                                     'curr_profile_image': image})
+                                                     'curr_profile_image': image,
+                                                     'projects': projects})
     return redirect('dashboard')
 
 

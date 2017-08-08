@@ -15,16 +15,14 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <h2>{{ name }}</h2>
                 <img class="img-responsive" src="{{ image.url }}" alt="profile image"
                      onerror='this.src="{% static 'images/Ugly-Pigeon.jpg' %}"'/>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6 add-margin">
                 <h3>About Me:</h3>
                 <p class="bio">{{ about }}</p>
-            </div>
-            <div class="col-sm-4">
                 <h3>Languages and Frameworks:</h3>
                 {% for language in languages %}
                     <li> {{ language }} </li>
@@ -34,14 +32,15 @@
     </div>
     <div id="projects" class="container">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="mx-auto col-xs-12">
                 <h2>My Projects:</h2>
             </div>
         </div>
         <div class="row">
             {% for project in projects %}
                 <div class="col-xs-6 col-md-3">
-                    <a href="#myModal" role="button" data-toggle="modal" data-target="#{{ project.title }}">
+                    <a href="#{{ project.title }}-ModalLink" role="button"
+                       data-toggle="modal" data-target="#{{ project.title }}-modal">
                         <image src="{{ project.image.url }}" alt="project.title" class="thumbnail img-responsive" />
                     </a>
                 </div>
@@ -50,7 +49,7 @@
 
 
         {% for project in projects %}
-            <div class="modal fade" id="{{ project.title }}" tabindex="-1" role="dialog" >
+            <div class="modal fade" id="{{ project.title }}-modal" tabindex="-1" role="dialog" >
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
