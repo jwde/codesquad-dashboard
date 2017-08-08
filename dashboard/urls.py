@@ -16,9 +16,6 @@ urlpatterns = [
     # url(r'^form_responses/([0-9]+)/$', views.form_responses, name='form_responses'),
     url(r'^accounts/',
         include('registration.backends.simple.urls')),
-    url(r'^login/$', auth_views.login, {'template_name': 'login.html',\
-                                        'authentication_form': LoginForm},\
-        name='login'),
     url(r'^register/$', views.register, name='register'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
     url(r'^change_password/$', views.change_password, name='change_password'),

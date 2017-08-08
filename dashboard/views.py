@@ -250,7 +250,7 @@ def register(request):
             if user is not None:
                 login(request, user)
                 return redirect('dashboard')
-    return render(request, 'createaccount.html', {'form': form})
+    return render(request, 'registration/createaccount.html', {'form': form})
 
 # @login_required(login_url='login/')
 # def create_form(request):
