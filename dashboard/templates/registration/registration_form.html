@@ -3,19 +3,22 @@
 {% load crispy_forms_tags %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'css/createaccount.css' %}">
+    <link rel="stylesheet" href="{% static 'css/registration.css' %}">
+
 {% endblock %}
 
 
 {% block content %}
-    <h1>Create An Account</h1>
+    <div class="registration-form">
+        <h2>Create An Account</h2>
 
-    <form method="post" action=".">
-        {% csrf_token %}
-        {{ form|crispy }}
+        <form method="post" action=".">
+            {% csrf_token %}
+            {{ form|crispy }}
 
-        <input type="submit" value="Submit"/>
-    </form>
+            <input type="submit" value="Submit"/>
+        </form>
+    </div>
 {% endblock %}
 
 {% block  javascript %}

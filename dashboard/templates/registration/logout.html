@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/registration.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="registration-form">
+        <h2>Logged Out</h2> <br />
+        <p class="help-block">You have been successfully logged out.</p>
+    </div>
+{% endblock %}

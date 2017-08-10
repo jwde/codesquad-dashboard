@@ -210,47 +210,47 @@ def form_responses(request, form_id):
 #     else:
 #         return redirect('dashboard')
 
-# def register(request):
-#     form = RegisterForm()
-#     if request.method == 'POST':
-#         form = RegisterForm(data=request.POST)
-#         if form.is_valid():
-#             first_name = request.POST.get('first_name')
-#             last_name = request.POST.get('last_name')
-#             email = request.POST.get('email')
-#             username = request.POST.get('username')
-#             password = request.POST.get('password1')
-#             role = request.POST.get('role')
-#             user = User.objects.create_user(
-#                                        username,\
-#                                        email,\
-#                                        password,\
-#                                        last_name=last_name,\
-#                                        first_name=first_name)
-#             profile = Profile.objects.create(user=user,\
-#                                              _is_student=(role == 'student'),\
-#                                              _is_teacher=(role == 'teacher'),\
-#                                              _is_employer=(role == 'employer'),\
-#                                              )
-#             user.save()
-#             profile.save()
-#             if role == 'teacher':
-#                 teacher = Teacher(profile = profile)
-#                 teacher.save()
-#             elif role == 'employer':
-#                 employer = Employer(profile = profile)
-#                 employer.save()
-#             else:
-#                 student = Student(profile = profile,\
-#                                   privacy_setting = 'PR',
-#                                   languages=[]
-#                                   )
-#                 student.save()
-#             user = authenticate(username = username, password = password)
-#             if user is not None:
-#                 login(request, user)
-#                 return redirect('dashboard')
-#     return render(request, 'registration/createaccount.html', {'form': form})
+def register(request):
+    form = RegisterForm()
+    if request.method == 'POST':
+        form = RegisterForm(data=request.POST)
+        if form.is_valid():
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            email = request.POST.get('email')
+            username = request.POST.get('username')
+            password = request.POST.get('password1')
+            role = request.POST.get('role')
+            user = User.objects.create_user(
+                                       username,\
+                                       email,\
+                                       password,\
+                                       last_name=last_name,\
+                                       first_name=first_name)
+            profile = Profile.objects.create(user=user,\
+                                             _is_student=(role == 'student'),\
+                                             _is_teacher=(role == 'teacher'),\
+                                             _is_employer=(role == 'employer'),\
+                                             )
+            user.save()
+            profile.save()
+            if role == 'teacher':
+                teacher = Teacher(profile = profile)
+                teacher.save()
+            elif role == 'employer':
+                employer = Employer(profile = profile)
+                employer.save()
+            else:
+                student = Student(profile = profile,\
+                                  privacy_setting = 'PR',
+                                  languages=[]
+                                  )
+                student.save()
+            user = authenticate(username = username, password = password)
+            if user is not None:
+                login(request, user)
+                return redirect('dashboard')
+    return render(request, 'registration/registration_form.html', {'form': form})
 
 # @login_required(login_url='login/')
 # def create_form(request):
