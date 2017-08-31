@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block styles %}
-        <link rel="stylesheet" href="{% static 'css/editprof.css' %}">
+    <link rel="stylesheet" href="{% static 'css/editprof.css' %}">
 
 {% endblock %}
 
@@ -15,20 +15,27 @@
 
                 <form method='post' enctype="multipart/form-data" action="{% url 'edit_profile' %}">
                     {% csrf_token %}
-                    <img class="img-responsive" src="{{ curr_profile_image.url }}" alt="current profile picture" />
+                    {% if curr_profile_image %}
+                        <img class="img-responsive" src="{{ curr_profile_image.url }}"
+                             alt="current profile picture"/>
+                    {% else %}
+                        <img class="img-responsive" src="{% static 'images/Ugly-Pigeon.jpg' %}"
+                             alt="current profile picture"/>
+                    {% endif %}
+
                     {{ profile_form|crispy }}
                     <input type="submit" value="Submit">
                 </form>
             </div>
         </div>
-    <div class="row">
-      <h2>Edit My Projects</h2>
-    </div>
-            <div class="row">
+        <div class="row">
+            <h2>Edit My Projects</h2>
+        </div>
+        <div class="row">
             {% for project in projects %}
                 <div class="col-xs-6 col-md-3">
                     <a href="#myModal" role="button" data-toggle="modal" data-target="#{{ project.title }}">
-                        <image src="{{ project.image.url }}" alt="project.title" class="thumbnail img-responsive" />
+                        <image src="{{ project.image.url }}" alt="project.title" class="thumbnail img-responsive"/>
                     </a>
                 </div>
             {% endfor %}
@@ -37,48 +44,50 @@
 
 
 
-<div class="modal fade" tabindex="-1" role="dialog" >
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">New Project</h4>
-      </div>
-      <div class="modal-body">
-        
-        <form id="edit_project_form" method="post" enctype="multipart/form-data" action="{% url 'edit_project' %}">
-           	{% csrf_token %}
-	      	<p class="category_title">Project Title</p>
-	      	{{ project_form.project_title }}
-	        <p class="category_title">Role</p>
-	        {{ project_form.project_role}}
-	        <p class="category_title">Languages/Frameworks/Tools</p>
-	        {{ project_form.project_languagesframeworks}}
-	        <p class="category_title">Project Description</p>
-	        {{project_form.project_description}}
-	        <p class="category_title">Link to Project</p>
-	        {{project_form.project_link}}
-	        <p class="category_title">Project Picture</p>
-	        {{project_form.project_image}}
-      	
-	    
-      </div>
-      <div class="modal-footer">
-     	 <a class="edit-proj" href="{% url 'edit_project' %}">
-			<button type="submit" class="btn btn-default">Save Project</button>
-         </a> 
-      </div>
-      </form>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">New Project</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form id="edit_project_form" method="post" enctype="multipart/form-data"
+                          action="{% url 'edit_project' %}">
+                        {% csrf_token %}
+                        <p class="category_title">Project Title</p>
+                        {{ project_form.project_title }}
+                        <p class="category_title">Role</p>
+                        {{ project_form.project_role }}
+                        <p class="category_title">Languages/Frameworks/Tools</p>
+                        {{ project_form.project_languagesframeworks }}
+                        <p class="category_title">Project Description</p>
+                        {{ project_form.project_description }}
+                        <p class="category_title">Link to Project</p>
+                        {{ project_form.project_link }}
+                        <p class="category_title">Project Picture</p>
+                        {{ project_form.project_image }}
 
 
-<!--  <script>
-$('#addproj').click(function(){
-    $('.modal').modal('toggle');
-});
-</script> -->
+                </div>
+                <div class="modal-footer">
+                    <a class="edit-proj" href="{% url 'edit_project' %}">
+                        <button type="submit" class="btn btn-default">Save Project</button>
+                    </a>
+                </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <!--  <script>
+    $('#addproj').click(function(){
+        $('.modal').modal('toggle');
+    });
+    </script> -->
 {% endblock %}
 
 {% block javascript %}

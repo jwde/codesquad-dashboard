@@ -3,15 +3,12 @@ from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
-from django.utils.safestring import SafeString
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseBadRequest
-from models import Profile, Student, Teacher, Employer, FormTemplate, Enrollment, Question, FormResponse, QuestionResponse, Course, Project
-from forms import RegisterForm, DynamicForm, EditProfileForm, EditProjectForm
-from utils import order
+from models import Profile, Student, Teacher, Employer, FormTemplate, Question, QuestionResponse, Course, Project
+from forms import RegisterForm, EditProfileForm, EditProjectForm
 from collections import defaultdict
 import datetime
 import json
-import bleach
 from django.forms.models import model_to_dict
 
 # Create your views here.

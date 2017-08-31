@@ -1,25 +1,26 @@
 from __future__ import unicode_literals
-
 from django.db import models
 from django.contrib.auth.models import User
 from django.core import validators
 from django.contrib.postgres.fields import JSONField, ArrayField
-from django.utils import timezone
+
 
 class BaseModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True,\
-                                      blank=True,\
+    created_at = models.DateTimeField(auto_now_add=True,
+                                      blank=True,
                                       null=True)
-    updated_at = models.DateTimeField(auto_now=True,\
-                                      blank=True,\
+    updated_at = models.DateTimeField(auto_now=True,
+                                      blank=True,
                                       null=True)
+
     class Meta:
         abstract = True
 
+
 class Profile(BaseModel):
-    user = models.OneToOneField(User,\
-                                on_delete=models.CASCADE,\
-                                primary_key=True,\
+    user = models.OneToOneField(User,
+                                on_delete=models.CASCADE,
+                                primary_key=True,
                                 related_name='profile')
     _is_student = models.BooleanField(default=True)
     _is_teacher = models.BooleanField(default=False)
@@ -30,12 +31,15 @@ class Profile(BaseModel):
     @property
     def is_student(self):
         return self._is_student
+
     @property
     def is_teacher(self):
         return self._is_teacher and self.teacher_approved
+
     @property
     def is_employer(self):
         return self._is_employer and self.employer_approved
+
     @property
     def type(self):
         if self.is_employer:
@@ -46,24 +50,25 @@ class Profile(BaseModel):
             return 'student'
         else:
             return 'pending'
+
     def __str__(self):
         return self.user.__str__()
 
 
 class Student(BaseModel):
-    profile = models.OneToOneField(Profile,\
-                                   on_delete=models.CASCADE,\
-                                   primary_key=True,\
+    profile = models.OneToOneField(Profile,
+                                   on_delete=models.CASCADE,
+                                   primary_key=True,
                                    related_name='student')
     PRIVATE = 'PR'
     PUBLIC = 'PU'
     PRIVACY_CHOICES = (
-    	('PR', 'Private'),
-    	('PU', 'Public'),
+        ('PR', 'Private'),
+        ('PU', 'Public'),
     )
     privacy_setting = models.CharField(
-    	max_length=2,
-    	choices=PRIVACY_CHOICES,
+        max_length=2,
+        choices=PRIVACY_CHOICES,
         default=PRIVATE,
     )
     # Augmented Profile fields
@@ -83,6 +88,7 @@ class Student(BaseModel):
     def __str__(self):
         return self.profile.user.username
 
+
 class Project(BaseModel):
     student = models.ForeignKey(Student,
                                 on_delete=models.CASCADE,
@@ -98,35 +104,43 @@ class Project(BaseModel):
     )
     role = models.TextField(null=True)
 
+
 class Course(BaseModel):
     name = models.CharField(max_length=200)
     enrolled_students = models.ManyToManyField(Student, through='Enrollment')
     start_date = models.DateField()
     end_date = models.DateField()
+
     def __str__(self):
         return self.name
+
 
 class Enrollment(BaseModel):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
+
 class Teacher(BaseModel):
-    profile = models.OneToOneField(Profile,\
-                                   on_delete=models.CASCADE,\
-                                   primary_key=True,\
+    profile = models.OneToOneField(Profile,
+                                   on_delete=models.CASCADE,
+                                   primary_key=True,
                                    related_name='teacher')
     courses = models.ManyToManyField(Course)
+
     def __str__(self):
         return self.profile.user.username
 
+
 class Employer(BaseModel):
-    profile = models.OneToOneField(Profile,\
-                                   on_delete=models.CASCADE,\
-                                   primary_key=True,\
+    profile = models.OneToOneField(Profile,
+                                   on_delete=models.CASCADE,
+                                   primary_key=True,
                                    related_name='employer')
     description = models.TextField()
+
     def __str__(self):
         return self.profile.user.username
+
 
 class FormTemplate(BaseModel):
     question_list = models.TextField(validators=[validators.validate_comma_separated_integer_list])
@@ -136,8 +150,10 @@ class FormTemplate(BaseModel):
     employers_allowed = models.BooleanField(default=False)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
+
     def __str__(self):
         return self.name
+
 
 class Question(BaseModel):
     LONGFORM = 'LF'
@@ -159,9 +175,11 @@ class Question(BaseModel):
     additional_info = JSONField()
     question_text = models.TextField()
 
+
 class FormResponse(BaseModel):
     form_template = models.ForeignKey(FormTemplate, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
 
 class QuestionResponse(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
