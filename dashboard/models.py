@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from django.core import validators
 from django.contrib.postgres.fields import JSONField, ArrayField
 from django.utils import timezone
-import datetime
 
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True,\
@@ -95,6 +94,7 @@ class Project(BaseModel):
     languagesframeworks = ArrayField(
         models.CharField(max_length=200, null=True),
         null=True,
+        verbose_name="Languages and frameworks",
     )
     role = models.TextField(null=True)
 
