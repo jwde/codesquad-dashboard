@@ -1,123 +1,125 @@
-body{
-	padding-top: 70px; /*Needed for bootstrap*/
+body {
+    padding-top: 70px; /*Needed for bootstrap*/
 }
 
 nav {
-	background: #D13F3F!important;
-	color: white;
-	position: fixed!important;
-	top: 0;
-	left: 0;
-	right: 0;
+    background: #D13F3F !important;
+    color: white;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 .navbar-center {
-  transform: translateX(-50%);
-  left: 50%;
-  position: absolute;
-}
-
-.navbar-brand
-{
+    transform: translateX(-50%);
+    left: 50%;
     position: absolute;
-    width: 100%;
-    left: 0;
-    text-align: center;
-    margin:0 auto;
+}
+.logo {
+    margin-top: 4px;
+    height:40px;
+    width:40px;
 }
 
 .collapse {
-	display: inline!important;
+    display: inline !important;
 }
 
 .cdrop-menu {
-	width: 30px;
-	position:fixed;
-	left:2%;
-	top:2%;
-	z-index: 99999;
-	display:block;
+    width: 30px;
+    position: fixed;
+    left: 2%;
+    top: 2%;
+    z-index: 99999;
+    display: block;
 }
 
-
 .cbars {
-	width:30;
-	cursor:pointer;
-	display:block;
-	position:relative;}
+    width: 30;
+    cursor: pointer;
+    display: block;
+    position: relative;
+}
 
 .cbar {
-	width: 30px;
-	height: 3px;
-	background: white;
-	margin-top:0;
-	transition-duration:400ms;
+    width: 30px;
+    height: 3px;
+    background: white;
+    margin-top: 0;
+    transition-duration: 400ms;
 }
 
 .cbar2 {
-	width: 30px;
-	height: 3px;
-	background: #ffffff;
-	margin-top: 5px;
-	margin-left: 0px;
-	transition-duration:400ms;
+    width: 30px;
+    height: 3px;
+    background: #ffffff;
+    margin-top: 5px;
+    margin-left: 0px;
+    transition-duration: 400ms;
 }
 
 .cbar3 {
-	width: 30px;
-	height: 3px;
-	background: #ffffff;
-	margin-top: 5px;
-	margin-left:0px;
-	transition-duration:400ms;
+    width: 30px;
+    height: 3px;
+    background: #ffffff;
+    margin-top: 5px;
+    margin-left: 0px;
+    transition-duration: 400ms;
 }
 
-.cbars {transition-duration:400ms;transform:none;display:block;background:#d13f3f;z-index:99999;}
+.cbars {
+    transition-duration: 400ms;
+    transform: none;
+    display: block;
+    background: #d13f3f;
+    z-index: 99999;
+}
 
 .copen {
-	transform:rotate(-45deg);
-	margin-left:5px;
+    transform: rotate(-45deg);
+    margin-left: 5px;
 }
 
 .cmenu-item {
-	padding: 10px;
-	margin:0;
-	background: #D13F3F;
-	text-align:center;
-	color: #ffffff;
-	display: block;
+    padding: 10px;
+    margin: 0;
+    background: #D13F3F;
+    text-align: center;
+    color: #ffffff;
+    display: block;
 }
 
 .cmenu-item:hover {
-	background:#b33939;
-	text-decoration: none;
-	color: #ffffff;
+    background: #b33939;
+    text-decoration: none;
+    color: #ffffff;
 }
 
 .cthemenu {
-	padding:none;
-	outline:none;
-	box-shadow:none;
-	padding:0!important;
-	border:1px solid #b33939;
-	margin-top:15px;
-	margin-left:14px;
-	height:auto;
-	width:170px;
-	opacity:0;
-	transition-duration:400ms;
-	border-radius:3px;
-	z-index:0;
-	position:relative;
-	background:#d13f3f;
-	visibility: hidden;
+    padding: none;
+    outline: none;
+    box-shadow: none;
+    padding: 0 !important;
+    border: 1px solid #b33939;
+    margin-top: 15px;
+    margin-left: 14px;
+    height: auto;
+    width: 170px;
+    opacity: 0;
+    transition-duration: 400ms;
+    border-radius: 3px;
+    z-index: 0;
+    position: relative;
+    background: #d13f3f;
+    visibility: hidden;
 }
 
 .copen-menu {
-	visibility: visible;
-	opacity:1;
-	margin-top:-13px;}
-
+    visibility: visible;
+    opacity: 1;
+    margin-top: -13px;
+}
 
 * {
     margin: 0;
@@ -125,27 +127,27 @@ nav {
     font-family: Montserrat, sans-serif;
 }
 
-.header{
-  z-index: 10000;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  background-color: #FFFFFF;
-  border-bottom: 5px solid #222;
-  padding: 10px 0;
-  text-align: center;
-  color: #000;
-}
-.header a{
-  color: #000;
-  text-decoration: none;
+.header {
+    z-index: 10000;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: #FFFFFF;
+    border-bottom: 5px solid #222;
+    padding: 10px 0;
+    text-align: center;
+    color: #000;
 }
 
-body{
-  background-color: #fff9fb;
+.header a {
+    color: #000;
+    text-decoration: none;
 }
 
+body {
+    background-color: #fff9fb;
+}
 
 .footer {
     position: relative;
@@ -154,9 +156,9 @@ body{
 }
 
 input {
-  background:none;
-  border:none;
-  font-size: 18px;
+    background: none;
+    border: none;
+    font-size: 18px;
 }
 
 .menu {
