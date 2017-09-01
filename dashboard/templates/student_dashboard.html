@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 {% load staticfiles %}
 
@@ -26,7 +25,7 @@
                 <h3>Languages and Frameworks:</h3>
                 {% for language in languages %}
                     <li> {{ language }} </li>
-                {%  endfor %}
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -38,37 +37,43 @@
         </div>
         <div class="row">
             {% for project in projects %}
+                {% if project.image %}
                 <div class="col-xs-6 col-md-3">
                     <a href="#{{ project.title }}-ModalLink" role="button"
                        data-toggle="modal" data-target="#{{ project.title }}-modal">
-                        <image src="{{ project.image.url }}" alt="project.title" class="thumbnail img-responsive" />
+                        <image src="{{ project.image.url }}" alt="project.title" class="thumbnail img-responsive"/>
                     </a>
                 </div>
+                {% endif %}
             {% endfor %}
         </div>
 
 
         {% for project in projects %}
-            <div class="modal fade" id="{{ project.title }}-modal" tabindex="-1" role="dialog" >
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">{{ project.title }}</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p class="category_title" id="project_role">Role: {{ project.role }}</p>
-                            <p class="category_title" id="project_languages">Tools Used: {{ project.languagesframeworks }}</p>
-                            <p class="category_title" id="project_description">Description: {{ project.description }}</p>
-                            <p class="category_title" id="project_linki">Link: {{ project.link }}</p>
-                        </div>
-                        <div class="modal-footer">
-                        </div>
-                        </form>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
+            {% if project.image %}
+                <div class="modal fade" id="{{ project.title }}-modal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">{{ project.title }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p class="category_title" id="project_role">Role: {{ project.role }}</p>
+                                <p class="category_title" id="project_languages">Tools
+                                    Used: {{ project.languagesframeworks }}</p>
+                                <p class="category_title" id="project_description">
+                                    Description: {{ project.description }}</p>
+                                <p class="category_title" id="project_linki">Link: {{ project.link }}</p>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                            </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}

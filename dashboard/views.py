@@ -5,44 +5,50 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseBadRequest
 from models import Profile, Student, Teacher, Employer, FormTemplate, Question, QuestionResponse, Course, Project
-from forms import RegisterForm, EditProfileForm, EditProjectForm
+from forms import RegisterForm, EditProfileForm, EditProjectForm, ProjectForm
 from collections import defaultdict
+from django.views.generic.edit import UpdateView
 import datetime
 import json
 from django.forms.models import model_to_dict
+
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def dashboard(request, type_requested=None):
     def validate(type_requested):
-        return type_requested in ('student', 'teacher', 'employer') and\
-               {'student': lambda: request.user.profile.is_student,\
-                'teacher': lambda: request.user.profile.is_teacher,\
+        return type_requested in ('student', 'teacher', 'employer') and \
+               {'student': lambda: request.user.profile.is_student, \
+                'teacher': lambda: request.user.profile.is_teacher, \
                 'employer': lambda: request.user.profile.is_employer}[type_requested]()
+
     def student_dashboard():
         projects = request.user.profile.student.projects.all()
         for project in projects:
             project.languagesframeworks = ' '.join(project.languagesframeworks)
         return render(request, "student_dashboard.html",
-                      {'name': request.user.first_name + " " + 
-                               request.user.last_name,\
-                       'about': request.user.profile.student.about_me,\
-                       'image': request.user.profile.student.image if hasattr(request.user.profile.student.image, 'url') else False,\
-                       'languages': request.user.profile.student.languages,\
+                      {'name': request.user.first_name + " " +
+                               request.user.last_name, \
+                       'about': request.user.profile.student.about_me, \
+                       'image': request.user.profile.student.image if hasattr(request.user.profile.student.image,
+                                                                              'url') else False, \
+                       'languages': request.user.profile.student.languages, \
                        'projects': projects})
+
     def teacher_dashboard():
         teacher_name = request.user.first_name + " " + request.user.last_name
         print teacher_name
-        active_courses = [c for c in request.user.profile.teacher.courses.all()\
+        active_courses = [c for c in request.user.profile.teacher.courses.all() \
                           if c.end_date >= datetime.date.today()]
         student_sets = [frozenset(c.enrolled_students.all()) for c in active_courses]
         students = frozenset().union(*student_sets)
-        return render(request, "teacher_dashboard.html",\
+        return render(request, "teacher_dashboard.html", \
                       {'students': students,
-                      'name': teacher_name})
+                       'name': teacher_name})
+
     def employer_dashboard():
-        active_courses = Course.objects.filter(end_date__gte = datetime.date.today())
-        student_sets = [frozenset(c.enrolled_students.filter(privacy_setting='PU'))\
+        active_courses = Course.objects.filter(end_date__gte=datetime.date.today())
+        student_sets = [frozenset(c.enrolled_students.filter(privacy_setting='PU')) \
                         for c in active_courses.all()]
         students = frozenset().union(*student_sets)
         student_profiles = []
@@ -50,24 +56,28 @@ def dashboard(request, type_requested=None):
             name = '{} {}'.format(s.profile.user.first_name, s.profile.user.last_name)
             profile = {'name': name, 'about': s.about_me, 'projects': s.projects}
             student_profiles.append(profile)
-        return render(request, "employer_dashboard.html",\
+        return render(request, "employer_dashboard.html", \
                       {'students': student_profiles})
+
     def pending_dashboard():
         return render(request, "pending_dashboard.html")
-    type_returned = type_requested if validate(type_requested)\
-                    else request.user.profile.type
+
+    type_returned = type_requested if validate(type_requested) \
+        else request.user.profile.type
     if request.method == 'GET':
-        return\
-        {'student': student_dashboard,\
-         'teacher': teacher_dashboard,\
-         'employer': employer_dashboard,\
-         'pending': pending_dashboard}[type_returned]()
+        return \
+            {'student': student_dashboard, \
+             'teacher': teacher_dashboard, \
+             'employer': employer_dashboard, \
+             'pending': pending_dashboard}[type_returned]()
+
 
 @login_required(login_url='/accounts/login/')
 def settings(request):
     change_password = PasswordChangeForm(user=request.user)
 
     return render(request, 'settings.html', {'change_password': change_password})
+
 
 def change_password(request):
     if request.method == 'POST':
@@ -80,14 +90,15 @@ def change_password(request):
     else:
         return HttpResponseBadRequest
 
+
 @login_required(login_url='/accounts/login/')
 def edit_profile(request):
     if request.user.profile.is_student:
         profile_form = EditProfileForm(data=request.POST or None,
-                               files=request.FILES or None,
-                               student=request.user.profile.student)
+                                       files=request.FILES or None,
+                                       student=request.user.profile.student)
         project_form = EditProjectForm(None, None,
-                               student=request.user.profile.student)
+                                       student=request.user.profile.student)
         image = request.user.profile.student.image
         projects = request.user.profile.student.projects.all()
         if request.method == 'POST':
@@ -106,9 +117,15 @@ def edit_profile(request):
     return redirect('dashboard')
 
 
+class ProjectUpdateView(UpdateView):
+    form_class = ProjectForm
+    model = Project
+    template_name_suffix = '_update_form'
+
+
 @login_required(login_url='/accounts/login/')
 def edit_project(request):
-  if request.user.profile.is_student and request.method == 'POST':
+    if request.user.profile.is_student and request.method == 'POST':
         form = EditProjectForm(data=request.POST or None,
                                files=request.FILES or None,
                                student=request.user.profile.student)
@@ -125,11 +142,12 @@ def edit_project(request):
             p.link = form.cleaned_data['project_link']
             p.save()
             response_dict = model_to_dict(p)
-            response_dict = {k:response_dict[k] for k in response_dict if not response_dict[k] == None}
+            response_dict = {k: response_dict[k] for k in response_dict if not response_dict[k] == None}
             response_dict['image'] = response_dict['image'].url
             return HttpResponse(json.dumps(response_dict), content_type='application/json')
         return HttpResponseBadRequest()
-  return ('')
+    return ('')
+
 
 @login_required(login_url='/accounts/login/')
 def my_forms(request):
@@ -142,9 +160,10 @@ def my_forms(request):
     if request.user.profile.is_employer:
         viewable_forms_sets.append(frozenset(FormTemplate.objects.filter(employers_allowed=True)))
     viewable_forms = frozenset().union(*viewable_forms_sets)
-    return render(request, 'my_forms.html',\
-                  {'view_forms': viewable_forms,\
+    return render(request, 'my_forms.html', \
+                  {'view_forms': viewable_forms, \
                    'own_forms': created_forms})
+
 
 @login_required(login_url='/accounts/login/')
 def form_responses(request, form_id):
@@ -162,10 +181,10 @@ def form_responses(request, form_id):
                 response_by_user[u] = [(q['text'], response_by_user[u][q['id']]) for q in questions_data]
             user_ids = question_responses.values('user').distinct()
             users = User.objects.filter(pk__in=user_ids)
-            user_data = [{'name': u.first_name + ' ' + u.last_name,\
+            user_data = [{'name': u.first_name + ' ' + u.last_name, \
                           'id': u.pk} for u in users]
             responses = [(user_data, response_by_user[u['id']]) for u in user_data]
-            return render(request, 'form_responses.html',\
+            return render(request, 'form_responses.html', \
                           {'name': form.name, 'responses': responses})
     return redirect('dashboard')
 
@@ -219,27 +238,27 @@ def register(request):
             password = request.POST.get('password1')
             role = request.POST.get('role')
             user = User.objects.create_user(
-                                       username,\
-                                       email,\
-                                       password,\
-                                       last_name=last_name,\
-                                       first_name=first_name)
-            profile = Profile.objects.create(user=user,\
-                                             _is_student=(role == 'student'),\
-                                             _is_teacher=(role == 'teacher'),\
-                                             _is_employer=(role == 'employer'),\
+                username, \
+                email, \
+                password, \
+                last_name=last_name, \
+                first_name=first_name)
+            profile = Profile.objects.create(user=user, \
+                                             _is_student=(role == 'student'), \
+                                             _is_teacher=(role == 'teacher'), \
+                                             _is_employer=(role == 'employer'), \
                                              )
             user.save()
             profile.save()
             if role == 'teacher':
-                teacher = Teacher(profile = profile)
+                teacher = Teacher(profile=profile)
                 teacher.save()
             elif role == 'employer':
-                employer = Employer(profile = profile)
+                employer = Employer(profile=profile)
                 employer.save()
             else:
-                student = Student(profile = profile,\
-                                  privacy_setting = 'PR',
+                student = Student(profile=profile, \
+                                  privacy_setting='PR',
                                   languages=[]
                                   )
                 student.save()
@@ -253,7 +272,7 @@ def register(request):
                                 role=""
                                 )
                     p.save()
-            user = authenticate(username = username, password = password)
+            user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
                 return redirect('dashboard')

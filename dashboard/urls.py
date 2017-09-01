@@ -1,16 +1,12 @@
-from django.conf.urls import url, include
-from django.contrib import admin
+from django.conf.urls import url
 from django.contrib.auth import views as auth_views
-from django.views.generic.edit import CreateView
-from dashboard.forms import LoginForm, RegisterForm
-from django.views.generic import RedirectView
 from . import views
 
 urlpatterns = [
     url(r'^$', views.dashboard, name='dashboard'),
     url(r'^settings/$', views.settings, name='settings'),
     url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
-    url(r'^edit_project/$', views.edit_project, name='edit_project'),
+    url(r'^edit_project/(?P<pk>[0-9]+)/$', views.ProjectUpdateView.as_view(), name='edit_project'),
     # url(r'^my_forms/$', views.my_forms, name='my_forms'),
     # url(r'^form_responses/([0-9]+)/$', views.form_responses, name='form_responses'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
