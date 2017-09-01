@@ -97,21 +97,18 @@ def edit_profile(request):
         profile_form = EditProfileForm(data=request.POST or None,
                                        files=request.FILES or None,
                                        student=request.user.profile.student)
-        project_form = EditProjectForm(None, None,
-                                       student=request.user.profile.student)
         image = request.user.profile.student.image
         projects = request.user.profile.student.projects.all()
         if request.method == 'POST':
             if profile_form.is_valid():
                 request.user.profile.student.about_me = profile_form.cleaned_data['about_me']
-                print(profile_form.cleaned_data['languages'].split(','))
                 if not profile_form.cleaned_data['languages'] == None:
                     request.user.profile.student.languages = profile_form.cleaned_data['languages'].split()
                 if not profile_form.cleaned_data['image'] == None:
                     request.user.profile.student.image = profile_form.cleaned_data['image']
                 request.user.profile.student.save()
                 return redirect('dashboard')
-        return render(request, 'edit_profile.html', {'profile_form': profile_form, 'project_form': project_form,
+        return render(request, 'edit_profile.html', {'profile_form': profile_form,
                                                      'curr_profile_image': image,
                                                      'projects': projects})
     return redirect('dashboard')
@@ -121,32 +118,7 @@ class ProjectUpdateView(UpdateView):
     form_class = ProjectForm
     model = Project
     template_name_suffix = '_update_form'
-
-
-@login_required(login_url='/accounts/login/')
-def edit_project(request):
-    if request.user.profile.is_student and request.method == 'POST':
-        form = EditProjectForm(data=request.POST or None,
-                               files=request.FILES or None,
-                               student=request.user.profile.student)
-        if form.is_valid():
-            p = Project()
-            p.title = form.cleaned_data['project_title']
-            p.description = form.cleaned_data['project_description']
-            p.role = form.cleaned_data['project_role']
-            p.languagesframeworks = form.cleaned_data['project_languagesframeworks'].split(',')
-            print form.cleaned_data['project_image']
-            if not form.cleaned_data['project_image'] == None:
-                p.image = form.cleaned_data['project_image']
-            p.student = request.user.profile.student
-            p.link = form.cleaned_data['project_link']
-            p.save()
-            response_dict = model_to_dict(p)
-            response_dict = {k: response_dict[k] for k in response_dict if not response_dict[k] == None}
-            response_dict['image'] = response_dict['image'].url
-            return HttpResponse(json.dumps(response_dict), content_type='application/json')
-        return HttpResponseBadRequest()
-    return ('')
+    success_url = '/dashboard/edit_profile'
 
 
 @login_required(login_url='/accounts/login/')

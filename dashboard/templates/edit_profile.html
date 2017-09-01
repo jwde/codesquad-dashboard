@@ -35,12 +35,12 @@
         <div class="row">
             {% for project in projects %}
                 <div class="col-xs-6 col-md-3">
-                    <a role="button" href="{% url 'edit_project' project.id %}" data-toggle="modal"
-                       data-target="#project-modal">
+                    <a href={% url 'edit_project' project.id %} data-toggle="modal"
+                       data-target=#project-modal>
                         {% if project.image %}
-                            <image src="{{ project.image.url }}" alt="project.title" class="thumbnail img-responsive"/>
+                            <image src="{{ project.image.url }}" alt={{ project.title }}" class="thumbnail img-responsive"/>
                         {% else %}
-                            <image src="{% static 'images/baby-goat.jpg' %}" alt="project.title" class="thumbnail img-responsive"/>
+                            <image src="{% static 'images/baby-goat.jpg' %}" alt="New Project" class="thumbnail img-responsive"/>
                         {% endif %}
                     </a>
                 </div>

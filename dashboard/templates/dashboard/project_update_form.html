@@ -1,5 +1,5 @@
 {% load crispy_forms_tags %}
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -7,7 +7,7 @@
                 </button>
                 <h4 class="modal-title">Edit Project:</h4>
             </div>
-            <form action="." method="post">
+            <form action="{% url 'edit_project' project.id %}" method="post">
                 <div class="modal-body">
                     {% csrf_token %}
                     {{ form|crispy }}
@@ -17,6 +17,5 @@
                     <input type="submit" class="btn btn-primary" value="Update project"/>
                 </div>
             </form>
-
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
