@@ -243,6 +243,16 @@ def register(request):
                                   languages=[]
                                   )
                 student.save()
+                for i in xrange(4):
+                    p = Project(student=student,
+                                title="",
+                                image=None,
+                                description="",
+                                link="",
+                                languagesframeworks="",
+                                role=""
+                                )
+                    p.save()
             user = authenticate(username = username, password = password)
             if user is not None:
                 login(request, user)

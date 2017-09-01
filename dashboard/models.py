@@ -97,11 +97,9 @@ class Project(BaseModel):
     image = models.ImageField(upload_to='project_pics', null=True)
     description = models.TextField()
     link = models.URLField()
-    languagesframeworks = ArrayField(
-        models.CharField(max_length=200, null=True),
-        null=True,
-        verbose_name="Languages and frameworks",
-    )
+    languagesframeworks = models.CharField(max_length=200,
+                                           null=True,
+                                           verbose_name="Languages and frameworks")
     role = models.TextField(null=True)
 
 
