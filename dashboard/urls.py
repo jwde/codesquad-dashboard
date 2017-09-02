@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.dashboard, name='dashboard'),
+    url(r'^student/(?P<pk>[0-9]+)/$', views.view_student, name='view_student'),
     url(r'^settings/$', views.settings, name='settings'),
     url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
     url(r'^edit_project/(?P<pk>[0-9]+)/$', views.ProjectUpdateView.as_view(), name='edit_project'),
