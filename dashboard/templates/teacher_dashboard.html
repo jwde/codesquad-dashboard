@@ -3,48 +3,49 @@
 
 {% block style_block %}
 
-        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-        <link href="{% static 'css/teacherdashboard.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="{% static 'css/teacherdashboard.css' %}" rel="stylesheet">
 
 {% endblock %}
 
 {% block content %}
-<div id="teachheader"><h1>Welcome, {{ name }}</h1></div>
+    <div id="teachheader"><h1>Welcome, {{ name }}</h1></div>
 
     <div class="container">
 
         <div class="teacher-profile">
 
-                <div id="student-list" class="col-md-9">
-                    <ul>
-                        {% for student in students %}
-                            <a href=""
+            <div id="student-list" class="col-md-9">
+                <ul>
+                    {% for student in students %}
+                        <a href="{% url 'view_student' student.pk %}">
                             {% if student.profile.student.image %}
-                            <li class="student_array"><img src="{{ student.profile.student.image.url }}"
-                                                           class="student-icon"/>
-                                {% else %}
-                            <li class="student_array"><img src="{% static 'images/baby-goat.jpg' %}"
-                                                           class="student-icon"/>
-                                {% endif %}
+                                <li class="student_array"><img src="{{ student.profile.student.image.url }}"
+                                                               class="student-icon"/>
+                                    {% else %}
+                                <li class="student_array"><img src="{% static 'images/baby-goat.jpg' %}"
+                                                               class="student-icon"/>
+                            {% endif %}
                             <div id='profile_modal'>
-                              {{ student.profile.user.first_name }} {{ student.profile.user.last_name }}
+                                {{ student.profile.user.first_name }} {{ student.profile.user.last_name }}
                             </div>
-                        </li>
+                            </li>
+                        </a>
                     {% endfor %}
-                    </ul>
-                </div>
+                </ul>
             </div>
         </div>
-</div>
+    </div>
+    </div>
 {% endblock %}
 
 
 {% block javascript %}
-<script>
-$('#profile_modal').click(function(){
-    $('.modal').modal('show');
-});
-</script>
+    <script>
+        $('#profile_modal').click(function () {
+            $('.modal').modal('show');
+        });
+    </script>
 {% endblock %}
 
 
