@@ -70,7 +70,8 @@ class Student(BaseModel):
         max_length=2,
         choices=PRIVACY_CHOICES,
         default=PRIVATE,
-    )
+    help_text="Your account will only be visible to potential " \
+                                    "employers when set to \"Public\"")
     # Augmented Profile fields
     image = models.ImageField(upload_to='profile_pics', null=True)
     about_me = models.TextField(null=True)

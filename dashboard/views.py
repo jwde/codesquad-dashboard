@@ -6,13 +6,66 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseBadRequest
 from models import Profile, Student, Teacher, Employer, FormTemplate, Question, QuestionResponse, Course, Project
-from forms import RegisterForm, EditProfileForm, EditProjectForm, ProjectForm
+from forms import RegisterForm, EditProfileForm, ProjectForm
 from collections import defaultdict
 from django.views.generic.edit import UpdateView
 import datetime
 from django.contrib.auth.mixins import AccessMixin, LoginRequiredMixin, UserPassesTestMixin
 import json
 from django.forms.models import model_to_dict
+
+
+def register(request):
+    form = RegisterForm()
+    if request.method == 'POST':
+        form = RegisterForm(data=request.POST)
+        if form.is_valid():
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            email = request.POST.get('email')
+            username = request.POST.get('username')
+            password = request.POST.get('password1')
+            role = request.POST.get('role')
+            user = User.objects.create_user(
+                username,
+                email,
+                password,
+                last_name=last_name,
+                first_name=first_name)
+            profile = Profile.objects.create(user=user,
+                                             _is_student=(role == 'student'),
+                                             _is_teacher=(role == 'teacher'),
+                                             _is_employer=(role == 'employer'),
+                                             )
+            user.save()
+            profile.save()
+            if role == 'teacher':
+                teacher = Teacher(profile=profile)
+                teacher.save()
+            elif role == 'employer':
+                employer = Employer(profile=profile)
+                employer.save()
+            else:
+                student = Student(profile=profile,
+                                  privacy_setting='PR',
+                                  languages=[]
+                                  )
+                student.save()
+                for i in xrange(4):
+                    p = Project(student=student,
+                                title="",
+                                image=None,
+                                description="",
+                                link="",
+                                languagesframeworks="",
+                                role=""
+                                )
+                    p.save()
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('dashboard')
+    return render(request, 'registration/registration_form.html', {'form': form})
 
 
 # Create your views here.
@@ -70,8 +123,9 @@ def dashboard(request, type_requested=None):
             'employer': employer_dashboard,
             'pending': pending_dashboard}[type_returned]()
 
+
 @login_required(login_url='/accounts/login/')
-def view_student(request, *args, **kwargs):
+def view_student(request, **kwargs):
     student = get_object_or_404(Student, pk=kwargs['pk'])
     projects = student.projects.all()
     return render(request, "student_dashboard.html",
@@ -88,6 +142,17 @@ def settings(request):
     change_password_form = PasswordChangeForm(user=request.user)
 
     return render(request, 'settings.html', {'change_password': change_password_form})
+
+
+class PrivacyUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    def test_func(self):
+        return self.request.user.profile.student == Student.objects.get(pk=self.kwargs['pk'])
+
+    model = Student
+    fields = ['privacy_setting']
+    template_name = 'dashboard/privacy_settings.html'
+    raise_exception = True
+    success_url = '/dashboard'
 
 
 def change_password(request):
@@ -134,59 +199,6 @@ class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Project
     template_name_suffix = '_update_form'
     success_url = '/dashboard/edit_profile'
-
-
-def register(request):
-    form = RegisterForm()
-    if request.method == 'POST':
-        form = RegisterForm(data=request.POST)
-        if form.is_valid():
-            first_name = request.POST.get('first_name')
-            last_name = request.POST.get('last_name')
-            email = request.POST.get('email')
-            username = request.POST.get('username')
-            password = request.POST.get('password1')
-            role = request.POST.get('role')
-            user = User.objects.create_user(
-                username,
-                email,
-                password,
-                last_name=last_name,
-                first_name=first_name)
-            profile = Profile.objects.create(user=user,
-                                             _is_student=(role == 'student'),
-                                             _is_teacher=(role == 'teacher'),
-                                             _is_employer=(role == 'employer'),
-                                             )
-            user.save()
-            profile.save()
-            if role == 'teacher':
-                teacher = Teacher(profile=profile)
-                teacher.save()
-            elif role == 'employer':
-                employer = Employer(profile=profile)
-                employer.save()
-            else:
-                student = Student(profile=profile,
-                                  privacy_setting='PR',
-                                  languages=[]
-                                  )
-                student.save()
-                for i in xrange(4):
-                    p = Project(student=student,
-                                title="",
-                                image=None,
-                                description="",
-                                link="",
-                                languagesframeworks="",
-                                role=""
-                                )
-                    p.save()
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('dashboard')
-    return render(request, 'registration/registration_form.html', {'form': form})
 
 # @login_required(login_url='/accounts/login/')
 # def my_forms(request):

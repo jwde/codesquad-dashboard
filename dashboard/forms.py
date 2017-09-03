@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django import forms
 from registration.forms import RegistrationFormUniqueEmail
 from models import Project
@@ -15,10 +15,10 @@ class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ['image', 'title', 'description',
-              'languagesframeworks',
-              'role', 'link']
+                  'languagesframeworks',
+                  'role', 'link']
         widgets = {
-            'link': forms.TextInput(attrs={}),
+            'link': forms.TextInput(),
         }
 
 
@@ -54,29 +54,6 @@ class EditProfileForm(forms.Form):
                                                    widget=forms.Textarea(attrs={'name': 'languages'}),
                                                    initial='\n'.join(student.languages),
                                                    required=False)
-
-
-class EditProjectForm(forms.Form):
-    def __init__(self, *args, **kwargs):
-        student = kwargs.pop('student')
-        super(EditProjectForm, self).__init__(*args, **kwargs)
-        self.fields['project_title'] = forms.CharField(label='Project Title', max_length=100,
-                                                       widget=forms.TextInput(attrs={'name': 'project_title'}),
-                                                       required=True)
-        self.fields['project_description'] = forms.CharField(label='Project Descrition', max_length=500,
-                                                             widget=forms.Textarea(
-                                                                 attrs={'name': 'project_description'}),
-                                                             required=True)
-        self.fields['project_role'] = forms.CharField(label='My Role', max_length=150,
-                                                      widget=forms.TextInput(attrs={'name': 'project_role'}),
-                                                      required=True)
-        self.fields['project_link'] = forms.URLField(label='Project URL', max_length=100,
-                                                     widget=forms.URLInput(attrs={'name': 'project_link'}),
-                                                     required=False)
-        self.fields['project_languagesframeworks'] = forms.CharField(label='Languages', max_length=200,
-                                                                     required=True)
-
-        self.fields['project_image'] = forms.ImageField(label='Project Image:', required=False)
 
 # class DynamicForm(forms.Form):
 #     def set_fields(self, fields):
