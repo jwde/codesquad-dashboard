@@ -100,17 +100,14 @@ def dashboard(request, type_requested=None):
                        'name': teacher_name})
 
     def employer_dashboard():
+        employer_name = request.user.first_name + " " + request.user.last_name
         active_courses = Course.objects.filter(end_date__gte=datetime.date.today())
         student_sets = [frozenset(c.enrolled_students.filter(privacy_setting='PU'))
                         for c in active_courses.all()]
         students = frozenset().union(*student_sets)
-        student_profiles = []
-        for s in students:
-            name = '{} {}'.format(s.profile.user.first_name, s.profile.user.last_name)
-            profile = {'name': name, 'about': s.about_me, 'projects': s.projects}
-            student_profiles.append(profile)
         return render(request, "employer_dashboard.html",
-                      {'students': student_profiles})
+                      {'name': employer_name,
+                       'students': students})
 
     def pending_dashboard():
         return render(request, "pending_dashboard.html")
