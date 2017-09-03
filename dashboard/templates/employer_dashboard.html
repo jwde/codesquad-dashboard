@@ -1,18 +1,40 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block styles %}
-        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'css/master.css' %}">        
+{% block style_block %}
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="{% static 'css/teacherdashboard.css' %}" rel="stylesheet">
+
 {% endblock %}
 
 {% block content %}
+    <div id="teachheader"><h1>Welcome, {{ name }}</h1></div>
 
-<h1>Students:</h1>
-{% for student in students %}
-<h2>{{ student.name }}</h2>
-<h2>{{ student.about }}</h2>
-<h2>{{ student.projects }}</h2>
-{% endfor %}
+    <div class="container">
 
+        <div class="teacher-profile">
+
+            <div id="student-list" class="col-md-9">
+                <ul>
+                    {% for student in students %}
+                        <a href="{% url 'view_student' student.pk %}">
+                            {% if student.profile.student.image %}
+                                <li class="student_array"><img src="{{ student.profile.student.image.url }}"
+                                                               class="student-icon"/>
+                                    {% else %}
+                                <li class="student_array"><img src="{% static 'images/baby-goat.jpg' %}"
+                                                               class="student-icon"/>
+                            {% endif %}
+                            <div id='profile_modal'>
+                                {{ student.profile.user.first_name }} {{ student.profile.user.last_name }}
+                            </div>
+                            </li>
+                        </a>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
 {% endblock %}

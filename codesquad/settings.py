@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'storages',
     'custom_storages',
+    'crispy_forms',
+    'registration',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -64,7 +66,9 @@ MIDDLEWARE_CLASSES = [
 ]
 
 # AUTH_USER_MODEL = 'dashboard.User'
-
+ACCOUNT_ACTIVATION_DAYS = 7
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/dashboard'
 ROOT_URLCONF = 'codesquad.urls'
 
 TEMPLATES = [
@@ -121,6 +125,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -153,9 +159,9 @@ AWS_SECRET_ACCESS_KEY = CODESQUAD_AWS_SECRET_KEY
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 STATICFILES_LOCATION = 'static'
-STATICFILES_STORAGE = 'custom_storages.StaticStorage'
-
-STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+# STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+#
+# STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 
 MEDIAFILES_LOCATION = 'media'
 
@@ -163,3 +169,7 @@ MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 MEDIA_ROOT = '/var/media/'
+
+# Crispy Forms Settings
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

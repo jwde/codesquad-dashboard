@@ -1,123 +1,83 @@
-
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block styles %}
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+{% block style_block %}
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-<script type='text/javascript' src="{% static 'js/student_dashboard.js' %}"></script>
-<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> 
-
-<script>var projects = '{{projects}}'</script>
-<link href="{% static 'css/master.css' %}" rel="stylesheet">
-<link rel="stylesheet" href="{% static 'css/studentdashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/studentdashboard.css' %}">
 
 
 {% endblock %}
 
 {% block content %}
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
 
-<div class="cdrop-menu">
-    <div class="cbars">
-        <div class="cbar"> </div>
-        <div class="cbar2"></div>
-        <div class="cbar3"></div>
-    </div>
-    <div class="cthemenu">
-        <a class="cmenu-item" href="{% url 'edit_profile' %}">Edit Profile</a>
-        <a class="cmenu-item" href="#">Settings</a>
-        <a class="cmenu-item" href="#" onclick="$('#logout').submit();">Log Out</a>
-        <form style="display:none" method="post" id="logout" action="{% url 'logout' %}" >{% csrf_token %} 
-        </form>
-    </div>
-</div>
-
-<script type="text/javascript">
-    $('.cbars').click(function(){
-    /*$('.bar').toggleClass('open1');
-    $('.bar2').toggleClass('open2');
-    $('.bar3').toggleClass('open3');
-    */
-        $('.cbars').toggleClass('copen');
-        $('.cthemenu').toggleClass('copen-menu');
-    });
-</script>
-
-      <a class="navbar-brand" href="#"><img class="img-responsive" src="{% static 'images/logobw.png' %}"></a>
- 
-
-      
-    </div>
-</nav>
-
-
-        <div class="container">
-            <div class="profile">
-                <div id="AboutMe" class="col-md-3"> 
-                    <h1 id="AboutMe-hdr">About Me</h1>
-                    <!--<img id="self-portrait" src="{% static 'images/Ugly-Pigeon.jpg' %}" alt="self-portrait"/> -->
-
-                    <img id="self-portrait" src="{{ image.url }}" alt="self-portrait"
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>{{ name }}</h2>
+                <img class="img-responsive" src="{{ image.url }}" alt="profile image"
                      onerror='this.src="{% static 'images/Ugly-Pigeon.jpg' %}"'/>
-                    <h2 id="name">{{ name }}</h2>    
-                    <p class="bio">{{ about }}</p>
+            </div>
+            <div class="col-sm-6 add-margin">
+                <h3>About Me:</h3>
+                <p class="bio">{{ about }}</p>
+                <h3>Languages and Frameworks:</h3>
+                {% for language in languages %}
+                    <li> {{ language }} </li>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div id="projects" class="container">
+        <div class="row">
+            <div class="mx-auto col-xs-12">
+                <h2>My Projects:</h2>
+            </div>
+        </div>
+        <div class="row">
+            {% for project in projects %}
+                {% if project.image %}
+                <div class="col-xs-6 col-md-3">
+                    <a href="#{{ project.title }}-ModalLink" role="button"
+                       data-toggle="modal" data-target="#{{ project.title }}-modal">
+                        <image src="{{ project.image.url }}" alt="project.title" class="thumbnail img-responsive"/>
+                    </a>
                 </div>
-
-                <div id="projects" class="col-md-6"> 
-                    <h1>Projects</h1>
-                    <ul id="projectList">
-                    </ul>
-                </div>
-                <div id="professional" class="col-md-3">
-                <p>Languages and Frameworks:<p>
-                <div id="languages"> {{ languages }} </div>
-                
-                <!-- <ul>
-                    <li>HTML</li>
-                    <li>CSS</li>
-                    <li>JavaScript</li>
-                </ul> -->
-               
-                <!--<div class="linkedin-block">
-                <img src="https://content.linkedin.com/content/dam/brand/site/img/logo/logo-tm.png" alt="linked in" class="linkedlogo"/>
-                <a href="www.mylinkedIn(me-juliamoyer).com" class="linkedin">Let's Connect</a></div>
-            --></div>
+                {% endif %}
+            {% endfor %}
+        </div>
 
 
-
-        <div class="modal fade" tabindex="-1" role="dialog" >
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">New Project</h4>
-      </div>
-      <div class="modal-body">
-            <p class="category_title" id="project_title">Project Title</p>
-            <p class="category_title" id="project_role">Role</p>
-            <p class="category_title" id="project_languages">Languages/Frameworks/Tools</p>
-            <p class="category_title" id="project_description">Project Description</p>
-            <p class="category_title" id="project_linki">Link to Project</p>
-            <div class="category_title" id="project_picutre"></div>        
-      </div>
-      <div class="modal-footer">
-      </div>
-      </form>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
+        {% for project in projects %}
+            {% if project.image %}
+                <div class="modal fade" id="{{ project.title }}-modal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">{{ project.title }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p class="category_title" id="project_role">Role: {{ project.role }}</p>
+                                <p class="category_title" id="project_languages">Tools
+                                    Used: {{ project.languagesframeworks }}</p>
+                                <p class="category_title" id="project_description">
+                                    Description: {{ project.description }}</p>
+                                <p class="category_title" id="project_linki">Link: {{ project.link }}</p>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                            </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+            {% endif %}
+        {% endfor %}
+    </div>
 {% endblock %}
 
-
+{% block javascript %}
+    <script type='text/javascript' src="{% static 'js/student_dashboard.js' %}"></script>
+{% endblock %}

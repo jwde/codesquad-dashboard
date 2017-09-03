@@ -275,17 +275,7 @@ class AugmentedProfileTest(TestCase):
                                              _is_employer=False,\
                                              )
         profile._is_employer = True
-        profile.bio = 'Hello. My name is Droolia.'
-        profile.desired_position = 'Web Developer'
-        profile.languages = ['HTML','CSS','Javascript']
-
         profile.save()
-
-    def test_profile(self):
-        profile = User.objects.get(username='horsecrzy85').profile
-        self.assertEqual(profile.bio, 'Hello. My name is Droolia.')
-        self.assertEqual(Profile.objects.filter(languages__contains=['CSS']).values_list('bio', flat=True)[0],
-                         'Hello. My name is Droolia.')
 
 # example mock / test case
 class AlwaysPassThisTest(TestCase):
